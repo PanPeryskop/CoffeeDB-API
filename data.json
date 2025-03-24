@@ -1,0 +1,695 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123",
+      "email": "admin@coffeeapi.com",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "username": "coffeegeek",
+      "password": "kawa123",
+      "email": "geek@mail.com",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "username": "espressofan",
+      "password": "espresso22",
+      "email": "espresso@mail.com",
+      "role": "user"
+    },
+    {
+      "id": 4,
+      "username": "brewmaster",
+      "password": "brewme2024",
+      "email": "brew@example.com",
+      "role": "user"
+    },
+    {
+      "id": 5,
+      "username": "mocha_lover",
+      "password": "m0chaL0ve",
+      "email": "mocha@gmail.com",
+      "role": "user"
+    }
+  ],
+  "roasteries": [
+    {
+      "id": 1,
+      "name": "Stumptown Coffee Roasters",
+      "country": "USA",
+      "city": "Portland",
+      "address": "128 SW 3rd Ave, Portland, OR 97204, USA",
+      "website": "https://www.stumptowncoffee.com",
+      "description": "Founded in 1999, known for uncompromising quality and direct trade.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 2,
+      "name": "Blue Bottle Coffee",
+      "country": "USA",
+      "city": "Oakland",
+      "address": "300 Webster St, Oakland, CA 94612, USA",
+      "website": "https://bluebottlecoffee.com",
+      "description": "Artisanal roastery focused on precise brewing and bean freshness.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 3,
+      "name": "Intelligentsia Coffee",
+      "country": "USA",
+      "city": "Chicago",
+      "address": "69 W Kinzie St, Chicago, IL 60654, USA",
+      "website": "https://www.intelligentsiacoffee.com",
+      "description": "Pioneers of direct trade with an emphasis on sustainability.",
+      "avgRating": 4.6
+    },
+    {
+      "id": 4,
+      "name": "Square Mile Coffee",
+      "country": "United Kingdom",
+      "city": "London",
+      "address": "124-130 St John St, London EC1M 4EB, UK",
+      "website": "https://www.squaremilecoffee.com",
+      "description": "Award-winning London roastery known for exceptional flavor profiles.",
+      "avgRating": 4.5
+    },
+    {
+      "id": 5,
+      "name": "La Colombe Coffee Roasters",
+      "country": "USA",
+      "city": "Philadelphia",
+      "address": "50 S 9th St, Philadelphia, PA 19107, USA",
+      "website": "https://www.lacolombe.com",
+      "description": "Innovative roastery famous for its draft latte and creative blends.",
+      "avgRating": 4.6
+    },
+    {
+      "id": 6,
+      "name": "Counter Culture Coffee",
+      "country": "USA",
+      "city": "Durham",
+      "address": "411 E Chapel Hill St, Durham, NC 27701, USA",
+      "website": "https://www.counterculturecoffee.com",
+      "description": "Focused on education and transparency with a strong sustainability commitment.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 7,
+      "name": "The Coffee Collective",
+      "country": "Denmark",
+      "city": "Copenhagen",
+      "address": "Jægersborggade 12, 2200 Copenhagen, Denmark",
+      "website": "https://coffeecollective.dk",
+      "description": "Danish roastery emphasizing direct relationships with farmers and high bean quality.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 8,
+      "name": "Tim Wendelboe",
+      "country": "Norway",
+      "city": "Oslo",
+      "address": "Dronning Eufemias gate 14, Oslo, Norway",
+      "website": "https://timwendelboe.no",
+      "description": "Renowned roastery and café led by a barista champion, dedicated to perfect espresso.",
+      "avgRating": 4.9
+    },
+    {
+      "id": 9,
+      "name": "George Howell Coffee",
+      "country": "USA",
+      "city": "Boston",
+      "address": "106 Arlington St, Boston, MA 02116, USA",
+      "website": "https://georgehowellcoffee.com",
+      "description": "Roastery focused on high-quality, sustainably sourced beans.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 10,
+      "name": "Coffee Supreme",
+      "country": "New Zealand",
+      "city": "Auckland",
+      "address": "32-34 Victoria Street, Auckland CBD, Auckland 1010, New Zealand",
+      "website": "https://coffeesupreme.co.nz",
+      "description": "Leading New Zealand specialty coffee provider known for bold flavors.",
+      "avgRating": 4.6
+    },
+    {
+      "id": 11,
+      "name": "Coffeedesk",
+      "country": "Poland",
+      "city": "Warsaw",
+      "address": "ul. Nowy Świat 15, Warsaw, Poland",
+      "website": "https://coffeedesk.com",
+      "description": "One of Poland’s top roasteries, offering a curated selection of beans from around the world.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 12,
+      "name": "Coffee Proficiency",
+      "country": "Poland",
+      "city": "Krakow",
+      "address": "ul. Floriańska 15, Krakow, Poland",
+      "website": "https://coffeeproficiency.pl",
+      "description": "Artisan roastery specializing in coffees from South America with an emphasis on quality.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 13,
+      "name": "Java Polska",
+      "country": "Poland",
+      "city": "Gdańsk",
+      "address": "ul. Długa 20, Gdańsk, Poland",
+      "website": "https://javapolska.pl",
+      "description": "Modern Polish roastery combining traditional techniques with innovative roasting.",
+      "avgRating": 4.6
+    }
+  ],
+  "coffees": [
+    {
+      "id": 1,
+      "name": "Hair Bender",
+      "roasteryId": 1,
+      "country": "Various",
+      "region": "Blend",
+      "farm": "Direct Trade",
+      "variety": "Blend",
+      "process": "Washed",
+      "roastProfile": "Medium",
+      "flavourNotes": ["chocolate", "cherry", "toffee"],
+      "description": "A complex blend with vibrant acidity and full body, cherished by connoisseurs."
+    },
+    {
+      "id": 2,
+      "name": "Three Africas",
+      "roasteryId": 2,
+      "country": "Ethiopia/Kenya/Uganda",
+      "region": "Blend",
+      "farm": "Mixed",
+      "variety": "Blend",
+      "process": "Washed",
+      "roastProfile": "Light-Medium",
+      "flavourNotes": ["fruity", "floral", "citrus"],
+      "description": "A delicate blend with lively fruit notes and a silky mouthfeel."
+    },
+    {
+      "id": 3,
+      "name": "Gibraltar",
+      "roasteryId": 2,
+      "country": "Various",
+      "region": "Blend",
+      "farm": "Direct Trade",
+      "variety": "Blend",
+      "process": "Espresso",
+      "roastProfile": "Medium",
+      "flavourNotes": ["chocolate", "caramel", "nutty"],
+      "description": "Blue Bottle’s signature blend – perfect for lattes with a balanced taste."
+    },
+    {
+      "id": 4,
+      "name": "Black Cat Classic Espresso",
+      "roasteryId": 3,
+      "country": "Various",
+      "region": "Blend",
+      "farm": "Direct Trade",
+      "variety": "Blend",
+      "process": "Washed",
+      "roastProfile": "Dark",
+      "flavourNotes": ["rich", "smoky", "full-bodied"],
+      "description": "A robust espresso blend with a velvety crema and deep character."
+    },
+    {
+      "id": 5,
+      "name": "Draft Latte Blend",
+      "roasteryId": 5,
+      "country": "Various",
+      "region": "Blend",
+      "farm": "Direct Trade",
+      "variety": "Blend",
+      "process": "Washed",
+      "roastProfile": "Medium",
+      "flavourNotes": ["creamy", "vanilla", "cocoa"],
+      "description": "Specially crafted for draft lattes and cold brew with a smooth finish."
+    },
+    {
+      "id": 6,
+      "name": "Espresso Blend",
+      "roasteryId": 7,
+      "country": "Various",
+      "region": "Blend",
+      "farm": "Direct Trade",
+      "variety": "Blend",
+      "process": "Washed",
+      "roastProfile": "Medium-Dark",
+      "flavourNotes": ["caramel", "toffee", "chocolate"],
+      "description": "A balanced espresso with rich body and a velvety finish."
+    },
+    {
+      "id": 7,
+      "name": "Single Origin Ethiopia",
+      "roasteryId": 8,
+      "country": "Ethiopia",
+      "region": "Yirgacheffe",
+      "farm": "Cooperative",
+      "variety": "Heirloom",
+      "process": "Washed",
+      "roastProfile": "Light",
+      "flavourNotes": ["floral", "citrus", "tea-like"],
+      "description": "A delicate single-origin coffee that highlights Ethiopia’s unique terroir."
+    },
+    {
+      "id": 8,
+      "name": "Direct Trade Guatemala",
+      "roasteryId": 9,
+      "country": "Guatemala",
+      "region": "Antigua",
+      "farm": "Finca La Esperanza",
+      "variety": "Bourbon",
+      "process": "Washed",
+      "roastProfile": "Medium",
+      "flavourNotes": ["chocolate", "nutty", "spicy"],
+      "description": "A balanced Guatemalan coffee with a smooth, rich flavor."
+    },
+    {
+      "id": 9,
+      "name": "Organic Single Origin Brazil",
+      "roasteryId": 10,
+      "country": "Brazil",
+      "region": "Sul de Minas",
+      "farm": "Fazenda Verde",
+      "variety": "Bourbon",
+      "process": "Natural",
+      "roastProfile": "Medium-Dark",
+      "flavourNotes": ["chocolate", "nutty", "earthy"],
+      "description": "Organically grown coffee from Brazil with a distinctive and full flavor."
+    },
+    {
+      "id": 10,
+      "name": "Ethiopia Sidamo",
+      "roasteryId": 1,
+      "country": "Ethiopia",
+      "region": "Sidamo",
+      "farm": "Cooperative",
+      "variety": "Heirloom",
+      "process": "Washed",
+      "roastProfile": "Light",
+      "flavourNotes": ["berry", "floral", "bright"],
+      "description": "A subtle single-origin coffee with delicate fruit and floral notes."
+    },
+    {
+      "id": 11,
+      "name": "Colombian Supremo",
+      "roasteryId": 3,
+      "country": "Colombia",
+      "region": "Huila",
+      "farm": "Finca La Esperanza",
+      "variety": "Typica",
+      "process": "Washed",
+      "roastProfile": "Medium",
+      "flavourNotes": ["caramel", "chocolate", "apple"],
+      "description": "A versatile Colombian coffee with a sweet and smooth finish."
+    },
+    {
+      "id": 12,
+      "name": "Kenya AA",
+      "roasteryId": 2,
+      "country": "Kenya",
+      "region": "Nyeri",
+      "farm": "Direct Trade",
+      "variety": "SL28/SL34",
+      "process": "Washed",
+      "roastProfile": "Light",
+      "flavourNotes": ["berry", "winey", "bright"],
+      "description": "A vibrant Kenyan coffee with bold acidity and complex fruit flavors."
+    },
+    {
+      "id": 13,
+      "name": "Sumatra Mandheling",
+      "roasteryId": 3,
+      "country": "Indonesia",
+      "region": "Sumatra",
+      "farm": "Smallholder",
+      "variety": "Typica",
+      "process": "Wet-Hulled",
+      "roastProfile": "Dark",
+      "flavourNotes": ["earthy", "spicy", "chocolate"],
+      "description": "A rich and full-bodied coffee with a distinctive earthy character."
+    },
+    {
+      "id": 14,
+      "name": "Brazil Santos",
+      "roasteryId": 10,
+      "country": "Brazil",
+      "region": "Santos",
+      "farm": "Cooperative",
+      "variety": "Bourbon",
+      "process": "Natural",
+      "roastProfile": "Medium",
+      "flavourNotes": ["nutty", "sweet", "balanced"],
+      "description": "A smooth and sweet Brazilian coffee with notes of chocolate and nuts."
+    },
+    {
+      "id": 15,
+      "name": "Costa Rica Tarrazu",
+      "roasteryId": 6,
+      "country": "Costa Rica",
+      "region": "Tarrazu",
+      "farm": "Direct Trade",
+      "variety": "Caturra",
+      "process": "Washed",
+      "roastProfile": "Medium-Light",
+      "flavourNotes": ["citrus", "floral", "clean"],
+      "description": "A bright and balanced coffee from Costa Rica with lively acidity and floral notes."
+    },
+    {
+      "id": 16,
+      "name": "Java Polska Classic",
+      "roasteryId": 13,
+      "country": "Poland",
+      "region": "Pomerania",
+      "farm": "Local Estates",
+      "variety": "Blend",
+      "process": "Medium Roast",
+      "roastProfile": "Medium",
+      "flavourNotes": ["balanced", "nutty", "chocolate"],
+      "description": "A signature blend capturing the essence of Polish coffee craftsmanship."
+    }
+  ],
+  "shops": [
+    {
+      "id": 1,
+      "name": "Stumptown Coffee Bar",
+      "country": "USA",
+      "city": "Portland",
+      "address": "128 SW 3rd Ave, Portland, OR 97204, USA",
+      "website": "https://www.stumptowncoffee.com",
+      "description": "A dynamic café offering a wide selection of specialty coffees.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 2,
+      "name": "Blue Bottle Cafe",
+      "country": "USA",
+      "city": "Oakland",
+      "address": "300 Webster St, Oakland, CA 94612, USA",
+      "website": "https://bluebottlecoffee.com",
+      "description": "A modern spot serving delicious coffee and fresh pastries.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 3,
+      "name": "Intelligentsia Coffee Bar",
+      "country": "USA",
+      "city": "Chicago",
+      "address": "69 W Kinzie St, Chicago, IL 60654, USA",
+      "website": "https://www.intelligentsiacoffee.com",
+      "description": "An elegant space for coffee enthusiasts serving meticulously crafted drinks.",
+      "avgRating": 4.6
+    },
+    {
+      "id": 4,
+      "name": "Square Mile Coffee House",
+      "country": "United Kingdom",
+      "city": "London",
+      "address": "124-130 St John St, London EC1M 4EB, UK",
+      "website": "https://www.squaremilecoffee.com",
+      "description": "A unique café in London celebrated for its excellent coffee quality.",
+      "avgRating": 4.5
+    },
+    {
+      "id": 5,
+      "name": "La Colombe Draft Latte Cafe",
+      "country": "USA",
+      "city": "Philadelphia",
+      "address": "50 S 9th St, Philadelphia, PA 19107, USA",
+      "website": "https://www.lacolombe.com",
+      "description": "A café specializing in innovative draft lattes and iced coffees.",
+      "avgRating": 4.6
+    },
+    {
+      "id": 6,
+      "name": "Counter Culture Coffee Shop",
+      "country": "USA",
+      "city": "Durham",
+      "address": "411 E Chapel Hill St, Durham, NC 27701, USA",
+      "website": "https://www.counterculturecoffee.com",
+      "description": "A meeting place for coffee lovers promoting sustainably sourced beans.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 7,
+      "name": "The Coffee Collective Cafe",
+      "country": "Denmark",
+      "city": "Copenhagen",
+      "address": "Jægersborggade 12, 2200 Copenhagen, Denmark",
+      "website": "https://coffeecollective.dk",
+      "description": "A minimalist café that emphasizes quality and ethical sourcing.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 8,
+      "name": "Tim Wendelboe Espresso Bar",
+      "country": "Norway",
+      "city": "Oslo",
+      "address": "Dronning Eufemias gate 14, Oslo, Norway",
+      "website": "https://timwendelboe.no",
+      "description": "An intimate espresso bar where precision meets passion.",
+      "avgRating": 4.9
+    },
+    {
+      "id": 9,
+      "name": "George Howell Coffee House",
+      "country": "USA",
+      "city": "Boston",
+      "address": "106 Arlington St, Boston, MA 02116, USA",
+      "website": "https://georgehowellcoffee.com",
+      "description": "A cozy café serving a curated selection of single-origin coffees.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 10,
+      "name": "Coffee Supreme Cafe",
+      "country": "New Zealand",
+      "city": "Auckland",
+      "address": "32-34 Victoria Street, Auckland CBD, Auckland 1010, New Zealand",
+      "website": "https://coffeesupreme.co.nz",
+      "description": "A trendy café known for its bold flavors and creative brewing.",
+      "avgRating": 4.6
+    },
+    {
+      "id": 11,
+      "name": "Forum Specialty Coffee",
+      "country": "Poland",
+      "city": "Warsaw",
+      "address": "ul. Marszałkowska 10, Warsaw, Poland",
+      "website": "https://forumcoffee.pl",
+      "description": "A specialty coffee shop offering a wide range of carefully selected coffees.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 12,
+      "name": "Relax Cafe",
+      "country": "Poland",
+      "city": "Krakow",
+      "address": "ul. Floriańska 15, Krakow, Poland",
+      "website": "https://relaxcafe.pl",
+      "description": "A cozy café in Krakow’s historic district with excellent pastries and coffee.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 13,
+      "name": "Kaffe Obscura",
+      "country": "Poland",
+      "city": "Wroclaw",
+      "address": "ul. Świdnicka 20, Wroclaw, Poland",
+      "website": "https://instagram.com/kaffe_obscura",
+      "description": "An atmospheric café in the heart of Wroclaw with a rotating selection of European roasts.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 14,
+      "name": "Prosto Cafe",
+      "country": "Poland",
+      "city": "Poznan",
+      "address": "ul. Głogowska 28, Poznan, Poland",
+      "website": "https://prostocafe.pl",
+      "description": "A modern café known for its signature drinks and house-made pastries.",
+      "avgRating": 4.7
+    },
+    {
+      "id": 15,
+      "name": "Kawiarnia Kofeina",
+      "country": "Poland",
+      "city": "Krakow",
+      "address": "ul. Grodzka 7, Krakow, Poland",
+      "website": "https://kofeina.pl",
+      "description": "A vibrant café offering expertly brewed coffee and a warm atmosphere.",
+      "avgRating": 4.8
+    },
+    {
+      "id": 16,
+      "name": "Coffeedesk Cafe",
+      "country": "Poland",
+      "city": "Warsaw",
+      "address": "ul. Chmielna 26, Warsaw, Poland",
+      "website": "https://coffeedesk.com",
+      "description": "The flagship café of Coffeedesk serving specialty coffees and light bites.",
+      "avgRating": 4.8
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "userId": 2,
+      "coffeeId": 1,
+      "roasteryId": 0,
+      "coffeeShopId": 0,
+      "rating": 4.8,
+      "review": "The Hair Bender blend is complex and full of delightful surprises.",
+      "dateOfCreation": "2024-05-01T10:24:31Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "coffeeId": 0,
+      "roasteryId": 1,
+      "coffeeShopId": 0,
+      "rating": 4.7,
+      "review": "Stumptown Coffee Roasters set the benchmark for quality in the industry.",
+      "dateOfCreation": "2024-05-03T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "coffeeId": 0,
+      "roasteryId": 0,
+      "coffeeShopId": 2,
+      "rating": 4.9,
+      "review": "Blue Bottle Cafe offers a modern atmosphere with outstanding coffee.",
+      "dateOfCreation": "2024-05-05T09:30:45Z"
+    },
+    {
+      "id": 4,
+      "userId": 5,
+      "coffeeId": 3,
+      "roasteryId": 0,
+      "coffeeShopId": 0,
+      "rating": 4.8,
+      "review": "Gibraltar is a perfect espresso – balanced and aromatic.",
+      "dateOfCreation": "2024-05-10T16:22:12Z"
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "coffeeId": 0,
+      "roasteryId": 0,
+      "coffeeShopId": 4,
+      "rating": 4.5,
+      "review": "Square Mile Coffee House enchants with its ambiance and quality drinks.",
+      "dateOfCreation": "2024-05-12T11:45:30Z"
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "coffeeId": 7,
+      "roasteryId": 0,
+      "coffeeShopId": 0,
+      "rating": 4.8,
+      "review": "The Single Origin Ethiopia from Tim Wendelboe is a true discovery.",
+      "dateOfCreation": "2024-05-15T08:10:22Z"
+    },
+    {
+      "id": 7,
+      "userId": 4,
+      "coffeeId": 0,
+      "roasteryId": 3,
+      "coffeeShopId": 0,
+      "rating": 4.9,
+      "review": "Intelligentsia Coffee captivates with its rich aroma and flavor.",
+      "dateOfCreation": "2024-05-20T17:05:45Z"
+    },
+    {
+      "id": 8,
+      "userId": 5,
+      "coffeeId": 0,
+      "roasteryId": 0,
+      "coffeeShopId": 5,
+      "rating": 4.7,
+      "review": "La Colombe Draft Latte Cafe serves innovative and refreshing beverages.",
+      "dateOfCreation": "2024-05-25T13:40:10Z"
+    },
+    {
+      "id": 9,
+      "userId": 2,
+      "coffeeId": 10,
+      "roasteryId": 0,
+      "coffeeShopId": 0,
+      "rating": 4.8,
+      "review": "Ethiopia Sidamo enchants with its delicate floral and berry notes.",
+      "dateOfCreation": "2024-05-28T10:30:00Z"
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "coffeeId": 0,
+      "roasteryId": 2,
+      "coffeeShopId": 0,
+      "rating": 4.9,
+      "review": "Blue Bottle Coffee proves that freshness is the key to great coffee.",
+      "dateOfCreation": "2024-06-01T15:20:33Z"
+    },
+    {
+      "id": 11,
+      "userId": 4,
+      "coffeeId": 8,
+      "roasteryId": 0,
+      "coffeeShopId": 0,
+      "rating": 4.8,
+      "review": "Direct Trade Guatemala offers a smooth, rich flavor with a balanced finish.",
+      "dateOfCreation": "2024-06-05T09:15:45Z"
+    },
+    {
+      "id": 12,
+      "userId": 5,
+      "coffeeId": 0,
+      "roasteryId": 0,
+      "coffeeShopId": 7,
+      "rating": 4.7,
+      "review": "The Coffee Collective Cafe emphasizes minimalism and quality sourcing.",
+      "dateOfCreation": "2024-06-10T14:30:20Z"
+    },
+    {
+      "id": 13,
+      "userId": 2,
+      "coffeeId": 13,
+      "roasteryId": 0,
+      "coffeeShopId": 16,
+      "rating": 4.8,
+      "review": "Coffeedesk Signature is a perfect balance of tradition and innovation.",
+      "dateOfCreation": "2024-06-15T12:00:00Z"
+    },
+    {
+      "id": 14,
+      "userId": 3,
+      "coffeeId": 14,
+      "roasteryId": 0,
+      "coffeeShopId": 12,
+      "rating": 4.7,
+      "review": "Proficiency Espresso boasts a bold character with a robust finish.",
+      "dateOfCreation": "2024-06-20T14:45:00Z"
+    },
+    {
+      "id": 15,
+      "userId": 4,
+      "coffeeId": 16,
+      "roasteryId": 0,
+      "coffeeShopId": 15,
+      "rating": 4.6,
+      "review": "Java Polska Classic captures the essence of Polish coffee craftsmanship.",
+      "dateOfCreation": "2024-06-25T09:30:00Z"
+    }
+  ]
+}
