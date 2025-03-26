@@ -40,14 +40,14 @@ func GetApiDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         BaseURL:     "http://srv17.mikr.us:40331",
         Authorization: AuthInfo{
             Description: "The API uses JWT (JSON Web Token) for authorization. Protected endpoints require a valid JWT token in the request header.",
-            Method:      "Bearer Token Authentication",
-            Header:      "Authentication: Bearer your_jwt_token",
+            Method:      "Bearer Token Authorization",
+            Header:      "Authorization: Bearer your_jwt_token",
             Examples: map[string]interface{}{
                 "loginRequest": map[string]interface{}{
                     "url": "POST /login",
                     "body": map[string]string{
                         "username": "coffeegeek",
-                        "password": "kawa123",
+                        "passwords": "kawa123",
                     },
                 },
                 "loginResponse": map[string]interface{}{
@@ -57,7 +57,7 @@ func GetApiDocumentationHandler(w http.ResponseWriter, r *http.Request) {
                     "url": "POST /coffees",
                     "headers": map[string]string{
                         "Content-Type": "application/json",
-                        "Authentication": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                     },
                 },
                 "roles": map[string]string{
@@ -67,7 +67,7 @@ func GetApiDocumentationHandler(w http.ResponseWriter, r *http.Request) {
             },
         },
         Endpoints: map[string][]API{
-            "Authentication": {
+            "Authorization": {
                 {
                     Method:      "POST",
                     Path:        "/register",
@@ -86,7 +86,7 @@ func GetApiDocumentationHandler(w http.ResponseWriter, r *http.Request) {
                     Auth:        false,
                     PayloadExample: map[string]interface{}{
                         "username": "coffeegeek",
-                        "password": "kawa123",
+                        "passwords": "kawa123",
                     },
                     ResponseExample: map[string]string{
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -265,15 +265,15 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         Version:     "1.0.0",
         BaseURL:     "http://srv17.mikr.us:40331",
         Authorization: AuthInfo{
-            Description: "The API uses JWT (JSON Web Token) for authorization. Protected endpoints require a valid JWT token in the request header.",
-            Method:      "Bearer Token Authentication",
-            Header:      "Authentication: Bearer your_jwt_token",
+            Description: "The API uses JWT (JSON Web Token) for Authorization. Protected endpoints require a valid JWT token in the request header.",
+            Method:      "Bearer Token Authorization",
+            Header:      "Authorization: Bearer your_jwt_token",
             Examples: map[string]interface{}{
                 "loginRequest": map[string]interface{}{
                     "url": "POST /login",
                     "body": map[string]string{
                         "username": "coffeeuser",
-                        "password": "strongpassword",
+                        "passwords": "strongpassword",
                     },
                 },
                 "loginResponse": map[string]interface{}{
@@ -283,7 +283,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
                     "url": "POST /coffees",
                     "headers": map[string]string{
                         "Content-Type": "application/json",
-                        "Authentication": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                     },
                 },
                 "roles": map[string]string{
@@ -293,7 +293,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
             },
         },
         Endpoints: map[string][]API{
-            "Authentication": {
+            "Authorization": {
                 {
                     Method:      "POST",
                     Path:        "/register",
@@ -312,7 +312,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
                     Auth:        false,
                     PayloadExample: map[string]interface{}{
                         "username": "coffeegeek",
-                        "password": "kawa123",
+                        "passwords": "kawa123",
                     },
                     ResponseExample: map[string]string{
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -981,6 +981,33 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         .auth-input {
             display: none;
             margin-top: 10px;
+            background-color: rgba(212, 165, 116, 0.05);
+            padding: 12px;
+            border-radius: 5px;
+            border-left: 3px solid #d4a574;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .auth-input.visible {
+            display: block;
+        }
+        
+        .token-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 5px;
+            font-family: monospace;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .token-input:focus {
+            border-color: #d4a574;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(212, 165, 116, 0.2);
         }
         
         .execute-btn {
@@ -1550,14 +1577,14 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
             </div>
         </section>
         
-        <section class="section" id="authentication">
-            <h2><i class="fas fa-lock"></i> Authentication</h2>
+        <section class="section" id="Authorization">
+            <h2><i class="fas fa-lock"></i> Authorization</h2>
             <div class="auth-info">
                 <p>` + doc.Authorization.Description + `</p>
                 <div><strong>Method:</strong> ` + doc.Authorization.Method + `</div>
                 <div><strong>Header:</strong> <code>` + doc.Authorization.Header + `</code></div>
                 
-                <h4>Authentication Examples</h4>
+                <h4>Authorization Examples</h4>
                 <pre><code class="language-json">` + formatAuthExamples(doc.Authorization.Examples) + `</code></pre>
             </div>
         </section>
@@ -1576,7 +1603,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
 
     // Icons for categories
     categoryIcons := map[string]string{
-        "Authentication": "fas fa-lock",
+        "Authorization": "fas fa-lock",
         "Coffees": "fas fa-coffee",
         "Roasteries": "fas fa-industry",
         "Coffee Shops": "fas fa-store",
@@ -1641,7 +1668,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
             if endpoint.Auth {
                 html += `<div class="auth-toggle">
                     <label>
-                        <input type="checkbox" onclick="toggleAuthInput(this)"> Include authentication token
+                        <input type="checkbox" onclick="toggleAuthInput(this)"> Include Authorization token
                     </label>
                     <div class="auth-input">
                         <input type="text" class="token-input" placeholder="Enter your JWT token">
@@ -1817,41 +1844,64 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
 		
 		// Toggle auth input visibility
 		function toggleAuthInput(checkbox) {
-			const authInput = checkbox.parentElement.nextElementSibling;
-			authInput.style.display = checkbox.checked ? 'block' : 'none';
+			const authToggle = checkbox.closest('.auth-toggle');
+			if (!authToggle) {
+				alert("Error: Could not find .auth-toggle element");
+				return;
+			}
+			
+			const authInput = authToggle.querySelector('.auth-input');
+			if (!authInput) {
+				alert("Error: Could not find .auth-input element");
+				return;
+			}
+			
+			// Toggle visibility
+			if (checkbox.checked) {
+				authInput.style.display = 'block';
+			} else {
+				authInput.style.display = 'none';
+			}
+			
+			// Debug info
+			console.log("Toggle state:", checkbox.checked);
+			console.log("Auth input element:", authInput);
 		}
-		
-		// Execute API request
-		function executeRequest(button, method) {
-			const endpointBody = button.closest('.endpoint-body');
-			const pathInput = endpointBody.querySelector('.path-input');
-			const responseContainer = endpointBody.querySelector('.response-container');
-			const responseStatus = responseContainer.querySelector('.status');
-			const responseTime = responseContainer.querySelector('.time');
-			const responseBody = responseContainer.querySelector('.response-body');
-			
-			// Get path (replace parameters if needed)
-			let path = pathInput.value;
-			if (!path.startsWith('/')) {
-				path = '/' + path;
-			}
-			
-			// Create request options
-			const options = {
-				method: method,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			};
-			
-			// Add auth token if provided
-			const tokenCheckbox = endpointBody.querySelector('.auth-toggle input[type="checkbox"]');
-			if (tokenCheckbox && tokenCheckbox.checked) {
-				const tokenInput = endpointBody.querySelector('.token-input');
-				if (tokenInput.value.trim()) {
-					options.headers['Authentication'] = 'Bearer ' + tokenInput.value.trim();
-				}
-			}
+        
+        // Execute API request
+        function executeRequest(button, method) {
+            const endpointBody = button.closest('.endpoint-body');
+            const pathInput = endpointBody.querySelector('.path-input');
+            const responseContainer = endpointBody.querySelector('.response-container');
+            const responseStatus = responseContainer.querySelector('.status');
+            const responseTime = responseContainer.querySelector('.time');
+            const responseBody = responseContainer.querySelector('.response-body');
+            
+            // Get path (replace parameters if needed)
+            let path = pathInput.value;
+            if (!path.startsWith('/')) {
+                path = '/' + path;
+            }
+            
+            // Create request options
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            // Add auth token if provided
+            const authToggle = endpointBody.querySelector('.auth-toggle');
+            if (authToggle) {
+                const tokenCheckbox = authToggle.querySelector('input[type="checkbox"]');
+                if (tokenCheckbox && tokenCheckbox.checked) {
+                    const tokenInput = authToggle.querySelector('.token-input');
+                    if (tokenInput && tokenInput.value.trim()) {
+                        options.headers['Authorization'] = 'Bearer ' + tokenInput.value.trim();
+                    }
+                }
+            }
 			
 			// Add request body for POST/PUT
 			if (method === 'POST' || method === 'PUT') {
