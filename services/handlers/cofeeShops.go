@@ -6,6 +6,7 @@ import (
     "fmt"
     "net/http"
     "strconv"
+    "strings"
 
     "coffeeApi/services/db"
     "coffeeApi/services/geocoding"
@@ -26,9 +27,49 @@ type CoffeeShop struct {
 }
 
 func GetCoffeeShopsHandler(w http.ResponseWriter, r *http.Request) {
-    rows, err := db.DB.Query(`
-        SELECT id, name, country, city, address, website, description, avg_rating, lat, lon
-        FROM shops`)
+    q := r.URL.Query()
+    name := q.Get("name")
+    country := q.Get("country")
+    city := q.Get("city")
+    address := q.Get("address")
+    website := q.Get("website")
+    
+    baseQuery := `SELECT id, name, country, city, address, website, description, avg_rating, lat, lon FROM shops`
+    conditions := []string{}
+    args := []interface{}{}
+    argIdx := 1
+
+    if name != "" {
+        conditions = append(conditions, fmt.Sprintf("name ILIKE $%d", argIdx))
+        args = append(args, "%"+name+"%")
+        argIdx++
+    }
+    if country != "" {
+        conditions = append(conditions, fmt.Sprintf("country ILIKE $%d", argIdx))
+        args = append(args, "%"+country+"%")
+        argIdx++
+    }
+    if city != "" {
+        conditions = append(conditions, fmt.Sprintf("city ILIKE $%d", argIdx))
+        args = append(args, "%"+city+"%")
+        argIdx++
+    }
+    if address != "" {
+        conditions = append(conditions, fmt.Sprintf("address ILIKE $%d", argIdx))
+        args = append(args, "%"+address+"%")
+        argIdx++
+    }
+    if website != "" {
+        conditions = append(conditions, fmt.Sprintf("website ILIKE $%d", argIdx))
+        args = append(args, "%"+website+"%")
+        argIdx++
+    }
+    
+    if len(conditions) > 0 {
+        baseQuery += " WHERE " + strings.Join(conditions, " AND ")
+    }
+
+    rows, err := db.DB.Query(baseQuery, args...)
     if err != nil {
         http.Error(w, "Database query error: "+err.Error(), http.StatusInternalServerError)
         return
@@ -72,7 +113,6 @@ func GetCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(shop)
 }
 
-
 func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     var shop CoffeeShop
     if err := json.NewDecoder(r.Body).Decode(&shop); err != nil {
@@ -84,7 +124,6 @@ func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Construct full address from address, city and country.
     fullAddress := fmt.Sprintf("%s, %s, %s", shop.Address, shop.City, shop.Country)
     lat, lon, err := geocoding.GetCoordinates(fullAddress)
     if err != nil {
@@ -93,7 +132,6 @@ func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     }
     shop.Lat = lat
     shop.Lon = lon
-
 
     err = db.DB.QueryRow(`
         INSERT INTO shops (name, country, city, address, website, description, avg_rating, lat, lon)
@@ -108,7 +146,6 @@ func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(shop)
 }
-
 
 func UpdateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
@@ -151,7 +188,6 @@ func UpdateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(shop)
 }
-
 
 func DeleteCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
