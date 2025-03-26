@@ -21,6 +21,8 @@ func main() {
     
     // API Documentation endpoint
     router.HandleFunc("/", handlers.GetApiDocumentationHandler).Methods("GET")
+    router.HandleFunc("/help", handlers.GetHtmlDocumentationHandler).Methods("GET")
+
     
     // User endpoints
     router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
