@@ -480,7 +480,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         },
     }
 
-    html := `<!DOCTYPE html>
+html := `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -909,7 +909,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         
         .endpoint-body {
             padding: 0;
-            max-height: 0;
+            max-height: none;
             overflow: hidden;
             transition: all 0.3s ease;
         }
@@ -934,9 +934,16 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
             background-color: #282c34;
             border-radius: 5px;
             padding: 15px;
-            overflow-x: auto;
+            overflow: auto; /* This enables both horizontal and vertical scrolling as needed */
             margin: 10px 0;
             position: relative;
+            max-height: none; /* Remove the max-height restriction */
+        }
+            
+        .response-body {
+            white-space: pre;
+            word-wrap: normal;
+            max-height: none; /* Remove the height restriction */
         }
         
         .try-it {
