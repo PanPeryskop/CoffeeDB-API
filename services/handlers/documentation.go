@@ -667,7 +667,6 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
             padding: 3px 6px;
             border-radius: 3px;
             font-family: monospace;
-            color: #e0e0e0;
         }
         
         .categories-nav {
