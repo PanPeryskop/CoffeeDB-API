@@ -12,7 +12,7 @@ import (
 var DB *sql.DB
 
 func Init() error {
-    // Wczytanie zmiennych środowiskowych z pliku .env
+
     if err := godotenv.Load(); err != nil {
         fmt.Println("Nie można wczytać pliku .env, korzystam ze zmiennych systemowych")
     }

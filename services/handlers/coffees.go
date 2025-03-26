@@ -25,7 +25,7 @@ type Coffee struct {
     Description  string   `json:"description"`
 }
 
-// GetCoffeesHandler retrieves all coffees from the database.
+
 func GetCoffeesHandler(w http.ResponseWriter, r *http.Request) {
     rows, err := db.DB.Query(`
         SELECT id, name, roastery_id, country, region, farm, variety, process, roast_profile, flavour_notes, description 
@@ -44,7 +44,7 @@ func GetCoffeesHandler(w http.ResponseWriter, r *http.Request) {
             http.Error(w, "Error scanning row: "+err.Error(), http.StatusInternalServerError)
             return
         }
-        // Assume flavourNotes are stored as comma-separated string.
+
         c.FlavourNotes = strings.Split(notes, ",")
         coffees = append(coffees, c)
     }
@@ -52,7 +52,7 @@ func GetCoffeesHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(coffees)
 }
 
-// GetCoffeeHandler retrieves a single coffee by id.
+
 func GetCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     coffeeID, err := strconv.Atoi(params["id"])
@@ -77,7 +77,7 @@ func GetCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(c)
 }
 
-// CreateCoffeeHandler inserts a new coffee record into the database.
+
 func CreateCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     var c Coffee
     if err := json.NewDecoder(r.Body).Decode(&c); err != nil {
@@ -88,7 +88,7 @@ func CreateCoffeeHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Missing required fields", http.StatusBadRequest)
         return
     }
-    // Convert flavour notes to comma-separated string.
+
     notes := strings.Join(c.FlavourNotes, ",")
 
     err := db.DB.QueryRow(`
@@ -104,7 +104,7 @@ func CreateCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(c)
 }
 
-// UpdateCoffeeHandler updates an existing coffee record.
+
 func UpdateCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     coffeeID, err := strconv.Atoi(params["id"])
@@ -140,7 +140,7 @@ func UpdateCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(c)
 }
 
-// DeleteCoffeeHandler deletes a coffee record from the database.
+
 func DeleteCoffeeHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     coffeeID, err := strconv.Atoi(params["id"])

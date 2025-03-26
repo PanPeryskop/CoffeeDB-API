@@ -10,7 +10,7 @@ import (
     "github.com/gorilla/mux"
 )
 
-// Review represents a review record.
+
 type Review struct {
     ID             int       `json:"id"`
     UserId         int       `json:"userId"`
@@ -22,7 +22,7 @@ type Review struct {
     DateOfCreation time.Time `json:"dateOfCreation"`
 }
 
-// allowedRating validates that the rating is exactly one of 1,2,3,4,5.
+
 func allowedRating(rating float32) bool {
     intRating := int(rating)
     if float32(intRating) != rating {
@@ -31,7 +31,7 @@ func allowedRating(rating float32) bool {
     return intRating >= 1 && intRating <= 5
 }
 
-// GetReviewsHandler retrieves reviews from the database based on optional query parameters.
+
 func GetReviewsHandler(w http.ResponseWriter, r *http.Request) {
     rows, err := db.DB.Query(`
         SELECT id, user_id, coffee_id, roastery_id, coffee_shop_id, rating, review, date_of_creation 
@@ -55,7 +55,7 @@ func GetReviewsHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(reviews)
 }
 
-// CreateReviewHandler inserts a new review record into the database.
+
 func CreateReviewHandler(w http.ResponseWriter, r *http.Request) {
     var rev Review
     if err := json.NewDecoder(r.Body).Decode(&rev); err != nil {
@@ -63,13 +63,13 @@ func CreateReviewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Validate required rating: must be one of 1,2,3,4,5.
+
     if !allowedRating(rev.Rating) {
         http.Error(w, "Rating must be an integer between 1 and 5", http.StatusBadRequest)
         return
     }
 
-    // Determine target: exactly one of CoffeeId, RoasteryId, or CoffeeShopId must be non-zero.
+
     targetCount := 0
     if rev.CoffeeId != 0 {
         targetCount++
@@ -99,8 +99,7 @@ func CreateReviewHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(rev)
 }
 
-// UpdateReviewHandler updates an existing review record.
-// It checks that the requesting user owns the review.
+
 func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     reviewID, err := strconv.Atoi(params["id"])
@@ -109,7 +108,7 @@ func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Retrieve the original review to check ownership.
+
     var orig Review
     err = db.DB.QueryRow(`
         SELECT id, user_id, coffee_id, roastery_id, coffee_shop_id, rating, review, date_of_creation 
@@ -123,7 +122,7 @@ func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Assume user id is provided in header "X-User-ID".
+
     userIDStr := r.Header.Get("X-User-ID")
     reqUserID, err := strconv.Atoi(userIDStr)
     if err != nil || reqUserID != orig.UserId {
@@ -140,7 +139,7 @@ func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Rating must be an integer between 1 and 5", http.StatusBadRequest)
         return
     }
-    // Maintain original review's user_id and date_of_creation.
+
     rev.UserId = orig.UserId
     rev.DateOfCreation = orig.DateOfCreation
 
@@ -161,8 +160,7 @@ func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(rev)
 }
 
-// DeleteReviewHandler deletes a review record from the database.
-// It checks that the requesting user is the owner or is an admin.
+
 func DeleteReviewHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     reviewID, err := strconv.Atoi(params["id"])
@@ -171,7 +169,6 @@ func DeleteReviewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Retrieve the original review to check ownership.
     var orig Review
     err = db.DB.QueryRow(`
         SELECT id, user_id FROM reviews WHERE id = $1`, reviewID).
@@ -184,7 +181,7 @@ func DeleteReviewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Assume user id is provided in header "X-User-ID".
+
     userIDStr := r.Header.Get("X-User-ID")
     reqUserID, err := strconv.Atoi(userIDStr)
     if err != nil {
@@ -192,8 +189,7 @@ func DeleteReviewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Here you would typically check if the user has admin privileges.
-    // For simplicity, we assume only the owner can delete.
+
     if reqUserID != orig.UserId {
         http.Error(w, "You can only delete your own reviews", http.StatusForbidden)
         return

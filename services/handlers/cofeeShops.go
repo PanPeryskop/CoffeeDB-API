@@ -25,7 +25,6 @@ type CoffeeShop struct {
     Lon         float64 `json:"lon"`
 }
 
-// GetCoffeeShopsHandler retrieves all coffee shops from the database.
 func GetCoffeeShopsHandler(w http.ResponseWriter, r *http.Request) {
     rows, err := db.DB.Query(`
         SELECT id, name, country, city, address, website, description, avg_rating, lat, lon
@@ -49,7 +48,6 @@ func GetCoffeeShopsHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(shops)
 }
 
-// GetCoffeeShopHandler retrieves a single coffee shop by its ID.
 func GetCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     shopID, err := strconv.Atoi(params["id"])
@@ -74,8 +72,7 @@ func GetCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(shop)
 }
 
-// CreateCoffeeShopHandler inserts a new coffee shop record into the database.
-// It automatically obtains coordinates from the external geocoding API.
+
 func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     var shop CoffeeShop
     if err := json.NewDecoder(r.Body).Decode(&shop); err != nil {
@@ -97,7 +94,7 @@ func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     shop.Lat = lat
     shop.Lon = lon
 
-    // Set starting avgRating to 0.
+
     err = db.DB.QueryRow(`
         INSERT INTO shops (name, country, city, address, website, description, avg_rating, lat, lon)
         VALUES ($1, $2, $3, $4, $5, $6, 0, $7, $8) RETURNING id`,
@@ -112,8 +109,7 @@ func CreateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(shop)
 }
 
-// UpdateCoffeeShopHandler updates an existing coffee shop record.
-// It re-geocodes the full address if related fields are modified.
+
 func UpdateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     shopID, err := strconv.Atoi(params["id"])
@@ -128,7 +124,6 @@ func UpdateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Construct full address and update geocoding information.
     fullAddress := fmt.Sprintf("%s, %s, %s", shop.Address, shop.City, shop.Country)
     lat, lon, err := geocoding.GetCoordinates(fullAddress)
     if err != nil {
@@ -157,7 +152,7 @@ func UpdateCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(shop)
 }
 
-// DeleteCoffeeShopHandler deletes a coffee shop record from the database.
+
 func DeleteCoffeeShopHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     shopID, err := strconv.Atoi(params["id"])

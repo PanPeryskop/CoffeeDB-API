@@ -24,7 +24,6 @@ type PhotonResponse struct {
     } `json:"features"`
 }
 
-// translatePolishChars replaces Polish diacritics with ASCII equivalents.
 func translatePolishChars(s string) string {
     polishToAscii := map[rune]string{
         'ą': "a", 'ć': "c", 'ę': "e", 'ł': "l", 'ń': "n", 'ó': "o", 'ś': "s", 'ź': "z", 'ż': "z",
@@ -41,7 +40,6 @@ func translatePolishChars(s string) string {
     return result.String()
 }
 
-// removeStreetPrefixes removes common street prefixes in various languages.
 func removeStreetPrefixes(address string) string {
     prefixes := []string{"ul. ", "ul.", "straße ", "str. ", "ул. ", "улица "}
     for _, prefix := range prefixes {
@@ -50,7 +48,6 @@ func removeStreetPrefixes(address string) string {
     return address
 }
 
-// getNominatimCoordinates calls Nominatim API with a given address.
 func getNominatimCoordinates(address string) (float64, float64, error) {
     encodedAddress := url.QueryEscape(address)
     requestURL := fmt.Sprintf("https://nominatim.openstreetmap.org/search?format=json&q=%s", encodedAddress)

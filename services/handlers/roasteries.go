@@ -25,7 +25,7 @@ type Roastery struct {
     Lon         float64 `json:"lon"`
 }
 
-// GetRoasteriesHandler retrieves all roasteries from the database.
+
 func GetRoasteriesHandler(w http.ResponseWriter, r *http.Request) {
     rows, err := db.DB.Query(`
         SELECT id, name, country, city, address, website, description, avg_rating, lat, lon
@@ -50,7 +50,7 @@ func GetRoasteriesHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(roasteries)
 }
 
-// GetRoasteryHandler retrieves a single roastery by its ID.
+
 func GetRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     roasteryID, err := strconv.Atoi(params["id"])
@@ -75,8 +75,7 @@ func GetRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(rastery)
 }
 
-// CreateRoasteryHandler inserts a new roastery record into the database.
-// It automatically obtains coordinates from the external geocoding API.
+
 func CreateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     var rastery Roastery
     if err := json.NewDecoder(r.Body).Decode(&rastery); err != nil {
@@ -88,7 +87,7 @@ func CreateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Construct full address from address, city, and country.
+
     fullAddress := fmt.Sprintf("%s, %s, %s", rastery.Address, rastery.City, rastery.Country)
     lat, lon, err := geocoding.GetCoordinates(fullAddress)
     if err != nil {
@@ -98,7 +97,7 @@ func CreateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     rastery.Lat = lat
     rastery.Lon = lon
 
-    // Set starting avg rating to 0.
+
     err = db.DB.QueryRow(`
         INSERT INTO roasteries (name, country, city, address, website, description, avg_rating, lat, lon)
         VALUES ($1, $2, $3, $4, $5, $6, 0, $7, $8) RETURNING id`,
@@ -113,8 +112,7 @@ func CreateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(rastery)
 }
 
-// UpdateRoasteryHandler updates an existing roastery record.
-// It re-geocodes the address if any related fields are modified.
+
 func UpdateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     roasteryID, err := strconv.Atoi(params["id"])
@@ -129,7 +127,7 @@ func UpdateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Re-geocode the full address.
+
     fullAddress := fmt.Sprintf("%s, %s, %s", rastery.Address, rastery.City, rastery.Country)
     lat, lon, err := geocoding.GetCoordinates(fullAddress)
     if err != nil {
@@ -158,7 +156,7 @@ func UpdateRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(rastery)
 }
 
-// DeleteRoasteryHandler deletes a roastery record from the database.
+
 func DeleteRoasteryHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     roasteryID, err := strconv.Atoi(params["id"])

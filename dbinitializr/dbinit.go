@@ -13,7 +13,7 @@ import (
     _ "github.com/lib/pq"
 )
 
-// createTables creates the required tables if they do not exist.
+
 func createTables() error {
     queries := []string{
         `CREATE TABLE IF NOT EXISTS users(
@@ -80,7 +80,7 @@ func createTables() error {
     return nil
 }
 
-// Data defines the structure of the seed file.
+
 type Data struct {
     Users      []User       `json:"users"`
     Coffees    []Coffee     `json:"coffees"`
@@ -178,7 +178,7 @@ func seedData(filePath string) error {
         return fmt.Errorf("error beginning transaction: %v", err)
     }
 
-    // Seed Users if empty
+
     empty, err := tableIsEmpty("SELECT COUNT(*) FROM users")
     if err != nil {
         tx.Rollback()
@@ -195,7 +195,7 @@ func seedData(filePath string) error {
         }
     }
 
-    // Seed Coffees if empty (flavourNotes stored as comma-separated string)
+
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM coffees")
     if err != nil {
         tx.Rollback()
@@ -217,7 +217,7 @@ func seedData(filePath string) error {
         }
     }
 
-    // Seed Roasteries if empty (automatically obtain coordinates if not provided)
+
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM roasteries")
     if err != nil {
         tx.Rollback()
@@ -245,7 +245,7 @@ func seedData(filePath string) error {
         }
     }
 
-    // Seed Coffee Shops if empty (with coordinates)
+
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM shops")
     if err != nil {
         tx.Rollback()
@@ -273,7 +273,7 @@ func seedData(filePath string) error {
         }
     }
 
-    // Seed Reviews if empty
+
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM reviews")
     if err != nil {
         tx.Rollback()
@@ -307,7 +307,7 @@ func main() {
         log.Fatal("Error creating tables:", err)
     }
 
-    if err := seedData("data.json"); err != nil {
+    if err := seedData("dbinitializr/data.json"); err != nil {
         log.Fatal(err)
     }
 }

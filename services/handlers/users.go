@@ -33,7 +33,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Hashujemy hasło
+
     hashed, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
     if err != nil {
         http.Error(w, "Error hashing password", http.StatusInternalServerError)
@@ -80,7 +80,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Porównujemy zahaszowane hasło
+
     if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(credentials.Passwords)); err != nil {
         http.Error(w, "Invalid credentials", http.StatusUnauthorized)
         return

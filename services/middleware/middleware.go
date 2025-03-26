@@ -13,7 +13,7 @@ import (
 
 var jwtKey = []byte("super_sekretny_klucz_kofola_5mlnZł")
 
-// AuthMiddleware validates the JWT token and sets the "X-User-ID" header.
+
 func AuthMiddleware(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         authHeader := r.Header.Get("Authorization")
@@ -51,8 +51,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
     })
 }
 
-// AdminMiddleware ensures that the authenticated user has admin privileges.
-// It queries the database for the user's role.
+
 func AdminMiddleware(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         userIDStr := r.Header.Get("X-User-ID")
