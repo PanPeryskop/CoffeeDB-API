@@ -1,0 +1,25 @@
+# Coffee API - Lista zadań
+
+## Integracja bazy danych
+- [ ] Skonfigurować połączenie z zewnętrzną bazą danych PostgreSQL
+- [ ] Stworzyć modele danych dla kawiarni i użytkowników
+- [ ] Zaimplementować podstawowe operacje CRUD
+- [ ] Dodać solidną obsługę błędów dla operacji bazodanowych
+
+## Uwierzytelnianie i bezpieczeństwo
+- [ ] Zaimplementować haszowanie haseł przy użyciu bcrypt lub Argon2
+- [ ] Przechowywać zahaszowane hasła w oddzielnej bazie danych 
+- [ ] Stworzyć przepływ uwierzytelniania JWT
+
+## Funkcje geolokalizacji
+- [ ] Zintegrować zewnętrzne API geokodowania 
+- [ ] Zaimplementować automatyczne wyodrębnianie współrzędnych z adresów kawiarni
+- [ ] Dodać buforowanie wyników geokodowania, aby uniknąć redundantnych wywołań API
+- [ ] Stworzyć mechanizm awaryjny dla nieudanych żądań geokodowania (np pole ToDo i opcja w api (fixGeo))
+
+## Ogólne ulepszenia
+- [ ] Dodać kompleksowe logowanie
+- [ ] Napisać dokumentację API
+- [ ] Skonfigurować potok CI/CD
+- [ ] Zaimplementować testy jednostkowe i integracyjne
+- [ ] Ogarną role użytkownikow
