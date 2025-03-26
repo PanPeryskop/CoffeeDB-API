@@ -662,13 +662,12 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         .auth-info p, .auth-info div {
             margin-bottom: 15px;
         }
-        
+			
         .auth-info code {
-            background-color: #f5f5f5;
             padding: 3px 6px;
             border-radius: 3px;
             font-family: monospace;
-            color: var(--primary-color);
+            color: #e0e0e0;
         }
         
         .categories-nav {
