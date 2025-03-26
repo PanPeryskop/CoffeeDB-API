@@ -42,7 +42,7 @@
       "name": "Stumptown Coffee Roasters",
       "country": "USA",
       "city": "Portland",
-      "address": "128 SW 3rd Ave, Portland, OR 97204, USA",
+      "address": "128 SW 3rd Ave",
       "website": "https://www.stumptowncoffee.com",
       "description": "Founded in 1999, known for uncompromising quality and direct trade.",
       "avgRating": 4.8
@@ -52,7 +52,7 @@
       "name": "Blue Bottle Coffee",
       "country": "USA",
       "city": "Oakland",
-      "address": "300 Webster St, Oakland, CA 94612, USA",
+      "address": "300 Webster St",
       "website": "https://bluebottlecoffee.com",
       "description": "Artisanal roastery focused on precise brewing and bean freshness.",
       "avgRating": 4.7
@@ -62,7 +62,7 @@
       "name": "Intelligentsia Coffee",
       "country": "USA",
       "city": "Chicago",
-      "address": "69 W Kinzie St, Chicago, IL 60654, USA",
+      "address": "69 W Kinzie St",
       "website": "https://www.intelligentsiacoffee.com",
       "description": "Pioneers of direct trade with an emphasis on sustainability.",
       "avgRating": 4.6
@@ -72,7 +72,7 @@
       "name": "Square Mile Coffee",
       "country": "United Kingdom",
       "city": "London",
-      "address": "124-130 St John St, London EC1M 4EB, UK",
+      "address": "124-130 St John St",
       "website": "https://www.squaremilecoffee.com",
       "description": "Award-winning London roastery known for exceptional flavor profiles.",
       "avgRating": 4.5
@@ -82,7 +82,7 @@
       "name": "La Colombe Coffee Roasters",
       "country": "USA",
       "city": "Philadelphia",
-      "address": "50 S 9th St, Philadelphia, PA 19107, USA",
+      "address": "50 S 9th St",
       "website": "https://www.lacolombe.com",
       "description": "Innovative roastery famous for its draft latte and creative blends.",
       "avgRating": 4.6
@@ -92,7 +92,7 @@
       "name": "Counter Culture Coffee",
       "country": "USA",
       "city": "Durham",
-      "address": "411 E Chapel Hill St, Durham, NC 27701, USA",
+      "address": "411 E Chapel Hill St",
       "website": "https://www.counterculturecoffee.com",
       "description": "Focused on education and transparency with a strong sustainability commitment.",
       "avgRating": 4.7
@@ -102,7 +102,7 @@
       "name": "The Coffee Collective",
       "country": "Denmark",
       "city": "Copenhagen",
-      "address": "Jægersborggade 12, 2200 Copenhagen, Denmark",
+      "address": "Jægersborggade 12",
       "website": "https://coffeecollective.dk",
       "description": "Danish roastery emphasizing direct relationships with farmers and high bean quality.",
       "avgRating": 4.8
@@ -112,7 +112,7 @@
       "name": "Tim Wendelboe",
       "country": "Norway",
       "city": "Oslo",
-      "address": "Dronning Eufemias gate 14, Oslo, Norway",
+      "address": "Dronning Eufemias gate 14",
       "website": "https://timwendelboe.no",
       "description": "Renowned roastery and café led by a barista champion, dedicated to perfect espresso.",
       "avgRating": 4.9
@@ -122,7 +122,7 @@
       "name": "George Howell Coffee",
       "country": "USA",
       "city": "Boston",
-      "address": "106 Arlington St, Boston, MA 02116, USA",
+      "address": "106 Arlington St",
       "website": "https://georgehowellcoffee.com",
       "description": "Roastery focused on high-quality, sustainably sourced beans.",
       "avgRating": 4.7
@@ -132,7 +132,7 @@
       "name": "Coffee Supreme",
       "country": "New Zealand",
       "city": "Auckland",
-      "address": "32-34 Victoria Street, Auckland CBD, Auckland 1010, New Zealand",
+      "address": "32-34 Victoria St",
       "website": "https://coffeesupreme.co.nz",
       "description": "Leading New Zealand specialty coffee provider known for bold flavors.",
       "avgRating": 4.6
@@ -142,9 +142,9 @@
       "name": "Coffeedesk",
       "country": "Poland",
       "city": "Warsaw",
-      "address": "ul. Nowy Świat 15, Warsaw, Poland",
+      "address": "ul. Nowy Świat 15",
       "website": "https://coffeedesk.com",
-      "description": "One of Poland’s top roasteries, offering a curated selection of beans from around the world.",
+      "description": "One of Poland's top roasteries, offering a curated selection of beans from around the world.",
       "avgRating": 4.8
     },
     {
@@ -152,7 +152,7 @@
       "name": "Coffee Proficiency",
       "country": "Poland",
       "city": "Krakow",
-      "address": "ul. Floriańska 15, Krakow, Poland",
+      "address": "ul. Floriańska 15",
       "website": "https://coffeeproficiency.pl",
       "description": "Artisan roastery specializing in coffees from South America with an emphasis on quality.",
       "avgRating": 4.7
@@ -162,7 +162,7 @@
       "name": "Java Polska",
       "country": "Poland",
       "city": "Gdańsk",
-      "address": "ul. Długa 20, Gdańsk, Poland",
+      "address": "ul. Długa 20",
       "website": "https://javapolska.pl",
       "description": "Modern Polish roastery combining traditional techniques with innovative roasting.",
       "avgRating": 4.6
@@ -206,7 +206,7 @@
       "process": "Espresso",
       "roastProfile": "Medium",
       "flavourNotes": ["chocolate", "caramel", "nutty"],
-      "description": "Blue Bottle’s signature blend – perfect for lattes with a balanced taste."
+      "description": "Blue Bottle's signature blend – perfect for lattes with a balanced taste."
     },
     {
       "id": 4,
@@ -258,7 +258,7 @@
       "process": "Washed",
       "roastProfile": "Light",
       "flavourNotes": ["floral", "citrus", "tea-like"],
-      "description": "A delicate single-origin coffee that highlights Ethiopia’s unique terroir."
+      "description": "A delicate single-origin coffee that highlights Ethiopia's unique terroir."
     },
     {
       "id": 8,
@@ -384,7 +384,7 @@
       "name": "Stumptown Coffee Bar",
       "country": "USA",
       "city": "Portland",
-      "address": "128 SW 3rd Ave, Portland, OR 97204, USA",
+      "address": "128 SW 3rd Ave",
       "website": "https://www.stumptowncoffee.com",
       "description": "A dynamic café offering a wide selection of specialty coffees.",
       "avgRating": 4.8
@@ -394,7 +394,7 @@
       "name": "Blue Bottle Cafe",
       "country": "USA",
       "city": "Oakland",
-      "address": "300 Webster St, Oakland, CA 94612, USA",
+      "address": "300 Webster St",
       "website": "https://bluebottlecoffee.com",
       "description": "A modern spot serving delicious coffee and fresh pastries.",
       "avgRating": 4.7
@@ -404,7 +404,7 @@
       "name": "Intelligentsia Coffee Bar",
       "country": "USA",
       "city": "Chicago",
-      "address": "69 W Kinzie St, Chicago, IL 60654, USA",
+      "address": "69 W Kinzie St",
       "website": "https://www.intelligentsiacoffee.com",
       "description": "An elegant space for coffee enthusiasts serving meticulously crafted drinks.",
       "avgRating": 4.6
@@ -414,7 +414,7 @@
       "name": "Square Mile Coffee House",
       "country": "United Kingdom",
       "city": "London",
-      "address": "124-130 St John St, London EC1M 4EB, UK",
+      "address": "124-130 St John St",
       "website": "https://www.squaremilecoffee.com",
       "description": "A unique café in London celebrated for its excellent coffee quality.",
       "avgRating": 4.5
@@ -424,7 +424,7 @@
       "name": "La Colombe Draft Latte Cafe",
       "country": "USA",
       "city": "Philadelphia",
-      "address": "50 S 9th St, Philadelphia, PA 19107, USA",
+      "address": "50 S 9th St",
       "website": "https://www.lacolombe.com",
       "description": "A café specializing in innovative draft lattes and iced coffees.",
       "avgRating": 4.6
@@ -434,7 +434,7 @@
       "name": "Counter Culture Coffee Shop",
       "country": "USA",
       "city": "Durham",
-      "address": "411 E Chapel Hill St, Durham, NC 27701, USA",
+      "address": "411 E Chapel Hill St",
       "website": "https://www.counterculturecoffee.com",
       "description": "A meeting place for coffee lovers promoting sustainably sourced beans.",
       "avgRating": 4.7
@@ -444,7 +444,7 @@
       "name": "The Coffee Collective Cafe",
       "country": "Denmark",
       "city": "Copenhagen",
-      "address": "Jægersborggade 12, 2200 Copenhagen, Denmark",
+      "address": "Jægersborggade 12",
       "website": "https://coffeecollective.dk",
       "description": "A minimalist café that emphasizes quality and ethical sourcing.",
       "avgRating": 4.8
@@ -454,7 +454,7 @@
       "name": "Tim Wendelboe Espresso Bar",
       "country": "Norway",
       "city": "Oslo",
-      "address": "Dronning Eufemias gate 14, Oslo, Norway",
+      "address": "Dronning Eufemias gate 14",
       "website": "https://timwendelboe.no",
       "description": "An intimate espresso bar where precision meets passion.",
       "avgRating": 4.9
@@ -464,7 +464,7 @@
       "name": "George Howell Coffee House",
       "country": "USA",
       "city": "Boston",
-      "address": "106 Arlington St, Boston, MA 02116, USA",
+      "address": "106 Arlington St",
       "website": "https://georgehowellcoffee.com",
       "description": "A cozy café serving a curated selection of single-origin coffees.",
       "avgRating": 4.7
@@ -474,7 +474,7 @@
       "name": "Coffee Supreme Cafe",
       "country": "New Zealand",
       "city": "Auckland",
-      "address": "32-34 Victoria Street, Auckland CBD, Auckland 1010, New Zealand",
+      "address": "32-34 Victoria St",
       "website": "https://coffeesupreme.co.nz",
       "description": "A trendy café known for its bold flavors and creative brewing.",
       "avgRating": 4.6
@@ -484,7 +484,7 @@
       "name": "Forum Specialty Coffee",
       "country": "Poland",
       "city": "Warsaw",
-      "address": "ul. Marszałkowska 10, Warsaw, Poland",
+      "address": "ul. Marszałkowska 10",
       "website": "https://forumcoffee.pl",
       "description": "A specialty coffee shop offering a wide range of carefully selected coffees.",
       "avgRating": 4.8
@@ -494,9 +494,9 @@
       "name": "Relax Cafe",
       "country": "Poland",
       "city": "Krakow",
-      "address": "ul. Floriańska 15, Krakow, Poland",
+      "address": "ul. Floriańska 15",
       "website": "https://relaxcafe.pl",
-      "description": "A cozy café in Krakow’s historic district with excellent pastries and coffee.",
+      "description": "A cozy café in Krakow's historic district with excellent pastries and coffee.",
       "avgRating": 4.7
     },
     {
@@ -504,7 +504,7 @@
       "name": "Kaffe Obscura",
       "country": "Poland",
       "city": "Wroclaw",
-      "address": "ul. Świdnicka 20, Wroclaw, Poland",
+      "address": "ul. Świdnicka 20",
       "website": "https://instagram.com/kaffe_obscura",
       "description": "An atmospheric café in the heart of Wroclaw with a rotating selection of European roasts.",
       "avgRating": 4.8
@@ -514,7 +514,7 @@
       "name": "Prosto Cafe",
       "country": "Poland",
       "city": "Poznan",
-      "address": "ul. Głogowska 28, Poznan, Poland",
+      "address": "ul. Głogowska 28",
       "website": "https://prostocafe.pl",
       "description": "A modern café known for its signature drinks and house-made pastries.",
       "avgRating": 4.7
@@ -524,7 +524,7 @@
       "name": "Kawiarnia Kofeina",
       "country": "Poland",
       "city": "Krakow",
-      "address": "ul. Grodzka 7, Krakow, Poland",
+      "address": "ul. Grodzka 7",
       "website": "https://kofeina.pl",
       "description": "A vibrant café offering expertly brewed coffee and a warm atmosphere.",
       "avgRating": 4.8
@@ -534,7 +534,7 @@
       "name": "Coffeedesk Cafe",
       "country": "Poland",
       "city": "Warsaw",
-      "address": "ul. Chmielna 26, Warsaw, Poland",
+      "address": "ul. Chmielna 26",
       "website": "https://coffeedesk.com",
       "description": "The flagship café of Coffeedesk serving specialty coffees and light bites.",
       "avgRating": 4.8
@@ -547,7 +547,7 @@
       "coffeeId": 1,
       "roasteryId": 0,
       "coffeeShopId": 0,
-      "rating": 4.8,
+      "rating": 5,
       "review": "The Hair Bender blend is complex and full of delightful surprises.",
       "dateOfCreation": "2024-05-01T10:24:31Z"
     },
@@ -557,7 +557,7 @@
       "coffeeId": 0,
       "roasteryId": 1,
       "coffeeShopId": 0,
-      "rating": 4.7,
+      "rating": 5,
       "review": "Stumptown Coffee Roasters set the benchmark for quality in the industry.",
       "dateOfCreation": "2024-05-03T14:15:00Z"
     },
@@ -567,7 +567,7 @@
       "coffeeId": 0,
       "roasteryId": 0,
       "coffeeShopId": 2,
-      "rating": 4.9,
+      "rating": 5,
       "review": "Blue Bottle Cafe offers a modern atmosphere with outstanding coffee.",
       "dateOfCreation": "2024-05-05T09:30:45Z"
     },
@@ -577,7 +577,7 @@
       "coffeeId": 3,
       "roasteryId": 0,
       "coffeeShopId": 0,
-      "rating": 4.8,
+      "rating": 5,
       "review": "Gibraltar is a perfect espresso – balanced and aromatic.",
       "dateOfCreation": "2024-05-10T16:22:12Z"
     },
@@ -587,7 +587,7 @@
       "coffeeId": 0,
       "roasteryId": 0,
       "coffeeShopId": 4,
-      "rating": 4.5,
+      "rating": 5,
       "review": "Square Mile Coffee House enchants with its ambiance and quality drinks.",
       "dateOfCreation": "2024-05-12T11:45:30Z"
     },
@@ -597,7 +597,7 @@
       "coffeeId": 7,
       "roasteryId": 0,
       "coffeeShopId": 0,
-      "rating": 4.8,
+      "rating": 5,
       "review": "The Single Origin Ethiopia from Tim Wendelboe is a true discovery.",
       "dateOfCreation": "2024-05-15T08:10:22Z"
     },
@@ -607,7 +607,7 @@
       "coffeeId": 0,
       "roasteryId": 3,
       "coffeeShopId": 0,
-      "rating": 4.9,
+      "rating": 5,
       "review": "Intelligentsia Coffee captivates with its rich aroma and flavor.",
       "dateOfCreation": "2024-05-20T17:05:45Z"
     },
@@ -617,7 +617,7 @@
       "coffeeId": 0,
       "roasteryId": 0,
       "coffeeShopId": 5,
-      "rating": 4.7,
+      "rating": 5,
       "review": "La Colombe Draft Latte Cafe serves innovative and refreshing beverages.",
       "dateOfCreation": "2024-05-25T13:40:10Z"
     },
@@ -627,7 +627,7 @@
       "coffeeId": 10,
       "roasteryId": 0,
       "coffeeShopId": 0,
-      "rating": 4.8,
+      "rating": 5,
       "review": "Ethiopia Sidamo enchants with its delicate floral and berry notes.",
       "dateOfCreation": "2024-05-28T10:30:00Z"
     },
@@ -637,7 +637,7 @@
       "coffeeId": 0,
       "roasteryId": 2,
       "coffeeShopId": 0,
-      "rating": 4.9,
+      "rating": 5,
       "review": "Blue Bottle Coffee proves that freshness is the key to great coffee.",
       "dateOfCreation": "2024-06-01T15:20:33Z"
     },
@@ -647,7 +647,7 @@
       "coffeeId": 8,
       "roasteryId": 0,
       "coffeeShopId": 0,
-      "rating": 4.8,
+      "rating": 5,
       "review": "Direct Trade Guatemala offers a smooth, rich flavor with a balanced finish.",
       "dateOfCreation": "2024-06-05T09:15:45Z"
     },
@@ -657,7 +657,7 @@
       "coffeeId": 0,
       "roasteryId": 0,
       "coffeeShopId": 7,
-      "rating": 4.7,
+      "rating": 5,
       "review": "The Coffee Collective Cafe emphasizes minimalism and quality sourcing.",
       "dateOfCreation": "2024-06-10T14:30:20Z"
     },
@@ -667,7 +667,7 @@
       "coffeeId": 13,
       "roasteryId": 0,
       "coffeeShopId": 16,
-      "rating": 4.8,
+      "rating": 5,
       "review": "Coffeedesk Signature is a perfect balance of tradition and innovation.",
       "dateOfCreation": "2024-06-15T12:00:00Z"
     },
@@ -677,7 +677,7 @@
       "coffeeId": 14,
       "roasteryId": 0,
       "coffeeShopId": 12,
-      "rating": 4.7,
+      "rating": 5,
       "review": "Proficiency Espresso boasts a bold character with a robust finish.",
       "dateOfCreation": "2024-06-20T14:45:00Z"
     },
@@ -687,7 +687,7 @@
       "coffeeId": 16,
       "roasteryId": 0,
       "coffeeShopId": 15,
-      "rating": 4.6,
+      "rating": 5,
       "review": "Java Polska Classic captures the essence of Polish coffee craftsmanship.",
       "dateOfCreation": "2024-06-25T09:30:00Z"
     }
