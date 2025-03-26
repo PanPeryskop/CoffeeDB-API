@@ -10,6 +10,8 @@ import (
 
     "github.com/golang-jwt/jwt"
     "golang.org/x/crypto/bcrypt"
+    "github.com/gorilla/mux"
+    "strconv"
 )
 
 var jwtKey = []byte("super_sekretny_klucz_kofola_5mlnZł")
@@ -98,4 +100,49 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
     json.NewEncoder(w).Encode(map[string]string{"token": tokenString})
+}
+
+// Add this function to your users.go file
+func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r)
+    userID, err := strconv.Atoi(params["id"])
+    if err != nil {
+        http.Error(w, "Invalid user ID", http.StatusBadRequest)
+        return
+    }
+    
+    // Create a response struct with only the fields you want to expose
+    type UserResponse struct {
+        ID       int    `json:"id"`
+        Username string `json:"username"`
+        Email    string `json:"email,omitempty"`
+        Role     string `json:"role,omitempty"`
+    }
+    
+    var user UserResponse
+    err = db.DB.QueryRow(`
+        SELECT id, username, email, role 
+        FROM users WHERE id = $1`, userID).
+        Scan(&user.ID, &user.Username, &user.Email, &user.Role)
+        
+    if err == sql.ErrNoRows {
+        http.Error(w, "User not found", http.StatusNotFound)
+        return
+    } else if err != nil {
+        http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+        return
+    }
+    
+    // For security, you might want to remove the email or other sensitive info for non-admin users
+    // Get the requesting user's role from the auth header
+    userRoleStr := r.Header.Get("X-User-Role")
+    if userRoleStr != "admin" {
+        // If not admin, clear email field
+        user.Email = ""
+        // Optionally hide role too
+        user.Role = ""
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(user)
 }

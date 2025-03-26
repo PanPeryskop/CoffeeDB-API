@@ -17,13 +17,10 @@
   (Implemented in services/geocoding/geocoding.go with Nominatim and Photon fallback)
 - [X] Zaimplementować automatyczne wyodrębnianie współrzędnych z adresów kawiarni  
   (Coordinates are auto-obtained in the coffees/roasteries/coffee shops handlers)
-- [ ] Dodać buforowanie wyników geokodowania, aby uniknąć redundantnych wywołań API  
-  (Not implemented yet)
 - [X] Stworzyć mechanizm awaryjny dla nieudanych żądań geokodowania  
 
 ## Ogólne ulepszenia
 - [ ] Dodać kompleksowe logowanie  
 - [ ] Napisać dokumentację API  
 - [ ] Zaimplementować testy jednostkowe i integracyjne  
-- [ ] Ogarną role użytkownikow  
-  (Some role-based checks exist in middleware, but role management could be further extended)
+- [1/2] Ogarną role użytkownikow  

@@ -11,8 +11,8 @@ import (
     "coffeeApi/services/db"
     "coffeeApi/services/geocoding"
     _ "github.com/lib/pq"
+    "golang.org/x/crypto/bcrypt"
 )
-
 
 func createTables() error {
     queries := []string{
@@ -21,7 +21,8 @@ func createTables() error {
             username TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
             email TEXT NOT NULL,
-            role TEXT NOT NULL
+            role TEXT NOT NULL,
+            avatar_url TEXT
         )`,
         `CREATE TABLE IF NOT EXISTS coffees(
             id SERIAL PRIMARY KEY,
@@ -34,7 +35,8 @@ func createTables() error {
             process TEXT,
             roast_profile TEXT,
             flavour_notes TEXT,
-            description TEXT
+            description TEXT,
+            image_url TEXT
         )`,
         `CREATE TABLE IF NOT EXISTS roasteries(
             id SERIAL PRIMARY KEY,
@@ -46,7 +48,8 @@ func createTables() error {
             description TEXT,
             avg_rating REAL,
             lat REAL,
-            lon REAL
+            lon REAL,
+            image_url TEXT
         )`,
         `CREATE TABLE IF NOT EXISTS shops(
             id SERIAL PRIMARY KEY,
@@ -58,7 +61,8 @@ func createTables() error {
             description TEXT,
             avg_rating REAL,
             lat REAL,
-            lon REAL
+            lon REAL,
+            image_url TEXT
         )`,
         `CREATE TABLE IF NOT EXISTS reviews(
             id SERIAL PRIMARY KEY,
@@ -80,7 +84,6 @@ func createTables() error {
     return nil
 }
 
-
 type Data struct {
     Users      []User       `json:"users"`
     Coffees    []Coffee     `json:"coffees"`
@@ -90,11 +93,12 @@ type Data struct {
 }
 
 type User struct {
-    ID       int    `json:"id"`
-    Username string `json:"username"`
-    Password string `json:"password"`
-    Email    string `json:"email"`
-    Role     string `json:"role"`
+    ID        int    `json:"id"`
+    Username  string `json:"username"`
+    Password  string `json:"password"`
+    Email     string `json:"email"`
+    Role      string `json:"role"`
+    AvatarURL string `json:"avatarUrl"`
 }
 
 type Coffee struct {
@@ -109,6 +113,7 @@ type Coffee struct {
     RoastProfile string   `json:"roastProfile"`
     FlavourNotes []string `json:"flavourNotes"`
     Description  string   `json:"description"`
+    ImageURL     string   `json:"imageUrl"`
 }
 
 type Roastery struct {
@@ -122,6 +127,7 @@ type Roastery struct {
     AvgRating   float32 `json:"avgRating"`
     Lat         float64 `json:"lat"`
     Lon         float64 `json:"lon"`
+    ImageURL    string  `json:"imageUrl"`
 }
 
 type CoffeeShop struct {
@@ -135,6 +141,7 @@ type CoffeeShop struct {
     AvgRating   float32 `json:"avgRating"`
     Lat         float64 `json:"lat"`
     Lon         float64 `json:"lon"`
+    ImageURL    string  `json:"imageUrl"`
 }
 
 type Review struct {
@@ -178,7 +185,6 @@ func seedData(filePath string) error {
         return fmt.Errorf("error beginning transaction: %v", err)
     }
 
-
     empty, err := tableIsEmpty("SELECT COUNT(*) FROM users")
     if err != nil {
         tx.Rollback()
@@ -186,15 +192,22 @@ func seedData(filePath string) error {
     }
     if empty {
         for _, u := range data.Users {
-            _, err := tx.Exec(`INSERT INTO users (id, username, password, email, role) VALUES ($1, $2, $3, $4, $5)`,
-                u.ID, u.Username, u.Password, u.Email, u.Role)
+            // Hash the password before storing
+            hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+            if err != nil {
+                tx.Rollback()
+                return fmt.Errorf("error hashing password for user %v: %v", u.Username, err)
+            }
+            
+            _, err = tx.Exec(`INSERT INTO users (id, username, password, email, role, avatar_url) 
+                              VALUES ($1, $2, $3, $4, $5, $6)`,
+                u.ID, u.Username, string(hashedPassword), u.Email, u.Role, u.AvatarURL)
             if err != nil {
                 tx.Rollback()
                 return fmt.Errorf("error inserting user %v: %v", u.Username, err)
             }
         }
     }
-
 
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM coffees")
     if err != nil {
@@ -207,16 +220,17 @@ func seedData(filePath string) error {
             if len(c.FlavourNotes) > 0 {
                 notes = strings.Join(c.FlavourNotes, ",")
             }
-            _, err := tx.Exec(`INSERT INTO coffees (id, name, roastery_id, country, region, farm, variety, process, roast_profile, flavour_notes, description)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-                c.ID, c.Name, c.RoasteryId, c.Country, c.Region, c.Farm, c.Variety, c.Process, c.RoastProfile, notes, c.Description)
+            _, err := tx.Exec(`INSERT INTO coffees (id, name, roastery_id, country, region, farm, variety, process, 
+                              roast_profile, flavour_notes, description, image_url)
+                              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+                c.ID, c.Name, c.RoasteryId, c.Country, c.Region, c.Farm, c.Variety, c.Process, 
+                c.RoastProfile, notes, c.Description, c.ImageURL)
             if err != nil {
                 tx.Rollback()
                 return fmt.Errorf("error inserting coffee %v: %v", c.Name, err)
             }
         }
     }
-
 
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM roasteries")
     if err != nil {
@@ -235,16 +249,17 @@ func seedData(filePath string) error {
                     r.Lon = lon
                 }
             }
-            _, err := tx.Exec(`INSERT INTO roasteries (id, name, country, city, address, website, description, avg_rating, lat, lon)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-                r.ID, r.Name, r.Country, r.City, r.Address, r.Website, r.Description, r.AvgRating, r.Lat, r.Lon)
+            _, err := tx.Exec(`INSERT INTO roasteries (id, name, country, city, address, website, description, 
+                              avg_rating, lat, lon, image_url)
+                              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+                r.ID, r.Name, r.Country, r.City, r.Address, r.Website, r.Description, 
+                r.AvgRating, r.Lat, r.Lon, r.ImageURL)
             if err != nil {
                 tx.Rollback()
                 return fmt.Errorf("error inserting roastery %v: %v", r.Name, err)
             }
         }
     }
-
 
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM shops")
     if err != nil {
@@ -263,16 +278,17 @@ func seedData(filePath string) error {
                     s.Lon = lon
                 }
             }
-            _, err := tx.Exec(`INSERT INTO shops (id, name, country, city, address, website, description, avg_rating, lat, lon)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-                s.ID, s.Name, s.Country, s.City, s.Address, s.Website, s.Description, s.AvgRating, s.Lat, s.Lon)
+            _, err := tx.Exec(`INSERT INTO shops (id, name, country, city, address, website, description, 
+                              avg_rating, lat, lon, image_url)
+                              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+                s.ID, s.Name, s.Country, s.City, s.Address, s.Website, s.Description, 
+                s.AvgRating, s.Lat, s.Lon, s.ImageURL)
             if err != nil {
                 tx.Rollback()
                 return fmt.Errorf("error inserting shop %v: %v", s.Name, err)
             }
         }
     }
-
 
     empty, err = tableIsEmpty("SELECT COUNT(*) FROM reviews")
     if err != nil {
@@ -281,9 +297,11 @@ func seedData(filePath string) error {
     }
     if empty {
         for _, rev := range data.Reviews {
-            _, err := tx.Exec(`INSERT INTO reviews (id, user_id, coffee_id, roastery_id, coffee_shop_id, rating, review, date_of_creation)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-                rev.ID, rev.UserId, rev.CoffeeId, rev.RoasteryId, rev.CoffeeShopId, rev.Rating, rev.Review, rev.DateOfCreation)
+            _, err := tx.Exec(`INSERT INTO reviews (id, user_id, coffee_id, roastery_id, coffee_shop_id, 
+                              rating, review, date_of_creation)
+                              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+                rev.ID, rev.UserId, rev.CoffeeId, rev.RoasteryId, rev.CoffeeShopId, 
+                rev.Rating, rev.Review, rev.DateOfCreation)
             if err != nil {
                 tx.Rollback()
                 return fmt.Errorf("error inserting review id %v: %v", rev.ID, err)

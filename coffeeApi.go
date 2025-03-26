@@ -24,6 +24,7 @@ func main() {
     // User endpoints
     router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
     router.HandleFunc("/login", handlers.LoginHandler).Methods("POST")
+    router.HandleFunc("/users/{id}", handlers.GetUserByIdHandler).Methods("GET")
 
     // Coffee endpoints
     router.HandleFunc("/coffees", handlers.GetCoffeesHandler).Methods("GET")
