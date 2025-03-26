@@ -311,8 +311,8 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
                     Description: "Login and get JWT token",
                     Auth:        false,
                     PayloadExample: map[string]interface{}{
-                        "username": "coffeeuser",
-                        "password": "strongpassword",
+                        "username": "coffeegeek",
+                        "password": "kawa123",
                     },
                     ResponseExample: map[string]string{
                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
