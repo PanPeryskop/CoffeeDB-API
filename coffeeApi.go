@@ -1,26 +1,27 @@
 package main
 
 import (
-	// "encoding/json"
-	"fmt"
-	"net/http"
-	// "os"
-	// "strconv"
-	// "strings"
-	// "time"
-	"log"
-	"coffeeApi/services/db"
-	"coffeeApi/services/handlers"
+    "fmt"
+    "log"
+    "net/http"
+    
+    "coffeeApi/services/db"
+    "coffeeApi/services/handlers"
     "coffeeApi/services/middleware"
-	// "github.com/golang-jwt/jwt"
-	"github.com/gorilla/mux"
+    
+    "github.com/gorilla/mux"
 )
 
 func main() {
     if err := db.Init(); err != nil {
         log.Fatal("Błąd połączenia z bazą:", err)
     }
+    
     router := mux.NewRouter()
+    
+    // API Documentation endpoint
+    router.HandleFunc("/", handlers.GetApiDocumentationHandler).Methods("GET")
+    
     // User endpoints
     router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
     router.HandleFunc("/login", handlers.LoginHandler).Methods("POST")
@@ -47,15 +48,22 @@ func main() {
     router.Handle("/roasteries/{id}", middleware.AuthMiddleware(http.HandlerFunc(handlers.UpdateRoasteryHandler))).Methods("PUT")
     router.Handle("/roasteries/{id}", middleware.AuthMiddleware(middleware.AdminMiddleware(http.HandlerFunc(handlers.DeleteRoasteryHandler)))).Methods("DELETE")
 
-    // Reviews endpoints
     router.HandleFunc("/reviews", handlers.GetReviewsHandler).Methods("GET")
     router.Handle("/reviews", middleware.AuthMiddleware(http.HandlerFunc(handlers.CreateReviewHandler))).Methods("POST")
     router.Handle("/reviews/{id}", middleware.AuthMiddleware(http.HandlerFunc(handlers.UpdateReviewHandler))).Methods("PUT")
     router.Handle("/reviews/{id}", middleware.AuthMiddleware(http.HandlerFunc(handlers.DeleteReviewHandler))).Methods("DELETE")
 
+    router.Use(middleware.CORSMiddleware)
+
     port := ":40331"
-    fmt.Printf("Serwer uruchomiony na porcie %s\n", port)
-    if err := http.ListenAndServe(port, router); err != nil {
+    server := &http.Server{
+        Addr:    port,
+        Handler: router,
+    }
+
+    fmt.Printf("Coffee API uruchomione na porcie %s\n", port)
+    fmt.Println("Dokumentacja API dostępna pod adresem: http://localhost" + port)
+    if err := server.ListenAndServe(); err != nil {
         log.Fatal("Błąd podczas uruchamiania serwera:", err)
     }
-} 
+}
