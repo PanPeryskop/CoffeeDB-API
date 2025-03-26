@@ -1034,11 +1034,364 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         .status.error { background-color: #e74c3c; color: white; }
         
         footer {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #1c140f, #0c0805);
             color: white;
             text-align: center;
-            padding: 30px 0;
-            margin-top: 50px;
+            padding: 60px 0 40px;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.4);
+            perspective: 1000px;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C6F48' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.15;
+            animation: pulse-bg 8s infinite alternate;
+        }
+        
+        @keyframes pulse-bg {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.2; }
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            transform: translateY(-95%);
+            filter: drop-shadow(0 -5px 5px rgba(0,0,0,0.1));
+        }
+        
+        .wave {
+            position: absolute;
+            height: 60px;
+            width: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%231c140f'%3E%3C/path%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%231c140f'%3E%3C/path%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%231c140f'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+            background-size: cover;
+            animation: wave 15s linear infinite;
+        }
+        
+        .wave:nth-child(1) {
+            z-index: 3;
+            opacity: 0.7;
+            animation: wave-move1 12s linear infinite;
+        }
+        
+        .wave:nth-child(2) {
+            z-index: 2;
+            opacity: 0.5;
+            animation: wave-move2 18s linear infinite;
+            bottom: 10px;
+        }
+        
+        .wave:nth-child(3) {
+            z-index: 1;
+            opacity: 0.3;
+            animation: wave-move3 24s linear infinite;
+            bottom: 15px;
+        }
+        
+        @keyframes wave-move1 {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1200px; }
+        }
+        
+        @keyframes wave-move2 {
+            0% { background-position-x: 0; }
+            100% { background-position-x: -1200px; }
+        }
+        
+        @keyframes wave-move3 {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1500px; }
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 5;
+            transform-style: preserve-3d;
+        }
+        
+        .footer-beans {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+        
+        .footer-bean {
+            position: absolute;
+            background: radial-gradient(ellipse at center, rgba(156, 111, 72, 0.2) 0%, rgba(156, 111, 72, 0) 70%);
+            border-radius: 50%;
+            transform: translateZ(0) rotateX(45deg) scale(0);
+            animation: float-beans 20s infinite ease-out;
+            bottom: 0;
+            filter: blur(1px);
+        }
+        
+        @keyframes float-beans {
+            0% {
+                transform: translateY(20px) translateZ(0) rotateX(45deg) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.8;
+                transform: translateY(15px) translateZ(20px) rotateX(45deg) scale(1) rotate(45deg);
+            }
+            90% {
+                opacity: 0.3;
+                transform: translateY(-140px) translateZ(100px) rotateX(45deg) scale(0.7) rotate(300deg);
+            }
+            100% {
+                transform: translateY(-150px) translateZ(0) rotateX(45deg) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .coffee-trails {
+            position: absolute;
+            width: 100%;
+            height: 70%;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            perspective: 500px;
+        }
+        
+        .coffee-trail {
+            position: absolute;
+            bottom: -50px;
+            width: 2px;
+            background: linear-gradient(to bottom, rgba(212, 165, 116, 0), rgba(212, 165, 116, 0.5) 50%, rgba(212, 165, 116, 0));
+            animation: rise-trail 6s ease-in-out infinite;
+            opacity: 0;
+            transform-style: preserve-3d;
+            transform-origin: bottom center;
+        }
+        
+        @keyframes rise-trail {
+            0% {
+                height: 0;
+                opacity: 0;
+                transform: translateZ(0) rotateY(0deg);
+                filter: blur(0);
+            }
+            20% {
+                opacity: 0.9;
+                transform: translateZ(20px) rotateY(15deg);
+                filter: blur(1px);
+            }
+            80% {
+                opacity: 0.4;
+                transform: translateZ(50px) rotateY(-15deg);
+                filter: blur(2px);
+            }
+            100% {
+                height: 100%;
+                opacity: 0;
+                transform: translateZ(0) rotateY(0deg);
+                filter: blur(0);
+            }
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+            animation: float-logo 6s ease-in-out infinite;
+        }
+        
+        @keyframes float-logo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .footer-logo i {
+            font-size: 2.5rem;
+            color: #d4a574;
+            display: inline-block;
+            animation: glow-logo 4s infinite alternate;
+        }
+        
+        @keyframes glow-logo {
+            0% { 
+                color: #d4a574;
+                text-shadow: 0 0 5px rgba(212, 165, 116, 0.3);
+                transform: scale(1);
+            }
+            100% { 
+                color: #e8c496; 
+                text-shadow: 0 0 20px rgba(212, 165, 116, 0.8), 0 0 30px rgba(212, 165, 116, 0.4);
+                transform: scale(1.1);
+            }
+        }
+        
+        .footer-content h3 {
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #d4a574, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            animation: shimmer 10s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .footer-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0), rgba(212, 165, 116, 0.8), rgba(255,255,255,0));
+            animation: width-pulse 4s infinite alternate;
+        }
+        
+        @keyframes width-pulse {
+            0% { width: 30%; opacity: 0.5; }
+            100% { width: 70%; opacity: 1; }
+        }
+        
+        .footer-content p {
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+            transform: translateZ(10px);
+        }
+        
+        .footer-social {
+            margin-top: 30px;
+            position: relative;
+            z-index: 5;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 12px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: visible;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: social-float 6s infinite ease-in-out;
+            animation-delay: calc(var(--i) * 0.2s);
+            z-index: 10;
+            will-change: transform;
+            transform-origin: center center;
+        }
+        
+        .social-icon:hover {
+            background: linear-gradient(135deg, #d4a574, #b87333);
+            transform: translateZ(80px) scale(1.4) rotate(8deg);
+            box-shadow: 0 20px 40px rgba(212, 165, 116, 0.6), 0 0 30px rgba(212, 165, 116, 0.4);
+            z-index: 20;
+        }
+        
+        .social-icon i {
+            position: relative;
+            z-index: 22;
+            transform: translateZ(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .social-icon:hover i {
+            color: white;
+            transform: translateZ(30px) scale(1.3);
+            text-shadow: 0 0 15px rgba(255,255,255,0.7);
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            width: 160%;
+            height: 160%;
+            top: -30%;
+            left: -30%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s;
+            z-index: 21;
+            pointer-events: none;
+        }
+        
+        .social-icon:hover::before {
+            transform: scale(1);
+            opacity: 1;
+            animation: social-pulse 1.5s infinite;
+        }
+        
+        @keyframes social-pulse {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            color: rgb(255, 255, 255);
+            font-size: 0.9rem;
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: transparent;
+            backdrop-filter: blur(5px);
+            transform: translateZ(5px);
+        }
+        
+        .copyright::before,
+        .copyright::after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            width: 70px;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.5), transparent);
+            top: 50%;
+            animation: width-pulse 4s infinite alternate-reverse;
+        }
+        
+        .copyright::before {
+            left: -90px;
+        }
+        
+        .copyright::after {
+            right: -90px;
         }
         
         .scroll-top {
@@ -1331,226 +1684,274 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         </div>`
     }
     
-    html += `</section>
-    </main>
-    
-    <div class="scroll-top" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-    
-    <footer>
-        <div class="container">
-            <p>` + doc.Name + ` &copy; 2023 | Version ` + doc.Version + `</p>
+	html += `</section>
+	</main>
+	
+	<div class="scroll-top" onclick="scrollToTop()">
+		<i class="fas fa-arrow-up"></i>
+	</div>
+	
+	    <footer>
+        <div class="footer-wave">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        
+        <div class="footer-beans">
+            <div class="footer-bean" style="left: 5%; width: 60px; height: 60px; animation-duration: 15s;"></div>
+            <div class="footer-bean" style="left: 15%; width: 40px; height: 40px; animation-duration: 18s; animation-delay: 1s;"></div>
+            <div class="footer-bean" style="left: 30%; width: 70px; height: 70px; animation-duration: 12s; animation-delay: 2s;"></div>
+            <div class="footer-bean" style="left: 50%; width: 50px; height: 50px; animation-duration: 16s; animation-delay: 0.5s;"></div>
+            <div class="footer-bean" style="left: 65%; width: 45px; height: 45px; animation-duration: 14s; animation-delay: 1.5s;"></div>
+            <div class="footer-bean" style="left: 80%; width: 55px; height: 55px; animation-duration: 17s; animation-delay: 2.5s;"></div>
+            <div class="footer-bean" style="left: 92%; width: 60px; height: 60px; animation-duration: 13s; animation-delay: 1s;"></div>
+        </div>
+        
+        <div class="coffee-trails">
+            <div class="coffee-trail" style="left: 10%; animation-delay: 0.2s;"></div>
+            <div class="coffee-trail" style="left: 25%; animation-delay: 2.1s;"></div>
+            <div class="coffee-trail" style="left: 40%; animation-delay: 0.5s;"></div>
+            <div class="coffee-trail" style="left: 55%; animation-delay: 1.8s;"></div>
+            <div class="coffee-trail" style="left: 70%; animation-delay: 1.2s;"></div>
+            <div class="coffee-trail" style="left: 85%; animation-delay: 0.8s;"></div>
+            <div class="coffee-trail" style="left: 18%; animation-delay: 1.4s;"></div>
+            <div class="coffee-trail" style="left: 33%; animation-delay: 2.7s;"></div>
+            <div class="coffee-trail" style="left: 48%; animation-delay: 0.9s;"></div>
+            <div class="coffee-trail" style="left: 63%; animation-delay: 2.3s;"></div>
+            <div class="coffee-trail" style="left: 78%; animation-delay: 1.6s;"></div>
+            <div class="coffee-trail" style="left: 93%; animation-delay: 3.0s;"></div>
+        </div>
+        
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-mug-hot"></i>
+            </div>
+            
+            <h3>CoffeeDB API</h3>
+            
+            <p>The ultimate RESTful API for coffee enthusiasts and professionals. Access data on coffees, roasteries, shops and more.</p>
+            
+            <div class="footer-social">
+                <a href="https://github.com/PanPeryskop" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/_peryskop/" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/stanislaw-gadek/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:st.gadek@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 CoffeeDB API | Version ` + doc.Version + `
+            </div>
         </div>
     </footer>
-    
-    <script>
-        // Syntax highlighting
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightBlock(block);
-            });
-            
-            // Show scroll to top button when scrolled down
-            window.addEventListener('scroll', () => {
-                const scrollBtn = document.querySelector('.scroll-top');
-                if (window.pageYOffset > 300) {
-                    scrollBtn.classList.add('show');
-                } else {
-                    scrollBtn.classList.remove('show');
-                }
-            });
-        });
-        
-        // Toggle endpoint details
-        function toggleEndpoint(element) {
-            const body = element.nextElementSibling;
-            body.classList.toggle('active');
-        }
-        
-        // Filter categories
-        function filterCategory(category) {
-            const buttons = document.querySelectorAll('.category-btn');
-            const categories = document.querySelectorAll('.category');
-            
-            // Update active button
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase() === category.toLowerCase() || 
-                   (category === 'all' && btn.textContent.toLowerCase() === 'all')) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Show/hide categories
-            if (category === 'all') {
-                categories.forEach(cat => {
-                    cat.style.display = 'block';
-                });
-            } else {
-                categories.forEach(cat => {
-                    if (cat.dataset.category === category) {
-                        cat.style.display = 'block';
-                    } else {
-                        cat.style.display = 'none';
-                    }
-                });
-            }
-        }
-        
-        // Copy to clipboard
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent.trim();
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const button = element.querySelector('.copy-btn');
-                const originalText = button.textContent;
-                button.textContent = 'Copied!';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                }, 2000);
-            });
-        }
-        
-        // Toggle auth input visibility
-        function toggleAuthInput(checkbox) {
-            const authInput = checkbox.parentElement.nextElementSibling;
-            authInput.style.display = checkbox.checked ? 'block' : 'none';
-        }
-        
-        // Execute API request
-        function executeRequest(button, method) {
-            const endpointBody = button.closest('.endpoint-body');
-            const pathInput = endpointBody.querySelector('.path-input');
-            const responseContainer = endpointBody.querySelector('.response-container');
-            const responseStatus = responseContainer.querySelector('.status');
-            const responseTime = responseContainer.querySelector('.time');
-            const responseBody = responseContainer.querySelector('.response-body');
-            
-            // Get path (replace parameters if needed)
-            let path = pathInput.value;
-            if (!path.startsWith('/')) {
-                path = '/' + path;
-            }
-            
-            // Create request options
-            const options = {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
-            
-            // Add auth token if provided
-            const tokenCheckbox = endpointBody.querySelector('.auth-toggle input[type="checkbox"]');
-            if (tokenCheckbox && tokenCheckbox.checked) {
-                const tokenInput = endpointBody.querySelector('.token-input');
-                if (tokenInput.value.trim()) {
-                    options.headers['Authentication'] = 'Bearer ' + tokenInput.value.trim();
-                }
-            }
-            
-            // Add request body for POST/PUT
-            if (method === 'POST' || method === 'PUT') {
-                const bodyInput = endpointBody.querySelector('.body-input');
-                if (bodyInput && bodyInput.value.trim()) {
-                    try {
-                        options.body = JSON.parse(bodyInput.value);
-                        options.body = JSON.stringify(options.body);
-                    } catch (e) {
-                        alert('Invalid JSON in request body');
-                        return;
-                    }
-                }
-            }
-            
-            // Show loading state
-            button.innerHTML = '<div class="loading"></div> Loading...';
-            button.disabled = true;
-            
-            // Execute the request
-            const startTime = new Date();
-            
-            fetch('` + doc.BaseURL + `' + path, options)
-                .then(response => {
-                    const endTime = new Date();
-                    const duration = endTime - startTime;
-                    
-                    // Update status
-                    responseStatus.textContent = response.status + ' ' + response.statusText;
-                    responseStatus.className = 'status';
-                    responseStatus.classList.add(response.ok ? 'success' : 'error');
-                    
-                    // Update time
-                    responseTime.textContent = '(' + duration + 'ms)';
-                    
-                    return response.text();
-                })
-                .then(text => {
-                    // Try to parse as JSON
-                    try {
-                        const json = JSON.parse(text);
-                        responseBody.textContent = JSON.stringify(json, null, 2);
-                    } catch (e) {
-                        // Not JSON, show as is
-                        responseBody.textContent = text;
-                    }
-                    
-                    // Highlight response
-                    hljs.highlightBlock(responseBody);
-                    
-                    // Show response
-                    responseContainer.classList.add('show');
-                })
-                .catch(error => {
-                    responseStatus.textContent = 'Error';
-                    responseStatus.className = 'status error';
-                    responseBody.textContent = error.message;
-                    responseContainer.classList.add('show');
-                })
-                .finally(() => {
-                    // Reset button
-                    button.innerHTML = '<i class="fas fa-paper-plane"></i> Execute Request';
-                    button.disabled = false;
-                });
-        }
-        
-        // Scroll to top
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-        
-        // Toggle dark/light theme
-        function toggleTheme() {
-            const body = document.body;
-            const themeIcon = document.querySelector('.theme-toggle i');
-            
-            body.classList.toggle('dark-theme');
-            
-            if (body.classList.contains('dark-theme')) {
-                themeIcon.className = 'fas fa-sun';
-            } else {
-                themeIcon.className = 'fas fa-moon';
-            }
-            
-            // Store preference
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-        }
-        
-        // Apply saved theme preference
-        (() => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-theme');
-                document.querySelector('.theme-toggle i').className = 'fas fa-sun';
-            }
-        })();
-    </script>
+	
+	<script>
+		// Syntax highlighting
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelectorAll('pre code').forEach((block) => {
+				hljs.highlightBlock(block);
+			});
+			
+			// Show scroll to top button when scrolled down
+			window.addEventListener('scroll', () => {
+				const scrollBtn = document.querySelector('.scroll-top');
+				if (window.pageYOffset > 300) {
+					scrollBtn.classList.add('show');
+				} else {
+					scrollBtn.classList.remove('show');
+				}
+			});
+		});
+		
+		// Toggle endpoint details
+		function toggleEndpoint(element) {
+			const body = element.nextElementSibling;
+			body.classList.toggle('active');
+		}
+		
+		// Filter categories
+		function filterCategory(category) {
+			const buttons = document.querySelectorAll('.category-btn');
+			const categories = document.querySelectorAll('.category');
+			
+			// Update active button
+			buttons.forEach(btn => {
+				btn.classList.remove('active');
+				if (btn.textContent.toLowerCase() === category.toLowerCase() || 
+				   (category === 'all' && btn.textContent.toLowerCase() === 'all')) {
+					btn.classList.add('active');
+				}
+			});
+			
+			// Show/hide categories
+			if (category === 'all') {
+				categories.forEach(cat => {
+					cat.style.display = 'block';
+				});
+			} else {
+				categories.forEach(cat => {
+					if (cat.dataset.category === category) {
+						cat.style.display = 'block';
+					} else {
+						cat.style.display = 'none';
+					}
+				});
+			}
+		}
+		
+		// Copy to clipboard
+		function copyToClipboard(elementId) {
+			const element = document.getElementById(elementId);
+			const text = element.textContent.trim();
+			
+			navigator.clipboard.writeText(text).then(() => {
+				const button = element.querySelector('.copy-btn');
+				const originalText = button.textContent;
+				button.textContent = 'Copied!';
+				
+				setTimeout(() => {
+					button.textContent = originalText;
+				}, 2000);
+			});
+		}
+		
+		// Toggle auth input visibility
+		function toggleAuthInput(checkbox) {
+			const authInput = checkbox.parentElement.nextElementSibling;
+			authInput.style.display = checkbox.checked ? 'block' : 'none';
+		}
+		
+		// Execute API request
+		function executeRequest(button, method) {
+			const endpointBody = button.closest('.endpoint-body');
+			const pathInput = endpointBody.querySelector('.path-input');
+			const responseContainer = endpointBody.querySelector('.response-container');
+			const responseStatus = responseContainer.querySelector('.status');
+			const responseTime = responseContainer.querySelector('.time');
+			const responseBody = responseContainer.querySelector('.response-body');
+			
+			// Get path (replace parameters if needed)
+			let path = pathInput.value;
+			if (!path.startsWith('/')) {
+				path = '/' + path;
+			}
+			
+			// Create request options
+			const options = {
+				method: method,
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			};
+			
+			// Add auth token if provided
+			const tokenCheckbox = endpointBody.querySelector('.auth-toggle input[type="checkbox"]');
+			if (tokenCheckbox && tokenCheckbox.checked) {
+				const tokenInput = endpointBody.querySelector('.token-input');
+				if (tokenInput.value.trim()) {
+					options.headers['Authentication'] = 'Bearer ' + tokenInput.value.trim();
+				}
+			}
+			
+			// Add request body for POST/PUT
+			if (method === 'POST' || method === 'PUT') {
+				const bodyInput = endpointBody.querySelector('.body-input');
+				if (bodyInput && bodyInput.value.trim()) {
+					try {
+						options.body = JSON.parse(bodyInput.value);
+						options.body = JSON.stringify(options.body);
+					} catch (e) {
+						alert('Invalid JSON in request body');
+						return;
+					}
+				}
+			}
+			
+			// Show loading state
+			button.innerHTML = '<div class="loading"></div> Loading...';
+			button.disabled = true;
+			
+			// Execute the request
+			const startTime = new Date();
+			
+			fetch('` + doc.BaseURL + `' + path, options)
+				.then(response => {
+					const endTime = new Date();
+					const duration = endTime - startTime;
+					
+					// Update status
+					responseStatus.textContent = response.status + ' ' + response.statusText;
+					responseStatus.className = 'status';
+					responseStatus.classList.add(response.ok ? 'success' : 'error');
+					
+					// Update time
+					responseTime.textContent = '(' + duration + 'ms)';
+					
+					return response.text();
+				})
+				.then(text => {
+					// Try to parse as JSON
+					try {
+						const json = JSON.parse(text);
+						responseBody.textContent = JSON.stringify(json, null, 2);
+					} catch (e) {
+						// Not JSON, show as is
+						responseBody.textContent = text;
+					}
+					
+					// Highlight response
+					hljs.highlightBlock(responseBody);
+					
+					// Show response
+					responseContainer.classList.add('show');
+				})
+				.catch(error => {
+					responseStatus.textContent = 'Error';
+					responseStatus.className = 'status error';
+					responseBody.textContent = error.message;
+					responseContainer.classList.add('show');
+				})
+				.finally(() => {
+					// Reset button
+					button.innerHTML = '<i class="fas fa-paper-plane"></i> Execute Request';
+					button.disabled = false;
+				});
+		}
+		
+		// Scroll to top
+		function scrollToTop() {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		}
+		
+		// Toggle dark/light theme
+		function toggleTheme() {
+			const body = document.body;
+			const themeIcon = document.querySelector('.theme-toggle i');
+			
+			body.classList.toggle('dark-theme');
+			
+			if (body.classList.contains('dark-theme')) {
+				themeIcon.className = 'fas fa-sun';
+			} else {
+				themeIcon.className = 'fas fa-moon';
+			}
+			
+			// Store preference
+			localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+		}
+		
+		// Apply saved theme preference
+		(() => {
+			const savedTheme = localStorage.getItem('theme');
+			if (savedTheme === 'dark') {
+				document.body.classList.add('dark-theme');
+				document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+			}
+		})();
+	</script>
 </body>
 </html>`
 
