@@ -64,7 +64,7 @@ REST API zbudowane w Go do zarządzania danymi dotyczącymi kawy, w tym danymi k
 
 ## Narzędzia i Zależności
 
-- Go 1.24.1  
+- Go
 - PostgreSQL  
 - Gorilla Mux
 - JWT
