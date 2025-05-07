@@ -20,7 +20,7 @@
 - [X] Stworzyć mechanizm awaryjny dla nieudanych żądań geokodowania  
 
 ## Ogólne ulepszenia
-- [ ] Dodać kompleksowe logowanie  
-- [ ] Napisać dokumentację API  
+- [X] Ogarnąć logowanie
+- [X] Napisać dokumentację API  
 - [ ] Zaimplementować testy jednostkowe i integracyjne  
 - [1/2] Ogarną role użytkownikow  
