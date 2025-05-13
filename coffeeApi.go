@@ -67,9 +67,9 @@ func main() {
         Handler: router,
     }
 
-    fmt.Printf("Coffee API uruchomione na porcie %s\n", port)
-    fmt.Println("Dokumentacja API dostępna pod adresem: http://localhost" + port + "/help")
+    fmt.Printf("Running on port %s\n", port)
+    fmt.Println("Dokumentacja: http://localhost" + port + "/help")
     if err := server.ListenAndServe(); err != nil {
-        log.Fatal("Błąd podczas uruchamiania serwera:", err)
+        log.Fatal("Błąd podczas uruchamiania:", err)
     }
 }
