@@ -9,9 +9,12 @@ import (
 
     "coffeeApi/services/db"
     "github.com/golang-jwt/jwt"
+    "os"
 )
 
-var jwtKey = []byte("super_sekretny_klucz_kofola_5mlnZł")
+var rawKey = os.Getenv("JWT_SECRET_KEY")
+
+var jwtKey = []byte(rawKey)
 
 
 func AuthMiddleware(next http.Handler) http.Handler {

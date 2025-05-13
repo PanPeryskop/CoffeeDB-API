@@ -12,9 +12,13 @@ import (
     "golang.org/x/crypto/bcrypt"
     "github.com/gorilla/mux"
     "strconv"
+    "os"
+    
 )
 
-var jwtKey = []byte("super_sekretny_klucz_kofola_5mlnZł")
+var rawKey = os.Getenv("JWT_SECRET_KEY")
+
+var jwtKey = []byte(rawKey)
 
 type User struct {
     ID       int    `json:"id"`
