@@ -71,7 +71,6 @@ func GetReviewsHandler(w http.ResponseWriter, r *http.Request) {
     shopCountry := q.Get("shopCountry")
     shopCity := q.Get("shopCity")
     
-    // Always join these tables to get names
     baseQuery := `
         SELECT r.id, r.user_id, r.coffee_id, r.roastery_id, r.coffee_shop_id, r.rating, r.review, r.date_of_creation,
                u.username AS user_name,
@@ -348,8 +347,48 @@ func CreateReviewHandler(w http.ResponseWriter, r *http.Request) {
 
     updateAverageRating(rev.CoffeeId, rev.RoasteryId, rev.CoffeeShopId)
 
-    // Return detailed review data
-    GetReviewHandler(w, r)
+    var userName, coffeeName, roasteryName, shopName sql.NullString
+    
+    err = db.DB.QueryRow(`
+        SELECT r.id, r.user_id, r.coffee_id, r.roastery_id, r.coffee_shop_id, r.rating, r.review, r.date_of_creation,
+               u.username AS user_name,
+               c.name AS coffee_name,
+               ro.name AS roastery_name,
+               s.name AS shop_name
+        FROM reviews r
+        LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN coffees c ON r.coffee_id = c.id
+        LEFT JOIN roasteries ro ON r.roastery_id = ro.id
+        LEFT JOIN shops s ON r.coffee_shop_id = s.id
+        WHERE r.id = $1`, rev.ID).
+        Scan(&rev.ID, &rev.UserId, &rev.CoffeeId, &rev.RoasteryId, &rev.CoffeeShopId, 
+             &rev.Rating, &rev.Review, &rev.DateOfCreation,
+             &userName, &coffeeName, &roasteryName, &shopName)
+             
+    if err != nil {
+        http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+        return
+    }
+    
+    response := ReviewResponse{
+        ID:             rev.ID,
+        UserId:         rev.UserId,
+        UserName:       nullStringValue(userName, "Anonymous User"),
+        CoffeeId:       rev.CoffeeId,
+        CoffeeName:     nullStringValue(coffeeName, ""),
+        RoasteryId:     rev.RoasteryId,
+        RoasteryName:   nullStringValue(roasteryName, ""),
+        CoffeeShopId:   rev.CoffeeShopId,
+        CoffeeShopName: nullStringValue(shopName, ""),
+        Rating:         rev.Rating,
+        Review:         rev.Review,
+        DateOfCreation: rev.DateOfCreation,
+        TargetType:     getTargetType(rev.CoffeeId, rev.RoasteryId, rev.CoffeeShopId),
+        TargetName:     getTargetName(coffeeName, roasteryName, shopName),
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
 }
 
 func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
@@ -412,8 +451,48 @@ func UpdateReviewHandler(w http.ResponseWriter, r *http.Request) {
     
     updateAverageRating(rev.CoffeeId, rev.RoasteryId, rev.CoffeeShopId)
     
-    // Return updated review with details
-    GetReviewHandler(w, r)
+    var userName, coffeeName, roasteryName, shopName sql.NullString
+    
+    err = db.DB.QueryRow(`
+        SELECT r.id, r.user_id, r.coffee_id, r.roastery_id, r.coffee_shop_id, r.rating, r.review, r.date_of_creation,
+               u.username AS user_name,
+               c.name AS coffee_name,
+               ro.name AS roastery_name,
+               s.name AS shop_name
+        FROM reviews r
+        LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN coffees c ON r.coffee_id = c.id
+        LEFT JOIN roasteries ro ON r.roastery_id = ro.id
+        LEFT JOIN shops s ON r.coffee_shop_id = s.id
+        WHERE r.id = $1`, reviewID).
+        Scan(&rev.ID, &rev.UserId, &rev.CoffeeId, &rev.RoasteryId, &rev.CoffeeShopId, 
+             &rev.Rating, &rev.Review, &rev.DateOfCreation,
+             &userName, &coffeeName, &roasteryName, &shopName)
+             
+    if err != nil {
+        http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+        return
+    }
+    
+    response := ReviewResponse{
+        ID:             rev.ID,
+        UserId:         rev.UserId,
+        UserName:       nullStringValue(userName, "Anonymous User"),
+        CoffeeId:       rev.CoffeeId,
+        CoffeeName:     nullStringValue(coffeeName, ""),
+        RoasteryId:     rev.RoasteryId,
+        RoasteryName:   nullStringValue(roasteryName, ""),
+        CoffeeShopId:   rev.CoffeeShopId,
+        CoffeeShopName: nullStringValue(shopName, ""),
+        Rating:         rev.Rating,
+        Review:         rev.Review,
+        DateOfCreation: rev.DateOfCreation,
+        TargetType:     getTargetType(rev.CoffeeId, rev.RoasteryId, rev.CoffeeShopId),
+        TargetName:     getTargetName(coffeeName, roasteryName, shopName),
+    }
+    
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
 }
 
 func DeleteReviewHandler(w http.ResponseWriter, r *http.Request) {
@@ -493,7 +572,6 @@ func updateAverageRating(coffeeId, roasteryId, coffeeShopId int) {
     }
 }
 
-// Helper functions to handle nullable values
 func nullStringValue(ns sql.NullString, defaultValue string) string {
     if ns.Valid {
         return ns.String

@@ -23,7 +23,6 @@ func main() {
     router.HandleFunc("/", handlers.GetApiDocumentationHandler).Methods("GET")
     router.HandleFunc("/help", handlers.GetHtmlDocumentationHandler).Methods("GET")
 
-    
     // User e
     router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
     router.HandleFunc("/login", handlers.LoginHandler).Methods("POST")

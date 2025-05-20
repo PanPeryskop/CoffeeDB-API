@@ -38,6 +38,7 @@ func GetApiDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         Description: "REST API for managing coffee data, including coffees, roasteries, coffee shops, and reviews. For interactive documentation, visit the /help endpoint.",
         Version:     "1.0.0",
         BaseURL:     "http://srv17.mikr.us:40331",
+        // BaseURL:     "http://localhost:40331",
         Authorization: AuthInfo{
             Description: "The API uses JWT (JSON Web Token) for authorization. Protected endpoints require a valid JWT token in the request header.",
             Method:      "Bearer Token Authorization",
@@ -264,6 +265,7 @@ func GetHtmlDocumentationHandler(w http.ResponseWriter, r *http.Request) {
         Description: "REST API for managing coffee data, including coffees, roasteries, coffee shops, and reviews",
         Version:     "1.0.0",
         BaseURL:     "http://srv17.mikr.us:40331",
+        // BaseURL:     "http://localhost:40331",
         Authorization: AuthInfo{
             Description: "The API uses JWT (JSON Web Token) for Authorization. Protected endpoints require a valid JWT token in the request header.",
             Method:      "Bearer Token Authorization",
