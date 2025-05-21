@@ -317,8 +317,12 @@
       "farm": "Brayan Alvear Las Palmas",
       "variety": "Pink Bourbon",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["grape", "tropical fruits", "floral"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "grape",
+        "tropical fruits",
+        "floral"
+      ],
       "description": "Kolumbia „Juicy Grape” to wyjątkowa kawa specialty z farmy Brayan Alvear Las Palmas w regionie Huila. Odmiana Pink Bourbon i obróbka washed wydobywają z niej intensywne nuty winogron, owoców tropikalnych i kwiatów. Idealna do metod przelewowych.",
       "imageUrl": "https://halisek.pl/wp-content/uploads/2023/08/kolumbia-juicy-grape-brayan-alverar-las-palmas-120g-grunt.jpg"
     },
@@ -331,8 +335,12 @@
       "farm": "Rugali Coffee Washing Station",
       "variety": "Red Bourbon",
       "process": "Natural Anaerobic",
-      "roastProfile": "Filter",
-      "flavourNotes": ["red fruits", "winey", "chocolate"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "red fruits",
+        "winey",
+        "chocolate"
+      ],
       "description": "Rwanda „RUGALI” Natural Anaerobic to kawa pochodząca ze stacji obróbki kawy Rugali w regionie Nyamasheke. Odmiana Red Bourbon poddana obróbce naturalnej anaerobowej, co nadaje jej wyraźne nuty czerwonych owoców, wina i czekolady. Polecana do alternatywnych metod parzenia.",
       "imageUrl": "https://halisek.pl/wp-content/uploads/2023/08/rwanda-rugali-natural-anaerobic-250g-grunt.jpg"
     },
@@ -345,7 +353,7 @@
       "farm": "N/A",
       "variety": "N/A",
       "process": "Natural / Washed (MIX)",
-      "roastProfile": "Espresso",
+      "roastProfile": "Light",
       "flavourNotes": [
         "milk chocolate",
         "marzipan",
@@ -364,8 +372,12 @@
       "farm": "Hacienda Sonora",
       "variety": "SL 28",
       "process": "Natural",
-      "roastProfile": "Filter",
-      "flavourNotes": ["dried fruits", "berries", "juicy notes"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "dried fruits",
+        "berries",
+        "juicy notes"
+      ],
       "description": "Początkowy, soczysty łyk kawy z Kostaryki to obfitość suszonych owoców, jagód i innych soczystych nut z grupy jagodowej. Ta owocowa mieszanka to efekt zastosowania kenijskiej odmiany SL28 i metody obróbki naturalnej. Właścicielom farmy, Alberto i Diego (ojciec i syn), udało się połączyć kenijską odmianę ze swoją tradycyjną metodą obróbki naturalnej, tworząc harmonijny i czysty profil.",
       "imageUrl": "https://haybcoffee.pl/wp-content/uploads/2024/02/DSC00466.jpg"
     },
@@ -378,8 +390,12 @@
       "farm": "Sul de Minas",
       "variety": "Mundo Novo, Yellow Catuai, Bourbon",
       "process": "Natural",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "nuts", "caramel"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "nuts",
+        "caramel"
+      ],
       "description": "Brazil Sul de Minas Natural to klasyczna kawa brazylijska, charakteryzująca się niską kwasowością i przyjemną słodyczą. Nuty czekolady, orzechów i karmelu czynią ją idealną do espresso i kaw mlecznych.",
       "imageUrl": "https://eshop.qb.coffee/wp-content/uploads/2022/11/Brazil-sul-de-minas-natural.png"
     },
@@ -392,8 +408,12 @@
       "farm": "Idido",
       "variety": "Heirloom, Kurume, Dega",
       "process": "Natural",
-      "roastProfile": "Filter",
-      "flavourNotes": ["blueberry", "peach", "floral"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "blueberry",
+        "peach",
+        "floral"
+      ],
       "description": "Etiopia Idido Natural to kawa z regionu Yirgacheffe, znana z intensywnych nut owocowych i kwiatowych. Naturalna obróbka podkreśla jej słodycz, z wyraźnymi akcentami jagód, brzoskwini i kwiatów. Doskonała do metod przelewowych.",
       "imageUrl": "https://eshop.qb.coffee/wp-content/uploads/2022/11/Ethiopia-idido-natural.png"
     },
@@ -406,7 +426,7 @@
       "farm": "MAHEMBE Coffee Company",
       "variety": "Arabica Bourbon",
       "process": "Dry fermentation",
-      "roastProfile": "Filter",
+      "roastProfile": "Light",
       "flavourNotes": [
         "berries",
         "flowers",
@@ -428,7 +448,7 @@
       "farm": "N/A",
       "variety": "Arabica Red Bourbon",
       "process": "Natural Anaerobic 72h",
-      "roastProfile": "Espresso",
+      "roastProfile": "Dark",
       "flavourNotes": [
         "tropical fruits",
         "berry fruits",
@@ -447,7 +467,7 @@
       "farm": "Sebseb Aba Mecha",
       "variety": "7411, 7274, 7110",
       "process": "Natural",
-      "roastProfile": "Filter",
+      "roastProfile": "Light",
       "flavourNotes": [
         "earl grey",
         "citrus",
@@ -471,8 +491,12 @@
       "farm": "Ureña Rojas family (Café Rivense)",
       "variety": "Catuai",
       "process": "Sealed Honey Fermentation",
-      "roastProfile": "Filter",
-      "flavourNotes": ["banana", "rosé wine", "brown sugar"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "banana",
+        "rosé wine",
+        "brown sugar"
+      ],
       "description": "Kawa z Kostaryki La Guaca to kawa, która brała udział w warszawskich eliminacjach Mistrzostw Polski AEROPRESS. Profil sensoryczny: banan, wino rosé, brązowy cukier.",
       "imageUrl": "https://caffegrano.pl/wp-content/uploads/2024/02/kostaryka-la-guaca-aeropress-caffe-grano.jpg"
     },
@@ -485,7 +509,7 @@
       "farm": "El Rincon",
       "variety": "Caturra, Colombia, Castillo",
       "process": "Washed",
-      "roastProfile": "Filter",
+      "roastProfile": "Light",
       "flavourNotes": [
         "cherry",
         "pomelo",
@@ -504,8 +528,11 @@
       "farm": "Cooxupé cooperative",
       "variety": "Mundo Novo, Bourbon, Catuai",
       "process": "Pulped natural",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["milk chocolate", "hazelnut"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "milk chocolate",
+        "hazelnut"
+      ],
       "description": "Boogie Bean to bestsellerowe espresso z ogromem możliwości parzenia. Może być bardzo słodkie z średnią goryczką lub słodko-kwaśno-owocowe z delikatną goryczką. Jest to kawa bardzo wyrozumiała i przyjemna. Po prostu – łatwa w zaparzaniu, przyjemna w piciu. Klasyczna Brazylia charakteryzująca się umiarkowaną kwasowością, delikatną goryczką i słodyczą.",
       "imageUrl": "https://bemybean.pl/wp-content/uploads/2023/10/Boogie-Bean-e1697282361686.jpg"
     },
@@ -518,8 +545,12 @@
       "farm": "N/A",
       "variety": "90% Arabica, 10% Robusta",
       "process": "Natural (Brazil), Washed (Vietnam)",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "caramel", "nuts"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "caramel",
+        "nuts"
+      ],
       "description": "Espresso Gold to klasyczna mieszanka 90% Arabiki i 10% Robusty, stworzona z myślą o miłośnikach intensywnego i pełnego smaku. Oferuje nuty czekolady, karmelu i orzechów, idealna do espresso i kaw mlecznych.",
       "imageUrl": "https://skladkawy.com/wp-content/uploads/2020/08/espresso-gold.jpg"
     },
@@ -532,8 +563,12 @@
       "farm": "N/A",
       "variety": "Bourbon, Catuai, Caturra",
       "process": "Washed",
-      "roastProfile": "Filter/Espresso",
-      "flavourNotes": ["chocolate", "citrus", "floral"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "chocolate",
+        "citrus",
+        "floral"
+      ],
       "description": "Gwatemala Huehuetenango to kawa z regionu Huehuetenango, słynąca z jasnej kwasowości i złożonego profilu smakowego. Nuty czekolady, cytrusów i kwiatów sprawiają, że jest uniwersalna zarówno do metod przelewowych, jak i espresso.",
       "imageUrl": "https://skladkawy.com/wp-content/uploads/2020/08/guatemala-huehuetenango.jpg"
     },
@@ -546,8 +581,12 @@
       "farm": "Ratnagiri Estate",
       "variety": "Chandragiri, Selection 9",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["spices", "dark chocolate", "nutty"],
+      "roastProfile": "Dark",
+      "flavourNotes": [
+        "spices",
+        "dark chocolate",
+        "nutty"
+      ],
       "description": "Kawa India Ratnagiri Microlot pochodzi z regionu Baba Budangiri Hills. Odmiany Chandragiri i Selection 9, obrabiane metodą washed, oferują unikalne nuty przypraw, ciemnej czekolady i orzechów. Idealna do metod przelewowych.",
       "imageUrl": "https://www.megan-coffee.com/wp-content/uploads/2024/01/india-ratnagiri-microlot.png"
     },
@@ -560,8 +599,12 @@
       "farm": "N/A",
       "variety": "Castillo, Caturra, Colombia",
       "process": "Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["caramel", "chocolate", "red apple"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "caramel",
+        "chocolate",
+        "red apple"
+      ],
       "description": "Kawa COLOMBIA Supremo Popayan z regionu Cauca to klasyczna kolumbijska arabika. Odmiany Castillo, Caturra i Colombia, obrabiane metodą washed, charakteryzują się nutami karmelu, czekolady i czerwonego jabłka. Doskonała do espresso.",
       "imageUrl": "https://www.megan-coffee.com/wp-content/uploads/2024/01/colombia-supremo-popayan.png"
     },
@@ -574,8 +617,12 @@
       "farm": "N/A",
       "variety": "Red Bourbon",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["citrus", "black tea", "floral"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "citrus",
+        "black tea",
+        "floral"
+      ],
       "description": "Rwanda Beloved Coffee to kawa z regionu Nyamasheke, znana z delikatnych i złożonych smaków. Odmiana Red Bourbon, obrabiana metodą washed, oferuje nuty cytrusów, czarnej herbaty i kwiatów. Idealna do metod przelewowych.",
       "imageUrl": "https://www.rafy.pl/img/products/21/530/kawa-rwanda-beloved-coffee.jpg"
     },
@@ -588,8 +635,12 @@
       "farm": "N/A",
       "variety": "Caturra, Catuai",
       "process": "Honey",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["red grapes", "honey", "chocolate"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "red grapes",
+        "honey",
+        "chocolate"
+      ],
       "description": "Kostaryka Sweet Wine z regionu Tarrazú to kawa o wyraźnych, słodkich nutach. Odmiany Caturra i Catuai, obrabiane metodą honey, nadają jej smaki czerwonych winogron, miodu i czekolady. Idealna do espresso.",
       "imageUrl": "https://www.rafy.pl/img/products/21/530/kawa-kostaryka-sweet-wine.jpg"
     },
@@ -602,8 +653,12 @@
       "farm": "San Rafael",
       "variety": "Mundo Novo, Catuai",
       "process": "Natural",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "nuts", "caramel"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "nuts",
+        "caramel"
+      ],
       "description": "Brazil San Rafael to klasyczna kawa brazylijska z regionu Minas Gerais. Odmiany Mundo Novo i Catuai, obrabiane metodą naturalną, oferują nuty czekolady, orzechów i karmelu. Doskonała do espresso.",
       "imageUrl": "https://www.palomacoffee.pl/wp-content/uploads/2020/08/palarnia-kawy-paloma-brazylia-san-rafael-250g.png"
     },
@@ -616,8 +671,12 @@
       "farm": "N/A",
       "variety": "Castillo, Caturra, Colombia",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["peach", "citrus", "floral"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "peach",
+        "citrus",
+        "floral"
+      ],
       "description": "Colombia Golden Huila to kawa z regionu Huila, znana z jasnej kwasowości i owocowych nut. Odmiany Castillo, Caturra i Colombia, obrabiane metodą washed, oferują smaki brzoskwini, cytrusów i kwiatów. Idealna do metod przelewowych.",
       "imageUrl": "https://www.palomacoffee.pl/wp-content/uploads/2020/08/palarnia-kawy-paloma-kolumbia-golden-huila-250g.png"
     },
@@ -630,8 +689,12 @@
       "farm": "N/A",
       "variety": "Heirloom",
       "process": "Natural",
-      "roastProfile": "Filter",
-      "flavourNotes": ["berries", "citrus", "subtle acidity"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "berries",
+        "citrus",
+        "subtle acidity"
+      ],
       "description": "Etiopia Mate Matiwos to naturalnie przetwarzana kawa o wyjątkowym profilu smakowym, pochodząca z regionu Sidamo w Etiopii. Rośnie na wysokości 2300 metrów nad poziomem morza, co przyczynia się do jej głębokiej i złożonej struktury. Chłodniejszy klimat na tej wysokości pozwala ziarnom dojrzewać powoli, rozwijając wyjątkowy smak.",
       "imageUrl": "https://palarniathewhitebear.pl/wp-content/uploads/2023/11/kawa-etiopia-mate-matiwos-palarnia-bialystok-250g.jpg"
     },
@@ -644,8 +707,12 @@
       "farm": "N/A",
       "variety": "Arabica",
       "process": "Natural / Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "nuts", "caramel"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "nuts",
+        "caramel"
+      ],
       "description": "Black Blend to zbalansowana mieszanka arabik z Brazylii i Gwatemali. Stworzona z myślą o espresso, oferuje klasyczne nuty czekolady, orzechów i karmelu. Idealna do codziennego parzenia.",
       "imageUrl": "https://palarniathewhitebear.pl/wp-content/uploads/2020/08/black-blend.jpg"
     },
@@ -657,9 +724,13 @@
       "region": "Minas Gerais",
       "farm": "N/A",
       "variety": "Arabica",
-      "process": "Natural",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "nuts", "low acidity"],
+      "process": "N/A",
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "nuts",
+        "low acidity"
+      ],
       "description": "Kawa Brazylia Santos to delikatna i aromatyczna kawa o niskiej kwasowości i goryczce. Idealna dla tych, którzy cenią sobie wyważone smaki i aromaty w kawie.",
       "imageUrl": "https://www.kawanaprezent.com/wp-content/uploads/2020/08/brazylia-santos.jpg"
     },
@@ -672,8 +743,11 @@
       "farm": "N/A",
       "variety": "N/A",
       "process": "N/A",
-      "roastProfile": "N/A",
-      "flavourNotes": ["orange", "chocolate"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "orange",
+        "chocolate"
+      ],
       "description": "Kawa smakowa z dodatkiem aromatów pomarańczy i czekolady. Idealna dla miłośników słodkich, deserowych kaw.",
       "imageUrl": "https://www.kawanaprezent.com/wp-content/uploads/2020/08/pomarancza-w-czekoladzie.jpg"
     },
@@ -687,7 +761,11 @@
       "variety": "Mundo Novo, Catuai",
       "process": "Dry processed",
       "roastProfile": "Medium",
-      "flavourNotes": ["chocolate", "nuts", "caramel"],
+      "flavourNotes": [
+        "chocolate",
+        "nuts",
+        "caramel"
+      ],
       "description": "Ziarna kawy Arabica Brazil Santos są bardzo aromatyczne i pozbawione nadmiernej kwasowości i goryczki. Szczególnie pasują koneserom kaw jednorodnych, którzy poszukują zrównoważonych smaków. Kawa nosi nazwę „Santos” od brazylijskiego portu, który stał się sławny, kiedy Brazylia stała się światowym potentatem w produkcji kawy.",
       "imageUrl": "https://planetakawy.pl/wp-content/uploads/2020/08/brazylia-santos-planeta-kawy.jpg"
     },
@@ -701,7 +779,13 @@
       "variety": "Heirloom",
       "process": "Wet",
       "roastProfile": "Medium",
-      "flavourNotes": ["flowers", "honey", "dried fruits", "nuts", "citrus"],
+      "flavourNotes": [
+        "flowers",
+        "honey",
+        "dried fruits",
+        "nuts",
+        "citrus"
+      ],
       "description": "Etiopia Sidamo to arabika pochodząca z Afryki Północno-Wschodniej. Uważana jest za miejsce, z którego pochodzi drzewo kawowe. Kawa uprawiana jest w regionie Sidamo, na południe od Addis Abeby, na wysokości od 1200 do 1900 metrów nad poziomem morza. Surowe ziarno ma intensywny zielony kolor, jest bardziej okrągłe niż płaskie i niewielkich rozmiarów. Kawa ta uprawiana jest w „ogrodach kawowych” wśród bananowców, tytoniu, przypraw i herbaty, co nadaje jej niezwykły i niepowtarzalny aromat.",
       "imageUrl": "https://planetakawy.pl/wp-content/uploads/2020/08/etiopia-sidamo-planeta-kawy.jpg"
     },
@@ -714,8 +798,12 @@
       "farm": "N/A",
       "variety": "Typica",
       "process": "Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["tobacco", "dark chocolate", "spices"],
+      "roastProfile": "Dark",
+      "flavourNotes": [
+        "tobacco",
+        "dark chocolate",
+        "spices"
+      ],
       "description": "Extra Turquino Special to rzadka kawa z Kuby, z regionu Sierra Maestra. Odmiana Typica, obrabiana metodą washed, oferuje intensywne nuty tytoniu, ciemnej czekolady i przypraw. Idealna do espresso.",
       "imageUrl": "https://kawaspeciality.com.pl/wp-content/uploads/2020/08/extra-turquino-special.jpg"
     },
@@ -728,8 +816,12 @@
       "farm": "N/A",
       "variety": "Typica, Arusha, Bourbon",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["citrus", "honey", "herbal"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "citrus",
+        "honey",
+        "herbal"
+      ],
       "description": "Papua Nowa Gwinea SHG to kawa z regionu Western Highlands, znana z jasnej kwasowości i złożonego profilu. Odmiany Typica, Arusha i Bourbon, obrabiane metodą washed, oferują nuty cytrusów, miodu i ziół. Idealna do metod przelewowych.",
       "imageUrl": "https://kawaspeciality.com.pl/wp-content/uploads/2020/08/papua-nowa-gwinea-shg.jpg"
     },
@@ -743,7 +835,11 @@
       "variety": "Catuai & Robusta",
       "process": "Natural (Brazil), Washed (India)",
       "roastProfile": "Medium - Dark",
-      "flavourNotes": ["dark chocolate", "walnuts", "caramel"],
+      "flavourNotes": [
+        "dark chocolate",
+        "walnuts",
+        "caramel"
+      ],
       "description": "Kicker Espresso to kawa blend z 80% arabiki i 20% robusty. W smaku dominują nuty ciemnej czekolady, orzechów włoskich i karmelu. Kwasowość jest niska. W kawach mlecznych przyjemne połączenie kakao i orzechów z łagodnym karmelowym finiszem. W czarnej kawie wyraźne nuty gorzkiej czekolady i orzechów.",
       "imageUrl": "https://momentocoffee.pl/cdn/shop/products/KickerEspresso-MomentoCoffee-Brazil_India_1_c84a0d8e-9d29-450f-90e8-07e32402120e.jpg?v=1680528249&width=1000"
     },
@@ -756,8 +852,12 @@
       "farm": "El Borbollon",
       "variety": "Bourbon, Pacamara",
       "process": "Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "red apple", "caramel"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "red apple",
+        "caramel"
+      ],
       "description": "Player Espresso to kawa z Salwadoru, z farmy El Borbollon w regionie Santa Ana. Odmiany Bourbon i Pacamara, obrabiane metodą washed, oferują klasyczne nuty czekolady, czerwonego jabłka i karmelu. Idealna do espresso.",
       "imageUrl": "https://momentocoffee.pl/cdn/shop/products/PlayerEspresso-MomentoCoffee-ElSalvador_ElBorbollon_1.jpg?v=1680528189&width=1000"
     },
@@ -770,8 +870,12 @@
       "farm": "Finca La Colonia & Finca Arroyo",
       "variety": "Caturra & Obata",
       "process": "Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["leather", "tobacco", "cocoa"],
+      "roastProfile": "Dark",
+      "flavourNotes": [
+        "leather",
+        "tobacco",
+        "cocoa"
+      ],
       "description": "Dominikana Finca La Colonia 250g to kawa dla miłośników głębokich, zdecydowanych smaków, dalekich od lekkości czy owocowej kwasowości. Skórzane, tytoniowe, kakaowe, intensywne, gęste i charakterna, ale harmonijna. Zamiast owoców i cytrusów oferuje aksamitne body i długi, suchy finisz.",
       "imageUrl": "https://coffeelab.pl/7016-large_default/dominikana-finca-la-colonia-250g.jpg"
     },
@@ -784,7 +888,7 @@
       "farm": "Finca Genesis Marco Cabera",
       "variety": "Pacamara & Java",
       "process": "Natural",
-      "roastProfile": "Filter",
+      "roastProfile": "Light",
       "flavourNotes": [
         "ripe cherries",
         "blackberries",
@@ -804,8 +908,12 @@
       "farm": "Finca Uluri",
       "variety": "Pacamara",
       "process": "Natural",
-      "roastProfile": "Filter",
-      "flavourNotes": ["tropical fruits", "strawberry", "chocolate"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "tropical fruits",
+        "strawberry",
+        "chocolate"
+      ],
       "description": "Uluri Natural Pacamara to wyjątkowa kawa z Salwadoru, z farmy Finca Uluri. Odmiana Pacamara, obrabiana metodą naturalną, oferuje intensywne nuty owoców tropikalnych, truskawek i czekolady. Idealna do metod przelewowych.",
       "imageUrl": "https://specialtycoffee.pl/wp-content/uploads/2022/01/el-salwador-uluri-pacamara-natural.jpg"
     },
@@ -818,8 +926,12 @@
       "farm": "Finca Enciso",
       "variety": "Caturra, Colombia",
       "process": "Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "caramel", "red apple"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "caramel",
+        "red apple"
+      ],
       "description": "Enciso to kawa z Kolumbii, z farmy Finca Enciso w regionie Huila. Odmiany Caturra i Colombia, obrabiane metodą washed, oferują klasyczne nuty czekolady, karmelu i czerwonego jabłka. Idealna do espresso.",
       "imageUrl": "https://specialtycoffee.pl/wp-content/uploads/2022/01/kolumbia-enciso.jpg"
     },
@@ -832,8 +944,13 @@
       "farm": "N/A",
       "variety": "Caturra, Colombia",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["dark chocolate", "peach", "apple", "plum"],
+      "roastProfile": "Dark",
+      "flavourNotes": [
+        "dark chocolate",
+        "peach",
+        "apple",
+        "plum"
+      ],
       "description": "Colombia Tolima Specialty Coffee to kawa z regionu Tolima, znana z zbalansowanego profilu smakowego. Odmiany Caturra i Colombia, obrabiane metodą washed, oferują nuty ciemnej czekolady, brzoskwini, jabłka i śliwki. Idealna do metod przelewowych.",
       "imageUrl": "https://javacoffee.pl/cdn/shop/products/kawa-java-kolumbia-tolima-250g_0f0d1487-ce57-410a-b5e0-394d01b17a0b.jpg?v=1626255091&width=600"
     },
@@ -847,7 +964,12 @@
       "variety": "Arabica SL14, SL28",
       "process": "Washed",
       "roastProfile": "Light",
-      "flavourNotes": ["peach", "apricot", "pear", "hazelnut"],
+      "flavourNotes": [
+        "peach",
+        "apricot",
+        "pear",
+        "hazelnut"
+      ],
       "description": "Specialty Coffee Uganda Bugisu to kawa z regionu Bugisu, uprawiana na zboczach Mount Elgon. Odmiany Arabica SL14 i SL28, obrabiane metodą washed, oferują delikatne nuty brzoskwini, moreli, gruszki i orzechów laskowych. Idealna do metod przelewowych.",
       "imageUrl": "https://javacoffee.pl/cdn/shop/products/kawa-java-uganda-bugisu-250g.jpg?v=1626255091&width=600"
     },
@@ -860,8 +982,11 @@
       "farm": "N/A",
       "variety": "Heirloom",
       "process": "Natural",
-      "roastProfile": "Filter",
-      "flavourNotes": ["passion fruit", "citrus"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "passion fruit",
+        "citrus"
+      ],
       "description": "New seasonal flavor: RADIOPHARE, with notes of passion fruit and citrus. Ta Etiopia z regionu Sidamo, obrabiana naturalnie, to prawdziwa eksplozja smaków, idealna do metod przelewowych.",
       "imageUrl": "https://coffeekonsulat.pl/wp-content/uploads/2023/11/Radiophare-Coffee-Konsulat.jpg"
     },
@@ -874,8 +999,11 @@
       "farm": "N/A",
       "variety": "Mundo Novo, Catuai",
       "process": "Natural",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "dried apricot"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "dried apricot"
+      ],
       "description": "New release: A DROP OF SCIENCE (chocolate, dried apricot from Brazil). Ta kawa z Brazylii, obrabiana naturalnie, oferuje klasyczne nuty czekolady i suszonych moreli, idealna do espresso.",
       "imageUrl": "https://coffeekonsulat.pl/wp-content/uploads/2023/11/A-Drop-of-Science-Coffee-Konsulat.jpg"
     },
@@ -888,8 +1016,12 @@
       "farm": "Finca Tamana",
       "variety": "Bourbon",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["caramel", "red apple", "citrus"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "caramel",
+        "red apple",
+        "citrus"
+      ],
       "description": "Finca Tamana Bourbon to kawa z Kolumbii, z farmy Finca Tamana w regionie Huila. Odmiana Bourbon, obrabiana metodą washed, oferuje nuty karmelu, czerwonego jabłka i cytrusów. Idealna do metod przelewowych.",
       "imageUrl": "https://gardellicoffee.com/wp-content/uploads/2023/04/Finca-Tamana-Bourbon-Washed-Filter-Gardelli-Coffee.jpg"
     },
@@ -902,8 +1034,12 @@
       "farm": "Finca Tamana",
       "variety": "Caturron",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["tropical fruits", "floral", "honey"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "tropical fruits",
+        "floral",
+        "honey"
+      ],
       "description": "Finca Tamana Caturron to kawa z Kolumbii, z farmy Finca Tamana w regionie Huila. Odmiana Caturron, obrabiana metodą washed, oferuje egzotyczne nuty owoców tropikalnych, kwiatów i miodu. Idealna do metod przelewowych.",
       "imageUrl": "https://gardellicoffee.com/wp-content/uploads/2023/04/Finca-Tamana-Caturron-Washed-Filter-Gardelli-Coffee.jpg"
     },
@@ -916,8 +1052,12 @@
       "farm": "Carmelita",
       "variety": "Java",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["citrus", "floral", "cane sugar"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "citrus",
+        "floral",
+        "cane sugar"
+      ],
       "description": "This coffee is currently sold out. Carmelita Washed Java to kawa z Boliwii, z farmy Carmelita w regionie Caranavi. Odmiana Java, obrabiana metodą washed, oferuje nuty cytrusów, kwiatów i cukru trzcinowego. Doskonała do metod przelewowych.",
       "imageUrl": "https://aprilcoffeeroasters.com/cdn/shop/products/Carmelita_Washed_Java_April_Coffee_Roasters.jpg"
     },
@@ -930,8 +1070,12 @@
       "farm": "Nano Challa",
       "variety": "Heirloom",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["peach", "jasmine", "bergamot"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "peach",
+        "jasmine",
+        "bergamot"
+      ],
       "description": "This coffee is currently sold out. Organic certified. Nano Challa, Washed Heirloom to kawa z Etiopii, z regionu Agaro, Jimma. Odmiana Heirloom, obrabiana metodą washed, oferuje delikatne nuty brzoskwini, jaśminu i bergamotki. Idealna do metod przelewowych.",
       "imageUrl": "https://aprilcoffeeroasters.com/cdn/shop/products/Nano_Challa_Washed_Heirloom_April_Coffee_Roasters.jpg"
     },
@@ -944,8 +1088,13 @@
       "farm": "N/A",
       "variety": "N/A",
       "process": "Natural (Brazil), Washed (Colombia)",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["STRAWBERRY", "CARAMEL", "NOUGAT", "CHOCOLATE"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "STRAWBERRY",
+        "CARAMEL",
+        "NOUGAT",
+        "CHOCOLATE"
+      ],
       "description": "Red Brick to flagowy blend do espresso od Square Mile, łączący kawy z Brazylii i Kolumbii. Oferuje bogate nuty truskawkowe, karmelowe, nugatowe i czekoladowe, tworząc kompleksowy i słodki profil.",
       "imageUrl": "https://shop.squaremilecoffee.com/cdn/shop/files/RedBrick.png?v=1680528249&width=600"
     },
@@ -958,8 +1107,12 @@
       "farm": "N/A",
       "variety": "N/A",
       "process": "Washed (Rwanda), Natural (Brazil)",
-      "roastProfile": "Filter",
-      "flavourNotes": ["BLUEBERRY", "ALMOND", "HONEY"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "BLUEBERRY",
+        "ALMOND",
+        "HONEY"
+      ],
       "description": "The Filter Blend to mieszanka kaw z Rwandy i Brazylii, stworzona z myślą o metodach przelewowych. Oferuje delikatne nuty jagód, migdałów i miodu, tworząc złożony i przyjemny profil.",
       "imageUrl": "https://shop.squaremilecoffee.com/cdn/shop/files/TheFilterBlend.png?v=1680528249&width=600"
     },
@@ -972,8 +1125,12 @@
       "farm": "Sítio Santa Clara",
       "variety": "Yellow Bourbon",
       "process": "Natural",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["chocolate", "nuts", "caramel"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "chocolate",
+        "nuts",
+        "caramel"
+      ],
       "description": "BRAZIL Sítio Santa Clara to kawa z Brazylii, z farmy Sítio Santa Clara w regionie Minas Gerais. Odmiana Yellow Bourbon, obrabiana naturalnie, oferuje klasyczne nuty czekolady, orzechów i karmelu. Idealna do espresso.",
       "imageUrl": "https://www.fiveelephant.com/cdn/shop/products/Brazil_SitioSantaClara_Espresso_2023.jpg?v=1680528249&width=600"
     },
@@ -986,8 +1143,12 @@
       "farm": "La Cancha",
       "variety": "Pacamara",
       "process": "Natural",
-      "roastProfile": "Filter",
-      "flavourNotes": ["tropical fruits", "strawberry", "winey"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "tropical fruits",
+        "strawberry",
+        "winey"
+      ],
       "description": "EL SALVADOR La Cancha Natural to kawa z Salwadoru, z farmy La Cancha w regionie Santa Ana. Odmiana Pacamara, obrabiana naturalnie, oferuje intensywne nuty owoców tropikalnych, truskawek i wina. Idealna do metod przelewowych.",
       "imageUrl": "https://www.fiveelephant.com/cdn/shop/products/ElSalvador_LaCanchaNatural_Filter_2023.jpg?v=1680528249&width=600"
     },
@@ -1000,8 +1161,12 @@
       "farm": "Chambakú",
       "variety": "Castillo, Caturra",
       "process": "Washed",
-      "roastProfile": "Espresso",
-      "flavourNotes": ["milk chocolate", "panela", "California walnuts"],
+      "roastProfile": "Medium",
+      "flavourNotes": [
+        "milk chocolate",
+        "panela",
+        "California walnuts"
+      ],
       "description": "Chambakú to kawa z Kolumbii, z farmy Chambakú w regionie Cauca. Odmiany Castillo i Caturra, obrabiane metodą washed, oferują nuty mlecznej czekolady, paneli i orzechów włoskich. Idealna do espresso.",
       "imageUrl": "https://nomadcoffee.es/cdn/shop/products/colombia-chambaku-espresso.jpg?v=1680528249&width=600"
     },
@@ -1014,8 +1179,12 @@
       "farm": "Inzovu",
       "variety": "Red Bourbon",
       "process": "Washed",
-      "roastProfile": "Filter",
-      "flavourNotes": ["red plum", "70% chocolate", "honey"],
+      "roastProfile": "Light",
+      "flavourNotes": [
+        "red plum",
+        "70% chocolate",
+        "honey"
+      ],
       "description": "Inzovu to kawa z Rwandy, z farmy Inzovu w regionie Kigali. Odmiana Red Bourbon, obrabiana metodą washed, oferuje nuty czerwonej śliwki, ciemnej czekolady i miodu. Idealna do metod przelewowych.",
       "imageUrl": "https://nomadcoffee.es/cdn/shop/products/rwanda-inzovu-espresso.jpg?v=1680528249&width=600"
     }
