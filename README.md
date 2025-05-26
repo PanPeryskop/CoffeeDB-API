@@ -70,7 +70,3 @@ REST API zbudowane w Go do zarządzania danymi dotyczącymi kawy, w tym danymi k
 - JWT
 - godotenv
 - lib/pq
-
-## Do Zrobienia
-
-Zobacz plik todo z planowanymi ulepszeniami, takimi jak lepsza obsługa błędów, logowanie, pamięć podręczna dla wyników geokodowania oraz testy jednostkowe i integracyjne.
