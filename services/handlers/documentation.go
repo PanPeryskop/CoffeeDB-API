@@ -1832,7 +1832,6 @@ html := `<!DOCTYPE html>
                 </div>`
             }
             
-            // Try it section
             html += `<div class="try-it">
                 <h4><i class="fas fa-play-circle"></i> Try it out</h4>
                 <div class="input-group">
@@ -1971,13 +1970,11 @@ html := `<!DOCTYPE html>
     </footer>
 	
 	<script>
-		// Syntax highlighting
 		document.addEventListener('DOMContentLoaded', () => {
 			document.querySelectorAll('pre code').forEach((block) => {
 				hljs.highlightBlock(block);
 			});
 			
-			// Show scroll to top button when scrolled down
 			window.addEventListener('scroll', () => {
 				const scrollBtn = document.querySelector('.scroll-top');
 				if (window.pageYOffset > 300) {
@@ -1988,18 +1985,15 @@ html := `<!DOCTYPE html>
 			});
 		});
 		
-		// Toggle endpoint details
 		function toggleEndpoint(element) {
 			const body = element.nextElementSibling;
 			body.classList.toggle('active');
 		}
 		
-		// Filter categories
 		function filterCategory(category) {
 			const buttons = document.querySelectorAll('.category-btn');
 			const categories = document.querySelectorAll('.category');
 			
-			// Update active button
 			buttons.forEach(btn => {
 				btn.classList.remove('active');
 				if (btn.textContent.toLowerCase() === category.toLowerCase() || 
@@ -2008,7 +2002,6 @@ html := `<!DOCTYPE html>
 				}
 			});
 			
-			// Show/hide categories
 			if (category === 'all') {
 				categories.forEach(cat => {
 					cat.style.display = 'block';
@@ -2024,7 +2017,6 @@ html := `<!DOCTYPE html>
 			}
 		}
 		
-		// Copy to clipboard
 		function copyToClipboard(elementId) {
 			const element = document.getElementById(elementId);
 			const text = element.textContent.trim();
@@ -2040,7 +2032,6 @@ html := `<!DOCTYPE html>
 			});
 		}
 		
-		// Toggle auth input visibility
 		function toggleAuthInput(checkbox) {
 			const authToggle = checkbox.closest('.auth-toggle');
 			if (!authToggle) {
@@ -2054,19 +2045,16 @@ html := `<!DOCTYPE html>
 				return;
 			}
 			
-			// Toggle visibility
 			if (checkbox.checked) {
 				authInput.style.display = 'block';
 			} else {
 				authInput.style.display = 'none';
 			}
 			
-			// Debug info
 			console.log("Toggle state:", checkbox.checked);
 			console.log("Auth input element:", authInput);
 		}
         
-        // Execute API request
         function executeRequest(button, method) {
             const endpointBody = button.closest('.endpoint-body');
             const pathInput = endpointBody.querySelector('.path-input');
@@ -2075,13 +2063,11 @@ html := `<!DOCTYPE html>
             const responseTime = responseContainer.querySelector('.time');
             const responseBody = responseContainer.querySelector('.response-body');
             
-            // Get path (replace parameters if needed)
             let path = pathInput.value;
             if (!path.startsWith('/')) {
                 path = '/' + path;
             }
             
-            // Create request options
             const options = {
                 method: method,
                 headers: {
@@ -2089,7 +2075,6 @@ html := `<!DOCTYPE html>
                 }
             };
             
-            // Add auth token if provided
             const authToggle = endpointBody.querySelector('.auth-toggle');
             if (authToggle) {
                 const tokenCheckbox = authToggle.querySelector('input[type="checkbox"]');
@@ -2101,7 +2086,6 @@ html := `<!DOCTYPE html>
                 }
             }
 			
-			// Add request body for POST/PUT
 			if (method === 'POST' || method === 'PUT') {
 				const bodyInput = endpointBody.querySelector('.body-input');
 				if (bodyInput && bodyInput.value.trim()) {
@@ -2115,11 +2099,9 @@ html := `<!DOCTYPE html>
 				}
 			}
 			
-			// Show loading state
 			button.innerHTML = '<div class="loading"></div> Loading...';
 			button.disabled = true;
 			
-			// Execute the request
 			const startTime = new Date();
 			
 			fetch('` + doc.BaseURL + `' + path, options)
@@ -2127,30 +2109,24 @@ html := `<!DOCTYPE html>
 					const endTime = new Date();
 					const duration = endTime - startTime;
 					
-					// Update status
 					responseStatus.textContent = response.status + ' ' + response.statusText;
 					responseStatus.className = 'status';
 					responseStatus.classList.add(response.ok ? 'success' : 'error');
 					
-					// Update time
 					responseTime.textContent = '(' + duration + 'ms)';
 					
 					return response.text();
 				})
 				.then(text => {
-					// Try to parse as JSON
 					try {
 						const json = JSON.parse(text);
 						responseBody.textContent = JSON.stringify(json, null, 2);
 					} catch (e) {
-						// Not JSON, show as is
 						responseBody.textContent = text;
 					}
 					
-					// Highlight response
 					hljs.highlightBlock(responseBody);
 					
-					// Show response
 					responseContainer.classList.add('show');
 				})
 				.catch(error => {
@@ -2160,13 +2136,11 @@ html := `<!DOCTYPE html>
 					responseContainer.classList.add('show');
 				})
 				.finally(() => {
-					// Reset button
 					button.innerHTML = '<i class="fas fa-paper-plane"></i> Execute Request';
 					button.disabled = false;
 				});
 		}
 		
-		// Scroll to top
 		function scrollToTop() {
 			window.scrollTo({
 				top: 0,
@@ -2174,7 +2148,6 @@ html := `<!DOCTYPE html>
 			});
 		}
 		
-		// Toggle dark/light theme
 		function toggleTheme() {
 			const body = document.body;
 			const themeIcon = document.querySelector('.theme-toggle i');
@@ -2187,11 +2160,9 @@ html := `<!DOCTYPE html>
 				themeIcon.className = 'fas fa-moon';
 			}
 			
-			// Store preference
 			localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
 		}
 		
-		// Apply saved theme preference
 		(() => {
 			const savedTheme = localStorage.getItem('theme');
 			if (savedTheme === 'dark') {
