@@ -130,6 +130,181 @@ class CoffeeApiTests(unittest.TestCase):
         resp = requests.get(f"{BASE_URL}/coffees")
         self.assertEqual(resp.status_code, 200, "Failed to get coffees")
         self.assertIsInstance(resp.json(), list, "Response should be a list of coffees")
+        
+    
+    def test_create_coffee(self):
+        resp = requests.post(f"{BASE_URL}/coffees", json=self.coffee_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to create coffee")
+        coffee = resp.json()
+        self.coffee_id_to_update = coffee.get("id") or coffee.get("coffeeId")
+        self.assertIn("id", coffee, "Response should contain coffee ID")
+        self.assertEqual(coffee["name"], self.coffee_data["name"], "Coffee name should match input data")
+        
+    
+    def test_update_coffee(self):
+        if not hasattr(self, 'coffee_id_to_update'):
+            self.test_create_coffee()
+        
+        update_data = {
+            "name": f"Updated Coffee {random_string()}",
+            "description": random_string(50)
+        }
+        resp = requests.put(f"{BASE_URL}/coffees/{self.coffee_id_to_update}", json=update_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to update coffee")
+        updated_coffee = resp.json()
+        self.assertEqual(updated_coffee["name"], update_data["name"], "Coffee name should be updated")
+        
+    
+    def test_delete_coffee(self):
+        if not hasattr(self, 'coffee_id_to_update'):
+            self.test_create_coffee()
+        
+        resp = requests.delete(f"{BASE_URL}/coffees/{self.coffee_id_to_update}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to delete coffee")
+        self.assertIn("message", resp.json(), "Response should contain a message")
+        
+        
+    def test_get_roasteries(self):
+        resp = requests.get(f"{BASE_URL}/roasteries")
+        self.assertEqual(resp.status_code, 200, "Failed to get roasteries")
+        self.assertIsInstance(resp.json(), list, "Response should be a list of roasteries")
+        
+    
+    def test_create_roastery(self):
+        resp = requests.post(f"{BASE_URL}/roasteries", json=self.roastery_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to create roastery")
+        roastery = resp.json()
+        self.roastery_id_to_update = roastery.get("id") or roastery.get("roasteryId")
+        self.assertIn("id", roastery, "Response should contain roastery ID")
+        self.assertEqual(roastery["name"], self.roastery_data["name"], "Roastery name should match input data")
+        
+    
+    def test_update_roastery(self):
+        if not hasattr(self, 'roastery_id_to_update'):
+            self.test_create_roastery()
+        
+        update_data = {
+            "name": f"Updated Roastery {random_string()}",
+            "description": random_string(50)
+        }
+        resp = requests.put(f"{BASE_URL}/roasteries/{self.roastery_id_to_update}", json=update_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to update roastery")
+        updated_roastery = resp.json()
+        self.assertEqual(updated_roastery["name"], update_data["name"], "Roastery name should be updated")
+        
+    
+    def test_delete_roastery(self):
+        if not hasattr(self, 'roastery_id_to_update'):
+            self.test_create_roastery()
+        
+        resp = requests.delete(f"{BASE_URL}/roasteries/{self.roastery_id_to_update}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to delete roastery")
+        self.assertIn("message", resp.json(), "Response should contain a message")
+        
+        
+    def test_get_coffee_shops(self):
+        resp = requests.get(f"{BASE_URL}/coffee-shops")
+        self.assertEqual(resp.status_code, 200, "Failed to get coffee shops")
+        self.assertIsInstance(resp.json(), list, "Response should be a list of coffee shops")
+    
+    
+    def test_create_coffee_shop(self):
+        resp = requests.post(f"{BASE_URL}/coffee-shops", json=self.shop_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to create coffee shop")
+        shop = resp.json()
+        self.shop_id_to_update = shop.get("id") or shop.get("coffeeShopId")
+        self.assertIn("id", shop, "Response should contain coffee shop ID")
+        self.assertEqual(shop["name"], self.shop_data["name"], "Coffee shop name should match input data")
+        
+        
+    def test_update_coffee_shop(self):
+        if not hasattr(self, 'shop_id_to_update'):
+            self.test_create_coffee_shop()
+        
+        update_data = {
+            "name": f"Updated Coffee Shop {random_string()}",
+            "description": random_string(50)
+        }
+        resp = requests.put(f"{BASE_URL}/coffee-shops/{self.shop_id_to_update}", json=update_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to update coffee shop")
+        updated_shop = resp.json()
+        self.assertEqual(updated_shop["name"], update_data["name"], "Coffee shop name should be updated")
+        
+        
+    def test_delete_coffee_shop(self):
+        if not hasattr(self, 'shop_id_to_update'):
+            self.test_create_coffee_shop()
+        
+        resp = requests.delete(f"{BASE_URL}/coffee-shops/{self.shop_id_to_update}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to delete coffee shop")
+        self.assertIn("message", resp.json(), "Response should contain a message")
+        
+        
+    
+    def test_post_coffee_review(self):
+        if not hasattr(self, 'coffee_id_to_update'):
+            self.test_create_coffee()
+        
+        self.review_data_coffee["coffeeId"] = self.coffee_id_to_update
+        resp = requests.post(f"{BASE_URL}/reviews/coffees", json=self.review_data_coffee, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to post coffee review")
+        review = resp.json()
+        self.assertIn("id", review, "Response should contain review ID")
+        
+        
+    def test_delete_coffee_review(self):
+        if not hasattr(self, 'coffee_id_to_update'):
+            self.test_post_coffee_review()
+        
+        resp = requests.delete(f"{BASE_URL}/reviews/coffees/{self.review_data_coffee['coffeeId']}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to delete coffee review")
+        self.assertIn("message", resp.json(), "Response should contain a message")
+        
+        
+    
+    def test_post_roastery_review(self):
+        if not hasattr(self, 'roastery_id_to_update'):
+            self.test_create_roastery()
+        
+        self.review_data_roastery["roasteryId"] = self.roastery_id_to_update
+        resp = requests.post(f"{BASE_URL}/reviews/roasteries", json=self.review_data_roastery, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to post roastery review")
+        review = resp.json()
+        self.assertIn("id", review, "Response should contain review ID")
+        
+        
+    
+    def test_delete_roastery_review(self):
+        if not hasattr(self, 'roastery_id_to_update'):
+            self.test_post_roastery_review()
+        
+        resp = requests.delete(f"{BASE_URL}/reviews/roasteries/{self.review_data_roastery['roasteryId']}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to delete roastery review")
+        self.assertIn("message", resp.json(), "Response should contain a message")
+        
+        
+    def test_post_coffee_shop_review(self):
+        if not hasattr(self, 'shop_id_to_update'):
+            self.test_create_coffee_shop()
+        
+        self.review_data_shop["coffeeShopId"] = self.shop_id_to_update
+        resp = requests.post(f"{BASE_URL}/reviews/coffee-shops", json=self.review_data_shop, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to post coffee shop review")
+        review = resp.json()
+        self.assertIn("id", review, "Response should contain review ID")
+        
+        
+    def test_delete_coffee_shop_review(self):
+        if not hasattr(self, 'shop_id_to_update'):
+            self.test_post_coffee_shop_review()
+        
+        resp = requests.delete(f"{BASE_URL}/reviews/coffee-shops/{self.review_data_shop['coffeeShopId']}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, "Failed to delete coffee shop review")
+        self.assertIn("message", resp.json(), "Response should contain a message")
+    
+        
+    
+
 
 
 if __name__ == "__main__":
