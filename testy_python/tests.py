@@ -4,308 +4,469 @@ import json
 import random
 import string
 import logging
+import time
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 BASE_URL = "http://srv17.mikr.us:40331"
 
-
 def random_string(length=8):
     return ''.join(random.choices(string.ascii_lowercase, k=length))
 
-
 class CoffeeApiTests(unittest.TestCase):
-    def setUp(self):
-        self.register_data = {
-            "username": random_string(),
-            "password": random_string(),
-            "email":    f"{random_string()}@example.com"
+    @classmethod
+    def setUpClass(cls):
+        cls.admin_user_id = 1 
+        cls.admin_username = "admin"
+
+        admin_credentials = {
+            "username": cls.admin_username,
+            "passwords": "admin123" 
         }
-        reg_resp = requests.post(f"{BASE_URL}/register", json=self.register_data)
-        self.assertEqual(reg_resp.status_code, 200, "Registration failed")
-        user_json = reg_resp.json()
-        self.user_id = user_json.get("id") or user_json.get("user_id")
-
-        login_payload = {
-            "username":  self.register_data["username"],
-            "passwords": self.register_data["password"]
-        }
-        login_resp = requests.post(f"{BASE_URL}/login", json=login_payload)
-        self.assertEqual(login_resp.status_code, 200, "Login failed")
-        token = login_resp.json().get("token")
-        self.assertIsNotNone(token, "No token returned")
-        self.auth_headers = {"Authorization": f"Bearer {token}"}
-
-        self.coffee_data = {
-            "name":         f"Test Coffee {random_string()}",
-            "roasteryId":   random.randint(1, 10),
-            "country":      random_string(),
-            "region":       random_string(),
-            "farm":         random_string(),
-            "variety":      random_string(),
-            "process":      random_string(),
-            "roastProfile": random_string(),
-            "flavourNotes": [random_string(), random_string(), random_string()],
-            "description":  random_string(50),
-            "imageUrl":     f"https://example.com/{random_string()}.jpg",
-        }
-        self.roastery_data = {
-            "name":        f"Roastery {random_string()}",
-            "country":     random_string(),
-            "city":        random_string(),
-            "address":     random_string(),
-            "website":     f"https://{random_string()}.com/",
-            "description": random_string(50),
-            "imageUrl":    f"https://example.com/{random_string()}.jpg",
-        }
-        self.shop_data = {
-            "name":        f"Shop {random_string()}",
-            "country":     random_string(),
-            "city":        random_string(),
-            "address":     random_string(),
-            "website":     f"https://{random_string()}.com/",
-            "description": random_string(50),
-            "imageUrl":    f"https://example.com/{random_string()}.jpg",
-        }
-        self.review_data_coffee = {
-            "coffeeId": random.randint(1, 10),
-            "rating":   random.randint(1, 5),
-            "review":   random_string(30),
-        }
-        self.review_data_roastery = {
-            "roasteryId": random.randint(1, 10),
-            "rating":     random.randint(1, 5),
-            "review":     random_string(30),
-        }
-        self.review_data_shop = {
-            "coffeeShopId": random.randint(1, 10),
-            "rating":       random.randint(1, 5),
-            "review":       random_string(30),
-        }
-
-
-    def test_api_documentation(self):
-        resp = requests.get(f"{BASE_URL}/")
-        self.assertEqual(resp.status_code, 200, "Failed to get API documentation")
-        self.assertIn("application/json", resp.headers.get("Content-Type", ""), "Response should be JSON")
-
-
-    def test_html_documentation(self):
-        resp = requests.get(f"{BASE_URL}/help")
-        self.assertEqual(resp.status_code, 200, "Failed to get HTML documentation")
-        self.assertTrue(resp.text.strip().lower().startswith("<!doctype html>"), "Response should be HTML document")
-
-
-    def test_register(self):
-        payload = {
-            "username": f"new_{random_string()}",
-            "password": "Password123!",
-            "email":    f"{random_string()}@example.com"
-        }
-        resp = requests.post(f"{BASE_URL}/register", json=payload)
-        self.assertEqual(resp.status_code, 200)
-
-
-    def test_login(self):
-        payload = {
-            "username":  self.register_data["username"],
-            "passwords": self.register_data["password"]
-        }
-        resp = requests.post(f"{BASE_URL}/login", json=payload)
-        self.assertEqual(resp.status_code, 200)
-        self.assertIn("token", resp.json())
-
-
-    def test_get_user_by_id(self):
-        resp = requests.get(f"{BASE_URL}/users/{self.user_id}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200)
-
-        body = resp.json()
-        user = body.get("data") or body.get("user") or body
-
-        self.assertEqual(user.get("username"), self.register_data["username"], "Username should match registered user")
-
-
-    def test_get_coffees(self):
-        resp = requests.get(f"{BASE_URL}/coffees")
-        self.assertEqual(resp.status_code, 200, "Failed to get coffees")
-        self.assertIsInstance(resp.json(), list, "Response should be a list of coffees")
         
-    
-    def test_create_coffee(self):
-        resp = requests.post(f"{BASE_URL}/coffees", json=self.coffee_data, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to create coffee")
-        coffee = resp.json()
-        self.coffee_id_to_update = coffee.get("id") or coffee.get("coffeeId")
-        self.assertIn("id", coffee, "Response should contain coffee ID")
-        self.assertEqual(coffee["name"], self.coffee_data["name"], "Coffee name should match input data")
+        login_resp = requests.post(f"{BASE_URL}/login", json=admin_credentials)
+        if login_resp.status_code != 200:
+            logging.error(f"Admin login failed: {login_resp.status_code} - {login_resp.text}")
+            logging.error(f"Admin login payload: {admin_credentials}")
+        assert login_resp.status_code == 200, f"Admin login failed: {login_resp.text}"
         
-    
-    def test_update_coffee(self):
-        if not hasattr(self, 'coffee_id_to_update'):
-            self.test_create_coffee()
+        token_data = login_resp.json()
+        token = token_data.get("token") or token_data.get("access_token")
+        assert token is not None, f"No token returned from admin login: {token_data}"
+        cls.auth_headers = {"Authorization": f"Bearer {token}"}
         
-        update_data = {
-            "name": f"Updated Coffee {random_string()}",
-            "description": random_string(50)
+        cls.user_id_for_tests = str(cls.admin_user_id)
+
+        cls.new_user_register_data_template = {
+            "username": f"testuser_{random_string(10)}",
+            "password": "TestPassword123!", 
+            "email": f"test_{random_string(10)}@example.com"
         }
-        resp = requests.put(f"{BASE_URL}/coffees/{self.coffee_id_to_update}", json=update_data, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to update coffee")
-        updated_coffee = resp.json()
-        self.assertEqual(updated_coffee["name"], update_data["name"], "Coffee name should be updated")
-        
-    
-    def test_delete_coffee(self):
-        if not hasattr(self, 'coffee_id_to_update'):
-            self.test_create_coffee()
-        
-        resp = requests.delete(f"{BASE_URL}/coffees/{self.coffee_id_to_update}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to delete coffee")
-        self.assertIn("message", resp.json(), "Response should contain a message")
-        
-        
-    def test_get_roasteries(self):
-        resp = requests.get(f"{BASE_URL}/roasteries")
-        self.assertEqual(resp.status_code, 200, "Failed to get roasteries")
-        self.assertIsInstance(resp.json(), list, "Response should be a list of roasteries")
-        
-    
-    def test_create_roastery(self):
-        resp = requests.post(f"{BASE_URL}/roasteries", json=self.roastery_data, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to create roastery")
+
+        cls.coffee_data_template = {
+            "name": f"Test Coffee {random_string()}",
+            "country": "Colombia", 
+            "region": "Huila",    
+            "farm": f"Test Farm {random_string()}",
+            "variety": "Arabica",  
+            "process": "Washed",   
+            "roastProfile": "Medium", 
+            "flavourNotes": ["citrus", "chocolate", "nuts"], 
+            "description": f"Test coffee description {random_string(20)}",
+            "imageUrl": f"https://example.com/{random_string()}.jpg",
+        }
+        cls.roastery_data_template_base = {
+            "name": f"Test Roastery {random_string()}",
+            "country": "Poland",         
+            "city": "Katowice",            
+            "address": "Korfantego 72",  
+            "website": f"https://test{random_string()}.com/",
+            "description": f"Test roastery description {random_string(20)}",
+            "imageUrl": f"https://example.com/roastery_{random_string()}.jpg",
+        }
+        cls.shop_data_template_base = {
+            "name": f"Test Shop {random_string()}",
+            "country": "Poland",           
+            "city": "Katowice",              
+            "address": "Wawelska 1", 
+            "website": f"https://testshop{random_string()}.com/",
+            "description": f"Test shop description {random_string(20)}",
+            "imageUrl": f"https://example.com/{random_string()}.jpg",
+        }
+        cls.review_payload_template_base = {
+            "rating": random.randint(1, 5),
+            "review": f"Test review {random_string(20)}",
+        }
+
+    def _get_roastery_data(self):
+        data = self.roastery_data_template_base.copy()
+        data["name"] = f"Test Roastery {random_string()}"
+        data["website"] = f"https://test{random_string()}.com/"
+        data["description"] = f"Test roastery description {random_string(20)}"
+        data["imageUrl"] = f"https://example.com/roastery_{random_string()}.jpg"
+        return data
+
+    def _get_coffee_data(self):
+        data = self.coffee_data_template.copy()
+        data["name"] = f"Test Coffee {random_string()}"
+        data["farm"] = f"Test Farm {random_string()}"
+        data["description"] = f"Test coffee description {random_string(20)}"
+        data["imageUrl"] = f"https://example.com/{random_string()}.jpg"
+        return data
+
+    def _get_shop_data(self):
+        data = self.shop_data_template_base.copy()
+        data["name"] = f"Test Shop {random_string()}"
+        data["website"] = f"https://testshop{random_string()}.com/"
+        data["description"] = f"Test shop description {random_string(20)}"
+        data["imageUrl"] = f"https://example.com/shop_{random_string()}.jpg"
+        return data
+
+    def _get_review_payload(self):
+        data = self.review_payload_template_base.copy()
+        data["rating"] = random.randint(1, 5)
+        data["review"] = f"Test review {random_string(20)}"
+        return data
+
+    def _create_roastery_for_test(self):
+        payload = self._get_roastery_data()
+        resp = requests.post(f"{BASE_URL}/roasteries", json=payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to create roastery for test: {resp.text} with payload {payload}")
         roastery = resp.json()
-        self.roastery_id_to_update = roastery.get("id") or roastery.get("roasteryId")
-        self.assertIn("id", roastery, "Response should contain roastery ID")
-        self.assertEqual(roastery["name"], self.roastery_data["name"], "Roastery name should match input data")
-        
-    
-    def test_update_roastery(self):
-        if not hasattr(self, 'roastery_id_to_update'):
-            self.test_create_roastery()
-        
-        update_data = {
-            "name": f"Updated Roastery {random_string()}",
-            "description": random_string(50)
-        }
-        resp = requests.put(f"{BASE_URL}/roasteries/{self.roastery_id_to_update}", json=update_data, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to update roastery")
-        updated_roastery = resp.json()
-        self.assertEqual(updated_roastery["name"], update_data["name"], "Roastery name should be updated")
-        
-    
-    def test_delete_roastery(self):
-        if not hasattr(self, 'roastery_id_to_update'):
-            self.test_create_roastery()
-        
-        resp = requests.delete(f"{BASE_URL}/roasteries/{self.roastery_id_to_update}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to delete roastery")
-        self.assertIn("message", resp.json(), "Response should contain a message")
-        
-        
-    def test_get_coffee_shops(self):
-        resp = requests.get(f"{BASE_URL}/coffee-shops")
-        self.assertEqual(resp.status_code, 200, "Failed to get coffee shops")
-        self.assertIsInstance(resp.json(), list, "Response should be a list of coffee shops")
-    
-    
-    def test_create_coffee_shop(self):
-        resp = requests.post(f"{BASE_URL}/coffee-shops", json=self.shop_data, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to create coffee shop")
+        self.assertIn("id", roastery)
+        return roastery["id"]
+
+    def _create_coffee_for_test(self, roastery_id):
+        coffee_data = self._get_coffee_data()
+        coffee_data["roasteryId"] = roastery_id
+        resp = requests.post(f"{BASE_URL}/coffees", json=coffee_data, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to create coffee for test: {resp.text} with payload {coffee_data}")
+        coffee = resp.json()
+        self.assertIn("id", coffee)
+        return coffee["id"]
+
+    def _create_shop_for_test(self):
+        payload = self._get_shop_data()
+        resp = requests.post(f"{BASE_URL}/shops", json=payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to create shop for test: {resp.text} with payload {payload}")
         shop = resp.json()
-        self.shop_id_to_update = shop.get("id") or shop.get("coffeeShopId")
-        self.assertIn("id", shop, "Response should contain coffee shop ID")
-        self.assertEqual(shop["name"], self.shop_data["name"], "Coffee shop name should match input data")
+        self.assertIn("id", shop)
+        return shop["id"]
+
+    def _create_review_for_test(self, review_target_payload):
+        payload = self._get_review_payload()
+        payload.update(review_target_payload)
+        resp = requests.post(f"{BASE_URL}/reviews", json=payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to post review for test: {resp.text} with payload {payload}")
+        review = resp.json()
+        self.assertIn("id", review)
+        return review["id"]
+
+    def test_1_get_api_documentation_json(self):
+        resp = requests.get(f"{BASE_URL}/")
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("application/json", resp.headers.get("Content-Type", ""))
+
+    def test_2_get_api_documentation_html(self):
+        resp = requests.get(f"{BASE_URL}/help")
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue(resp.text.strip().lower().startswith("<!doctype html>"))
+
+    def test_3_get_user_by_id(self):
+        resp = requests.get(f"{BASE_URL}/users/{self.user_id_for_tests}", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to get user by ID: {resp.text}")
+        body = resp.json()
+        user = body.get("data") or body.get("user") or body 
+        self.assertEqual(user.get("username"), self.admin_username)
+
+    def test_4_create_roastery(self):
+        roastery_id = self._create_roastery_for_test()
+        self.assertIsNotNone(roastery_id)
+
+    def test_5_get_all_roasteries(self):
+        self._create_roastery_for_test()
+        resp = requests.get(f"{BASE_URL}/roasteries")
+        self.assertEqual(resp.status_code, 200, f"Failed to get roasteries: {resp.text}")
+        data = resp.json()
+        if data is None: 
+            data = []
+        self.assertIsInstance(data, list)
+        self.assertGreater(len(data), 0)
         
+    def test_6_get_roastery_by_id(self):
+        roastery_id = self._create_roastery_for_test()
+        resp = requests.get(f"{BASE_URL}/roasteries/{roastery_id}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get roastery by ID: {resp.text}")
+        roastery = resp.json()
+        self.assertIn("id", roastery)
+        self.assertEqual(roastery["id"], roastery_id)
+    
+    def test_7_update_roastery(self):
+        roastery_id = self._create_roastery_for_test()
         
-    def test_update_coffee_shop(self):
-        if not hasattr(self, 'shop_id_to_update'):
-            self.test_create_coffee_shop()
+        update_payload = self._get_roastery_data()
+        update_payload["name"] = f"Updated Roastery {random_string()}"
+        update_payload["description"] = f"Updated description {random_string(20)}"
+        if "id" in update_payload: 
+            del update_payload["id"]
+
+        resp = requests.put(f"{BASE_URL}/roasteries/{roastery_id}", json=update_payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to update roastery: {resp.text} with payload {update_payload}")
+        updated_roastery = resp.json()
+        self.assertEqual(updated_roastery["name"], update_payload["name"])
+        self.assertEqual(updated_roastery["description"], update_payload["description"])
+
+
+    def test_8_create_coffee(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        self.assertIsNotNone(coffee_id)
+
+    def test_9_get_all_coffees(self):
+        roastery_id = self._create_roastery_for_test()
+        self._create_coffee_for_test(roastery_id)
+        resp = requests.get(f"{BASE_URL}/coffees")
+        self.assertEqual(resp.status_code, 200, f"Failed to get coffees: {resp.text}")
+        data = resp.json()
+        if data is None: 
+            data = []
+        self.assertIsInstance(data, list)
+        self.assertGreater(len(data), 0)
         
-        update_data = {
-            "name": f"Updated Coffee Shop {random_string()}",
-            "description": random_string(50)
-        }
-        resp = requests.put(f"{BASE_URL}/coffee-shops/{self.shop_id_to_update}", json=update_data, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to update coffee shop")
+    def test_10_get_coffee_by_id(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        resp = requests.get(f"{BASE_URL}/coffees/{coffee_id}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get coffee by ID: {resp.text}")
+        coffee = resp.json()
+        self.assertIn("id", coffee)
+        self.assertEqual(coffee["id"], coffee_id)
+        
+    def test_11_update_coffee(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        
+        get_coffee_resp = requests.get(f"{BASE_URL}/coffees/{coffee_id}")
+        self.assertEqual(get_coffee_resp.status_code, 200)
+        current_coffee_data = get_coffee_resp.json()
+
+        update_payload = current_coffee_data
+        update_payload["name"] = f"Updated Coffee {random_string()}"
+        update_payload["description"] = f"Updated description {random_string(20)}"
+        if "id" in update_payload:
+             del update_payload["id"]
+        if "roastery" in update_payload: # If API returns nested roastery, remove for PUT
+            del update_payload["roastery"]
+
+
+        resp = requests.put(f"{BASE_URL}/coffees/{coffee_id}", json=update_payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to update coffee: {resp.text} with payload {update_payload}")
+        updated_coffee = resp.json()
+        self.assertEqual(updated_coffee["name"], update_payload["name"])
+        self.assertEqual(updated_coffee["description"], update_payload["description"])
+
+
+    def test_12_create_coffee_shop(self):
+        shop_id = self._create_shop_for_test()
+        self.assertIsNotNone(shop_id)
+        
+    def test_13_get_all_coffee_shops(self):
+        self._create_shop_for_test()
+        resp = requests.get(f"{BASE_URL}/shops")
+        self.assertEqual(resp.status_code, 200, f"Failed to get coffee shops: {resp.text}")
+        data = resp.json()
+        if data is None: 
+            data = []
+        self.assertIsInstance(data, list)
+        self.assertGreater(len(data), 0)
+
+    def test_14_get_coffee_shop_by_id(self):
+        shop_id = self._create_shop_for_test()
+        resp = requests.get(f"{BASE_URL}/shops/{shop_id}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get coffee shop by ID: {resp.text}")
+        shop = resp.json()
+        self.assertIn("id", shop)
+        self.assertEqual(shop["id"], shop_id)
+
+    def test_15_update_coffee_shop(self):
+        shop_id = self._create_shop_for_test()
+
+        update_payload = self._get_shop_data()
+        update_payload["name"] = f"Updated Coffee Shop {random_string()}"
+        update_payload["description"] = f"Updated description {random_string(20)}"
+        if "id" in update_payload: 
+            del update_payload["id"]
+        
+        resp = requests.put(f"{BASE_URL}/shops/{shop_id}", json=update_payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to update coffee shop: {resp.text} with payload {update_payload}")
         updated_shop = resp.json()
-        self.assertEqual(updated_shop["name"], update_data["name"], "Coffee shop name should be updated")
-        
-        
-    def test_delete_coffee_shop(self):
-        if not hasattr(self, 'shop_id_to_update'):
-            self.test_create_coffee_shop()
-        
-        resp = requests.delete(f"{BASE_URL}/coffee-shops/{self.shop_id_to_update}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to delete coffee shop")
-        self.assertIn("message", resp.json(), "Response should contain a message")
-        
-        
-    
-    def test_post_coffee_review(self):
-        if not hasattr(self, 'coffee_id_to_update'):
-            self.test_create_coffee()
-        
-        self.review_data_coffee["coffeeId"] = self.coffee_id_to_update
-        resp = requests.post(f"{BASE_URL}/reviews/coffees", json=self.review_data_coffee, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to post coffee review")
-        review = resp.json()
-        self.assertIn("id", review, "Response should contain review ID")
-        
-        
-    def test_delete_coffee_review(self):
-        if not hasattr(self, 'coffee_id_to_update'):
-            self.test_post_coffee_review()
-        
-        resp = requests.delete(f"{BASE_URL}/reviews/coffees/{self.review_data_coffee['coffeeId']}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to delete coffee review")
-        self.assertIn("message", resp.json(), "Response should contain a message")
-        
-        
-    
-    def test_post_roastery_review(self):
-        if not hasattr(self, 'roastery_id_to_update'):
-            self.test_create_roastery()
-        
-        self.review_data_roastery["roasteryId"] = self.roastery_id_to_update
-        resp = requests.post(f"{BASE_URL}/reviews/roasteries", json=self.review_data_roastery, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to post roastery review")
-        review = resp.json()
-        self.assertIn("id", review, "Response should contain review ID")
-        
-        
-    
-    def test_delete_roastery_review(self):
-        if not hasattr(self, 'roastery_id_to_update'):
-            self.test_post_roastery_review()
-        
-        resp = requests.delete(f"{BASE_URL}/reviews/roasteries/{self.review_data_roastery['roasteryId']}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to delete roastery review")
-        self.assertIn("message", resp.json(), "Response should contain a message")
-        
-        
-    def test_post_coffee_shop_review(self):
-        if not hasattr(self, 'shop_id_to_update'):
-            self.test_create_coffee_shop()
-        
-        self.review_data_shop["coffeeShopId"] = self.shop_id_to_update
-        resp = requests.post(f"{BASE_URL}/reviews/coffee-shops", json=self.review_data_shop, headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to post coffee shop review")
-        review = resp.json()
-        self.assertIn("id", review, "Response should contain review ID")
-        
-        
-    def test_delete_coffee_shop_review(self):
-        if not hasattr(self, 'shop_id_to_update'):
-            self.test_post_coffee_shop_review()
-        
-        resp = requests.delete(f"{BASE_URL}/reviews/coffee-shops/{self.review_data_shop['coffeeShopId']}", headers=self.auth_headers)
-        self.assertEqual(resp.status_code, 200, "Failed to delete coffee shop review")
-        self.assertIn("message", resp.json(), "Response should contain a message")
-    
-        
-    
+        self.assertEqual(updated_shop["name"], update_payload["name"])
+        self.assertEqual(updated_shop["description"], update_payload["description"])
 
 
+    def test_16_create_coffee_review(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        review_id = self._create_review_for_test({"coffeeId": coffee_id})
+        self.assertIsNotNone(review_id)
+
+    def test_17_create_roastery_review(self):
+        roastery_id = self._create_roastery_for_test()
+        review_id = self._create_review_for_test({"roasteryId": roastery_id})
+        self.assertIsNotNone(review_id)
+
+    def test_18_create_coffee_shop_review(self):
+        shop_id = self._create_shop_for_test()
+        review_id = self._create_review_for_test({"coffeeShopId": shop_id})
+        self.assertIsNotNone(review_id)
+
+    def test_19_get_all_reviews(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        self._create_review_for_test({"coffeeId": coffee_id})
+        resp = requests.get(f"{BASE_URL}/reviews")
+        self.assertEqual(resp.status_code, 200, f"Failed to get all reviews: {resp.text}")
+        reviews = resp.json()
+        if reviews is None: 
+            reviews = []
+        self.assertIsInstance(reviews, list)
+        self.assertGreater(len(reviews),0)
+        
+    def test_20_get_reviews_for_coffee(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        self._create_review_for_test({"coffeeId": coffee_id}) 
+        resp = requests.get(f"{BASE_URL}/reviews?coffeeId={coffee_id}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get coffee reviews: {resp.text}")
+        reviews = resp.json()
+        if reviews is None: 
+            reviews = []
+        self.assertIsInstance(reviews, list)
+        self.assertGreater(len(reviews),0)
+        for review in reviews:
+            self.assertEqual(str(review.get("coffeeId") or review.get("coffee", {}).get("id")), str(coffee_id))
+
+    def test_21_get_reviews_for_roastery(self):
+        roastery_id = self._create_roastery_for_test()
+        self._create_review_for_test({"roasteryId": roastery_id}) 
+        resp = requests.get(f"{BASE_URL}/reviews?roasteryId={roastery_id}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get roastery reviews: {resp.text}")
+        reviews = resp.json()
+        if reviews is None: 
+            reviews = []
+        self.assertIsInstance(reviews, list)
+        self.assertGreater(len(reviews),0)
+        for review in reviews:
+            self.assertEqual(str(review.get("roasteryId") or review.get("roastery", {}).get("id")), str(roastery_id))
+
+    def test_22_get_reviews_for_shop(self):
+        shop_id = self._create_shop_for_test()
+        self._create_review_for_test({"coffeeShopId": shop_id}) 
+        resp = requests.get(f"{BASE_URL}/reviews?coffeeShopId={shop_id}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get shop reviews: {resp.text}")
+        reviews = resp.json()
+        if reviews is None: 
+            reviews = []
+        self.assertIsInstance(reviews, list)
+        self.assertGreater(len(reviews),0)
+        for review in reviews:
+            self.assertEqual(str(review.get("coffeeShopId") or review.get("coffeeShop", {}).get("id")), str(shop_id))
+
+    def test_23_get_reviews_for_user(self):
+        roastery_id = self._create_roastery_for_test()
+        self._create_review_for_test({"roasteryId": roastery_id}) 
+        resp = requests.get(f"{BASE_URL}/reviews?userId={self.user_id_for_tests}")
+        self.assertEqual(resp.status_code, 200, f"Failed to get user reviews: {resp.text}")
+        reviews = resp.json()
+        if reviews is None: 
+            reviews = []
+        self.assertIsInstance(reviews, list)
+        self.assertGreater(len(reviews),0)
+        for review in reviews:
+            self.assertEqual(str(review.get("userId") or review.get("user", {}).get("id")), str(self.user_id_for_tests))
+
+    def test_24_update_review(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        review_id = self._create_review_for_test({"coffeeId": coffee_id})
+        
+        update_payload = {
+            "rating": random.randint(1, 5),
+            "review": f"Updated review text {random_string()}"
+        }
+        resp = requests.put(f"{BASE_URL}/reviews/{review_id}", json=update_payload, headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to update review: {resp.text}")
+        updated_review = resp.json()
+        self.assertEqual(updated_review["rating"], update_payload["rating"])
+        self.assertEqual(updated_review["review"], update_payload["review"])
+        self.assertEqual(updated_review["id"], review_id)
+
+    def test_25_get_stats(self):
+        resp = requests.get(f"{BASE_URL}/stats", headers=self.auth_headers)
+        self.assertEqual(resp.status_code, 200, f"Failed to get stats: {resp.text}")
+        stats = resp.json()
+        self.assertIsInstance(stats, dict)
+
+    def test_26_delete_coffee_review(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        review_id = self._create_review_for_test({"coffeeId": coffee_id})
+        
+        resp_delete = requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
+        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee review: {resp_delete.text}")
+
+    def test_27_delete_roastery_review(self):
+        roastery_id = self._create_roastery_for_test()
+        review_id = self._create_review_for_test({"roasteryId": roastery_id})
+        
+        resp_delete = requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
+        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete roastery review: {resp_delete.text}")
+        
+    def test_28_delete_coffee_shop_review(self):
+        shop_id = self._create_shop_for_test()
+        review_id = self._create_review_for_test({"coffeeShopId": shop_id})
+        
+        resp_delete = requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
+        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee shop review: {resp_delete.text}")
+        
+    def test_29_delete_coffee(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        
+        resp_delete = requests.delete(f"{BASE_URL}/coffees/{coffee_id}", headers=self.auth_headers)
+        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee: {resp_delete.text}")
+
+        resp_get = requests.get(f"{BASE_URL}/coffees/{coffee_id}")
+        self.assertEqual(resp_get.status_code, 404)
+
+
+    def test_30_delete_roastery(self):
+        roastery_id = self._create_roastery_for_test()
+        
+        resp_delete = requests.delete(f"{BASE_URL}/roasteries/{roastery_id}", headers=self.auth_headers)
+        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete roastery: {resp_delete.text}")
+        
+        resp_get = requests.get(f"{BASE_URL}/roasteries/{roastery_id}")
+        self.assertEqual(resp_get.status_code, 404)
+        
+    def test_31_delete_coffee_shop(self): 
+        shop_id = self._create_shop_for_test()
+        
+        resp_delete = requests.delete(f"{BASE_URL}/shops/{shop_id}", headers=self.auth_headers)
+        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee shop: {resp_delete.text}")
+
+        resp_get = requests.get(f"{BASE_URL}/shops/{shop_id}")
+        self.assertEqual(resp_get.status_code, 404)
+
+
+    def test_32_register_and_login_new_user(self):
+        user_data = self.new_user_register_data_template.copy()
+        user_data["username"] = f"testuser_{random_string(10)}"
+        user_data["email"] = f"test_{random_string(10)}@example.com"
+
+        reg_resp = requests.post(f"{BASE_URL}/register", json=user_data)
+        self.assertEqual(reg_resp.status_code, 200, f"New user registration failed: {reg_resp.text} with payload {user_data}")
+        
+        user_json = reg_resp.json()
+        new_user_id_val = user_json.get("id") or user_json.get("user_id") or user_json.get("userId")
+        if not new_user_id_val and "user" in user_json and isinstance(user_json.get("user"), dict):
+            new_user_id_val = user_json["user"].get("id")
+        self.assertIsNotNone(new_user_id_val, f"New user ID not found in registration response: {user_json}")
+
+        time.sleep(1) 
+
+        new_user_login_payload = {
+            "username": user_data["username"],
+            "passwords": user_data["password"] 
+        }
+        
+        login_resp = requests.post(f"{BASE_URL}/login", json=new_user_login_payload)
+        self.assertEqual(login_resp.status_code, 200, f"New user login failed: {login_resp.text} with payload {new_user_login_payload}")
+        
+        token_data = login_resp.json()
+        new_user_token = token_data.get("token") or token_data.get("access_token")
+        self.assertIsNotNone(new_user_token, f"No token returned from new user login: {token_data}")
+        logging.info(f"Successfully registered and logged in new user: {user_data['username']}")
 
 if __name__ == "__main__":
     unittest.main()
