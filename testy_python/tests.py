@@ -235,7 +235,7 @@ class CoffeeApiTests(unittest.TestCase):
         update_payload["description"] = f"Updated description {random_string(20)}"
         if "id" in update_payload:
              del update_payload["id"]
-        if "roastery" in update_payload: # If API returns nested roastery, remove for PUT
+        if "roastery" in update_payload: 
             del update_payload["roastery"]
 
 
