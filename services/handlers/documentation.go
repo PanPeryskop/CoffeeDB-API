@@ -1006,16 +1006,16 @@ html := `<!DOCTYPE html>
             background-color: #282c34;
             border-radius: 5px;
             padding: 15px;
-            overflow: auto; /* This enables both horizontal and vertical scrolling as needed */
+            overflow: auto; 
             margin: 10px 0;
             position: relative;
-            max-height: none; /* Remove the max-height restriction */
+            max-height: none; 
         }
             
         .response-body {
             white-space: pre;
             word-wrap: normal;
-            max-height: none; /* Remove the height restriction */
+            max-height: none; 
         }
         
         .try-it {
@@ -1630,8 +1630,8 @@ html := `<!DOCTYPE html>
 
         .wrapper .icon {
         position: relative;
-        background: transparent;  /* Zmienione z #fff na transparent */
-        color: #d4a574;  /* Dodany kolor ikon pasujący do motywu kawy */
+        background: transparent;  
+        color: #d4a574;  
         border-radius: 50%;
         margin: 10px;
         width: 50px;
@@ -1641,10 +1641,10 @@ html := `<!DOCTYPE html>
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);  /* Delikatniejszy cień */
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);  
         cursor: pointer;
         transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        border: 1px solid rgba(212, 165, 116, 0.3);  /* Delikatna obwódka */
+        border: 1px solid rgba(212, 165, 116, 0.3);  
         }
 
         .wrapper .icon a {
@@ -1776,7 +1776,6 @@ html := `<!DOCTYPE html>
     
     html += `</div>`
 
-    // Icons for categories
     categoryIcons := map[string]string{
         "Authorization": "fas fa-lock",
         "Coffees": "fas fa-coffee",
@@ -1785,7 +1784,6 @@ html := `<!DOCTYPE html>
         "Reviews": "fas fa-star",
     }
 
-    // For each category
     for category, endpoints := range doc.Endpoints {
         icon := "fas fa-folder"
         if val, ok := categoryIcons[category]; ok {
