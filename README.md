@@ -69,4 +69,4 @@ REST API zbudowane w Go do zarządzania danymi dotyczącymi kawy, w tym danymi k
 - Gorilla Mux
 - JWT
 - godotenv
-- lib/pq
+- lib/pq 
