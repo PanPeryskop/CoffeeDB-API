@@ -106,7 +106,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(map[string]string{"token": tokenString})
 }
 
-// Add this function to your users.go file
 func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
     userID, err := strconv.Atoi(params["id"])
@@ -115,7 +114,6 @@ func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
     
-    // Create a response struct with only the fields you want to expose
     type UserResponse struct {
         ID       int    `json:"id"`
         Username string `json:"username"`
@@ -137,13 +135,10 @@ func GetUserByIdHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
     
-    // For security, you might want to remove the email or other sensitive info for non-admin users
-    // Get the requesting user's role from the auth header
+
     userRoleStr := r.Header.Get("X-User-Role")
     if userRoleStr != "admin" {
-        // If not admin, clear email field
         user.Email = ""
-        // Optionally hide role too
         user.Role = ""
     }
     
