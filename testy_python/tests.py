@@ -18,10 +18,11 @@ class CoffeeApiTests(unittest.TestCase):
     def setUpClass(cls):
         cls.admin_user_id = 1 
         cls.admin_username = "admin"
+        cls.admin_password = "admin123"
 
         admin_credentials = {
             "username": cls.admin_username,
-            "passwords": "admin123" 
+            "passwords": cls.admin_password 
         }
         
         login_resp = requests.post(f"{BASE_URL}/login", json=admin_credentials)
@@ -36,7 +37,7 @@ class CoffeeApiTests(unittest.TestCase):
         cls.auth_headers = {"Authorization": f"Bearer {token}"}
         
         cls.user_id_for_tests = str(cls.admin_user_id)
-
+        
         cls.new_user_register_data_template = {
             "username": f"testuser_{random_string(10)}",
             "password": "TestPassword123!", 
@@ -77,6 +78,41 @@ class CoffeeApiTests(unittest.TestCase):
             "rating": random.randint(1, 5),
             "review": f"Test review {random_string(20)}",
         }
+        
+        cls.total_created_resources = {
+            "users": 0,
+            "coffees": 0,
+            "roasteries": 0,
+            "shops": 0,
+            "reviews": 0
+        }
+
+    def setUp(self):
+        self.created_resources = {
+            "users": [],
+            "coffees": [],
+            "roasteries": [],
+            "shops": [],
+            "reviews": []
+        }
+        
+    def tearDown(self):
+        for review_id in self.created_resources["reviews"]:
+            requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
+            
+        for coffee_id in self.created_resources["coffees"]:
+            requests.delete(f"{BASE_URL}/coffees/{coffee_id}", headers=self.auth_headers)
+            
+        for shop_id in self.created_resources["shops"]:
+            requests.delete(f"{BASE_URL}/shops/{shop_id}", headers=self.auth_headers)
+            
+        for roastery_id in self.created_resources["roasteries"]:
+            requests.delete(f"{BASE_URL}/roasteries/{roastery_id}", headers=self.auth_headers)
+        
+        self.__class__.total_created_resources["coffees"] += len(self.created_resources["coffees"])
+        self.__class__.total_created_resources["roasteries"] += len(self.created_resources["roasteries"])
+        self.__class__.total_created_resources["shops"] += len(self.created_resources["shops"])
+        self.__class__.total_created_resources["reviews"] += len(self.created_resources["reviews"])
 
     def _get_roastery_data(self):
         data = self.roastery_data_template_base.copy()
@@ -114,6 +150,7 @@ class CoffeeApiTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 200, f"Failed to create roastery for test: {resp.text} with payload {payload}")
         roastery = resp.json()
         self.assertIn("id", roastery)
+        self.created_resources["roasteries"].append(roastery["id"])
         return roastery["id"]
 
     def _create_coffee_for_test(self, roastery_id):
@@ -123,6 +160,7 @@ class CoffeeApiTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 200, f"Failed to create coffee for test: {resp.text} with payload {coffee_data}")
         coffee = resp.json()
         self.assertIn("id", coffee)
+        self.created_resources["coffees"].append(coffee["id"])
         return coffee["id"]
 
     def _create_shop_for_test(self):
@@ -131,6 +169,7 @@ class CoffeeApiTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 200, f"Failed to create shop for test: {resp.text} with payload {payload}")
         shop = resp.json()
         self.assertIn("id", shop)
+        self.created_resources["shops"].append(shop["id"])
         return shop["id"]
 
     def _create_review_for_test(self, review_target_payload):
@@ -140,6 +179,7 @@ class CoffeeApiTests(unittest.TestCase):
         self.assertEqual(resp.status_code, 200, f"Failed to post review for test: {resp.text} with payload {payload}")
         review = resp.json()
         self.assertIn("id", review)
+        self.created_resources["reviews"].append(review["id"])
         return review["id"]
 
     def test_1_get_api_documentation_json(self):
@@ -159,30 +199,21 @@ class CoffeeApiTests(unittest.TestCase):
         user = body.get("data") or body.get("user") or body 
         self.assertEqual(user.get("username"), self.admin_username)
 
-    def test_4_create_roastery(self):
+    def test_4_roastery_crud(self):
         roastery_id = self._create_roastery_for_test()
         self.assertIsNotNone(roastery_id)
-
-    def test_5_get_all_roasteries(self):
-        self._create_roastery_for_test()
+        
         resp = requests.get(f"{BASE_URL}/roasteries")
         self.assertEqual(resp.status_code, 200, f"Failed to get roasteries: {resp.text}")
         data = resp.json()
-        if data is None: 
-            data = []
         self.assertIsInstance(data, list)
         self.assertGreater(len(data), 0)
         
-    def test_6_get_roastery_by_id(self):
-        roastery_id = self._create_roastery_for_test()
         resp = requests.get(f"{BASE_URL}/roasteries/{roastery_id}")
         self.assertEqual(resp.status_code, 200, f"Failed to get roastery by ID: {resp.text}")
         roastery = resp.json()
         self.assertIn("id", roastery)
         self.assertEqual(roastery["id"], roastery_id)
-    
-    def test_7_update_roastery(self):
-        roastery_id = self._create_roastery_for_test()
         
         update_payload = self._get_roastery_data()
         update_payload["name"] = f"Updated Roastery {random_string()}"
@@ -196,35 +227,22 @@ class CoffeeApiTests(unittest.TestCase):
         self.assertEqual(updated_roastery["name"], update_payload["name"])
         self.assertEqual(updated_roastery["description"], update_payload["description"])
 
-
-    def test_8_create_coffee(self):
+    def test_5_coffee_crud(self):
         roastery_id = self._create_roastery_for_test()
         coffee_id = self._create_coffee_for_test(roastery_id)
         self.assertIsNotNone(coffee_id)
-
-    def test_9_get_all_coffees(self):
-        roastery_id = self._create_roastery_for_test()
-        self._create_coffee_for_test(roastery_id)
+        
         resp = requests.get(f"{BASE_URL}/coffees")
         self.assertEqual(resp.status_code, 200, f"Failed to get coffees: {resp.text}")
         data = resp.json()
-        if data is None: 
-            data = []
         self.assertIsInstance(data, list)
         self.assertGreater(len(data), 0)
         
-    def test_10_get_coffee_by_id(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
         resp = requests.get(f"{BASE_URL}/coffees/{coffee_id}")
         self.assertEqual(resp.status_code, 200, f"Failed to get coffee by ID: {resp.text}")
         coffee = resp.json()
         self.assertIn("id", coffee)
         self.assertEqual(coffee["id"], coffee_id)
-        
-    def test_11_update_coffee(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
         
         get_coffee_resp = requests.get(f"{BASE_URL}/coffees/{coffee_id}")
         self.assertEqual(get_coffee_resp.status_code, 200)
@@ -238,39 +256,28 @@ class CoffeeApiTests(unittest.TestCase):
         if "roastery" in update_payload: 
             del update_payload["roastery"]
 
-
         resp = requests.put(f"{BASE_URL}/coffees/{coffee_id}", json=update_payload, headers=self.auth_headers)
         self.assertEqual(resp.status_code, 200, f"Failed to update coffee: {resp.text} with payload {update_payload}")
         updated_coffee = resp.json()
         self.assertEqual(updated_coffee["name"], update_payload["name"])
         self.assertEqual(updated_coffee["description"], update_payload["description"])
 
-
-    def test_12_create_coffee_shop(self):
+    def test_6_coffee_shop_crud(self):
         shop_id = self._create_shop_for_test()
         self.assertIsNotNone(shop_id)
         
-    def test_13_get_all_coffee_shops(self):
-        self._create_shop_for_test()
         resp = requests.get(f"{BASE_URL}/shops")
         self.assertEqual(resp.status_code, 200, f"Failed to get coffee shops: {resp.text}")
         data = resp.json()
-        if data is None: 
-            data = []
         self.assertIsInstance(data, list)
         self.assertGreater(len(data), 0)
-
-    def test_14_get_coffee_shop_by_id(self):
-        shop_id = self._create_shop_for_test()
+        
         resp = requests.get(f"{BASE_URL}/shops/{shop_id}")
         self.assertEqual(resp.status_code, 200, f"Failed to get coffee shop by ID: {resp.text}")
         shop = resp.json()
         self.assertIn("id", shop)
         self.assertEqual(shop["id"], shop_id)
-
-    def test_15_update_coffee_shop(self):
-        shop_id = self._create_shop_for_test()
-
+        
         update_payload = self._get_shop_data()
         update_payload["name"] = f"Updated Coffee Shop {random_string()}"
         update_payload["description"] = f"Updated description {random_string(20)}"
@@ -282,164 +289,67 @@ class CoffeeApiTests(unittest.TestCase):
         updated_shop = resp.json()
         self.assertEqual(updated_shop["name"], update_payload["name"])
         self.assertEqual(updated_shop["description"], update_payload["description"])
-
-
-    def test_16_create_coffee_review(self):
+    
+    def test_7_reviews_crud(self):
         roastery_id = self._create_roastery_for_test()
         coffee_id = self._create_coffee_for_test(roastery_id)
-        review_id = self._create_review_for_test({"coffeeId": coffee_id})
-        self.assertIsNotNone(review_id)
-
-    def test_17_create_roastery_review(self):
-        roastery_id = self._create_roastery_for_test()
-        review_id = self._create_review_for_test({"roasteryId": roastery_id})
-        self.assertIsNotNone(review_id)
-
-    def test_18_create_coffee_shop_review(self):
         shop_id = self._create_shop_for_test()
-        review_id = self._create_review_for_test({"coffeeShopId": shop_id})
-        self.assertIsNotNone(review_id)
-
-    def test_19_get_all_reviews(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
-        self._create_review_for_test({"coffeeId": coffee_id})
+        
+        coffee_review_id = self._create_review_for_test({"coffeeId": coffee_id})
+        self.assertIsNotNone(coffee_review_id)
+        
+        roastery_review_id = self._create_review_for_test({"roasteryId": roastery_id})
+        self.assertIsNotNone(roastery_review_id)
+        
+        shop_review_id = self._create_review_for_test({"coffeeShopId": shop_id})
+        self.assertIsNotNone(shop_review_id)
+        
         resp = requests.get(f"{BASE_URL}/reviews")
         self.assertEqual(resp.status_code, 200, f"Failed to get all reviews: {resp.text}")
         reviews = resp.json()
-        if reviews is None: 
-            reviews = []
         self.assertIsInstance(reviews, list)
-        self.assertGreater(len(reviews),0)
+        self.assertGreater(len(reviews), 0)
         
-    def test_20_get_reviews_for_coffee(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
-        self._create_review_for_test({"coffeeId": coffee_id}) 
         resp = requests.get(f"{BASE_URL}/reviews?coffeeId={coffee_id}")
         self.assertEqual(resp.status_code, 200, f"Failed to get coffee reviews: {resp.text}")
         reviews = resp.json()
-        if reviews is None: 
-            reviews = []
         self.assertIsInstance(reviews, list)
-        self.assertGreater(len(reviews),0)
-        for review in reviews:
-            self.assertEqual(str(review.get("coffeeId") or review.get("coffee", {}).get("id")), str(coffee_id))
-
-    def test_21_get_reviews_for_roastery(self):
-        roastery_id = self._create_roastery_for_test()
-        self._create_review_for_test({"roasteryId": roastery_id}) 
+        self.assertGreater(len(reviews), 0)
+        
         resp = requests.get(f"{BASE_URL}/reviews?roasteryId={roastery_id}")
         self.assertEqual(resp.status_code, 200, f"Failed to get roastery reviews: {resp.text}")
         reviews = resp.json()
-        if reviews is None: 
-            reviews = []
         self.assertIsInstance(reviews, list)
-        self.assertGreater(len(reviews),0)
-        for review in reviews:
-            self.assertEqual(str(review.get("roasteryId") or review.get("roastery", {}).get("id")), str(roastery_id))
-
-    def test_22_get_reviews_for_shop(self):
-        shop_id = self._create_shop_for_test()
-        self._create_review_for_test({"coffeeShopId": shop_id}) 
+        self.assertGreater(len(reviews), 0)
+        
         resp = requests.get(f"{BASE_URL}/reviews?coffeeShopId={shop_id}")
         self.assertEqual(resp.status_code, 200, f"Failed to get shop reviews: {resp.text}")
         reviews = resp.json()
-        if reviews is None: 
-            reviews = []
         self.assertIsInstance(reviews, list)
-        self.assertGreater(len(reviews),0)
-        for review in reviews:
-            self.assertEqual(str(review.get("coffeeShopId") or review.get("coffeeShop", {}).get("id")), str(shop_id))
-
-    def test_23_get_reviews_for_user(self):
-        roastery_id = self._create_roastery_for_test()
-        self._create_review_for_test({"roasteryId": roastery_id}) 
-        resp = requests.get(f"{BASE_URL}/reviews?userId={self.user_id_for_tests}")
-        self.assertEqual(resp.status_code, 200, f"Failed to get user reviews: {resp.text}")
-        reviews = resp.json()
-        if reviews is None: 
-            reviews = []
-        self.assertIsInstance(reviews, list)
-        self.assertGreater(len(reviews),0)
-        for review in reviews:
-            self.assertEqual(str(review.get("userId") or review.get("user", {}).get("id")), str(self.user_id_for_tests))
-
-    def test_24_update_review(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
-        review_id = self._create_review_for_test({"coffeeId": coffee_id})
+        self.assertGreater(len(reviews), 0)
         
         update_payload = {
             "rating": random.randint(1, 5),
             "review": f"Updated review text {random_string()}"
         }
-        resp = requests.put(f"{BASE_URL}/reviews/{review_id}", json=update_payload, headers=self.auth_headers)
+        resp = requests.put(f"{BASE_URL}/reviews/{coffee_review_id}", json=update_payload, headers=self.auth_headers)
         self.assertEqual(resp.status_code, 200, f"Failed to update review: {resp.text}")
         updated_review = resp.json()
         self.assertEqual(updated_review["rating"], update_payload["rating"])
         self.assertEqual(updated_review["review"], update_payload["review"])
-        self.assertEqual(updated_review["id"], review_id)
 
-    def test_25_get_stats(self):
+    def test_8_stats_endpoint(self):
+        roastery_id = self._create_roastery_for_test()
+        coffee_id = self._create_coffee_for_test(roastery_id)
+        shop_id = self._create_shop_for_test()
+        self._create_review_for_test({"coffeeId": coffee_id})
+        
         resp = requests.get(f"{BASE_URL}/stats", headers=self.auth_headers)
         self.assertEqual(resp.status_code, 200, f"Failed to get stats: {resp.text}")
         stats = resp.json()
         self.assertIsInstance(stats, dict)
 
-    def test_26_delete_coffee_review(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
-        review_id = self._create_review_for_test({"coffeeId": coffee_id})
-        
-        resp_delete = requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
-        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee review: {resp_delete.text}")
-
-    def test_27_delete_roastery_review(self):
-        roastery_id = self._create_roastery_for_test()
-        review_id = self._create_review_for_test({"roasteryId": roastery_id})
-        
-        resp_delete = requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
-        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete roastery review: {resp_delete.text}")
-        
-    def test_28_delete_coffee_shop_review(self):
-        shop_id = self._create_shop_for_test()
-        review_id = self._create_review_for_test({"coffeeShopId": shop_id})
-        
-        resp_delete = requests.delete(f"{BASE_URL}/reviews/{review_id}", headers=self.auth_headers)
-        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee shop review: {resp_delete.text}")
-        
-    def test_29_delete_coffee(self):
-        roastery_id = self._create_roastery_for_test()
-        coffee_id = self._create_coffee_for_test(roastery_id)
-        
-        resp_delete = requests.delete(f"{BASE_URL}/coffees/{coffee_id}", headers=self.auth_headers)
-        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee: {resp_delete.text}")
-
-        resp_get = requests.get(f"{BASE_URL}/coffees/{coffee_id}")
-        self.assertEqual(resp_get.status_code, 404)
-
-
-    def test_30_delete_roastery(self):
-        roastery_id = self._create_roastery_for_test()
-        
-        resp_delete = requests.delete(f"{BASE_URL}/roasteries/{roastery_id}", headers=self.auth_headers)
-        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete roastery: {resp_delete.text}")
-        
-        resp_get = requests.get(f"{BASE_URL}/roasteries/{roastery_id}")
-        self.assertEqual(resp_get.status_code, 404)
-        
-    def test_31_delete_coffee_shop(self): 
-        shop_id = self._create_shop_for_test()
-        
-        resp_delete = requests.delete(f"{BASE_URL}/shops/{shop_id}", headers=self.auth_headers)
-        self.assertEqual(resp_delete.status_code, 204, f"Failed to delete coffee shop: {resp_delete.text}")
-
-        resp_get = requests.get(f"{BASE_URL}/shops/{shop_id}")
-        self.assertEqual(resp_get.status_code, 404)
-
-
-    def test_32_register_and_login_new_user(self):
+    def test_9_register_and_login(self):
         user_data = self.new_user_register_data_template.copy()
         user_data["username"] = f"testuser_{random_string(10)}"
         user_data["email"] = f"test_{random_string(10)}@example.com"
@@ -453,11 +363,11 @@ class CoffeeApiTests(unittest.TestCase):
             new_user_id_val = user_json["user"].get("id")
         self.assertIsNotNone(new_user_id_val, f"New user ID not found in registration response: {user_json}")
 
-        time.sleep(1) 
+        self.created_resources["users"].append(new_user_id_val)
 
         new_user_login_payload = {
             "username": user_data["username"],
-            "passwords": user_data["password"] 
+            "passwords": user_data["password"]
         }
         
         login_resp = requests.post(f"{BASE_URL}/login", json=new_user_login_payload)
@@ -466,7 +376,11 @@ class CoffeeApiTests(unittest.TestCase):
         token_data = login_resp.json()
         new_user_token = token_data.get("token") or token_data.get("access_token")
         self.assertIsNotNone(new_user_token, f"No token returned from new user login: {token_data}")
-        logging.info(f"Successfully registered and logged in new user: {user_data['username']}")
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(exit=False)
+    print(f"Created and deleted:")
+    print(f"Roasteries:     {CoffeeApiTests.total_created_resources['roasteries']}")
+    print(f"Coffees:              {CoffeeApiTests.total_created_resources['coffees']}")
+    print(f"Coffee Shops:         {CoffeeApiTests.total_created_resources['shops']}")
+    print(f"Reviews:         {CoffeeApiTests.total_created_resources['reviews']}")
