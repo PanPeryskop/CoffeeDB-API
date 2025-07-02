@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-      "username": "admin",
+      "username": "admin aktualne dane są zmienione",
       "password": "admin123",
       "email": "admin@coffeeapi.com",
       "role": "admin",
